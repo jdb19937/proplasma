@@ -128,9 +128,9 @@ def main():
                     help='square image side length (default 1024)')
     ap.add_argument('-n', type=int, default=1,
                     help='grid side length; total cells = N*N (default 1, max 4)')
-    ap.add_argument('--modus', choices=('pictura', 'artista', 'bestia'),
-                    default='pictura',
-                    help='which generator to call in promptum (default pictura)')
+    ap.add_argument('--modus', choices=('persona', 'artista', 'bestia'),
+                    default='persona',
+                    help='which generator to call in promptum (default persona)')
     ap.add_argument('-r', '--rudis', action='store_true',
                     help='pass -r to promptum (rudis variant: echoes params)')
     args, extra = ap.parse_known_args()
