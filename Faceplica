@@ -4,7 +4,7 @@ PREFIX      = /opt/apotheca
 FONTES      = persona.c artista.c bestia.c
 CAPITA      = persona.h artista.h bestia.h communia.h
 OBJECTA     = $(FONTES:.c=.o)
-BIBLIOTHECA = libeffigies.a
+BIBLIOTHECA = libproplasma.a
 
 omnia: $(BIBLIOTHECA) promptum
 
@@ -20,9 +20,9 @@ promptum: promptum.o $(BIBLIOTHECA)
 colloca: omnia
 	install -d $(PREFIX)/bin
 	install -m 755 promptum $(PREFIX)/bin
-	install -d $(PREFIX)/lib $(PREFIX)/include/effigies
+	install -d $(PREFIX)/lib $(PREFIX)/include/proplasma
 	install -m 644 $(BIBLIOTHECA) $(PREFIX)/lib/
-	install -m 644 $(CAPITA) $(PREFIX)/include/effigies/
+	install -m 644 $(CAPITA) $(PREFIX)/include/proplasma/
 
 purga:
 	rm -f $(OBJECTA) promptum.o $(BIBLIOTHECA) promptum
