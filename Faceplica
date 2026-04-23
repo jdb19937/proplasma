@@ -1,0 +1,33 @@
+# Faceplica
+
+PREFIX      = /opt/apotheca
+FONTES      = persona.c artista.c bestia.c
+CAPITA      = persona.h artista.h bestia.h communia.h
+OBJECTA     = $(FONTES:.c=.o)
+BIBLIOTHECA = libeffigies.a
+
+omnia: $(BIBLIOTHECA) promptum
+
+%.o: %.c $(CAPITA)
+	ccc $<
+
+$(BIBLIOTHECA): $(OBJECTA)
+	ar rcs $@ $^
+
+promptum: promptum.o $(BIBLIOTHECA)
+	ldi $^
+
+colloca: omnia
+	install -d $(PREFIX)/bin
+	install -m 755 promptum $(PREFIX)/bin
+	install -d $(PREFIX)/lib $(PREFIX)/include/effigies
+	install -m 644 $(BIBLIOTHECA) $(PREFIX)/lib/
+	install -m 644 $(CAPITA) $(PREFIX)/include/effigies/
+
+purga:
+	rm -f $(OBJECTA) promptum.o $(BIBLIOTHECA) promptum
+
+linte:
+	insinulint -c $(FONTES) promptum.c $(CAPITA)
+
+.PHONY: omnia colloca purga linte
