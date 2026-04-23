@@ -10,13 +10,13 @@
 /* Usum programmatis exhibere. */
 static void usus(const char *nomen) {
     fprintf(stderr,
-        "usus: %s [-s semen] [--modus pictura|artista|bestia] [-r] [selectiones]\n"
+        "usus: %s [-s semen] [--modus persona|artista|bestia] [-r] [selectiones]\n"
         "  -s, --semen N       semen generatoris (ex /dev/urandom si abest)\n"
-        "      --modus M       pictura (default) | artista | bestia\n"
+        "      --modus M       persona (default) | artista | bestia\n"
         "  -r, --rudis         variatio rudis (parametros mero modo iterat)\n"
         "  -h, --auxilium      hunc textum exhibere\n"
         "\n"
-        "Selectiones modi pictura (quaeque ex semine alia defaltit):\n"
+        "Selectiones modi persona (quaeque ex semine alia defaltit):\n"
         "      --sexus X       m|f|mas|femina\n"
         "      --aetas N       numerus integer, 1..120\n"
         "      --pulchritudo N  0|1|2|3|4\n"
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     uint64_t semen = 0;
     int habet_semen = 0;
     int rudis = 0;
-    const char *modus = "pictura";
+    const char *modus = "persona";
     ArtistaOptiones aopt = {0};
     PersonaOptiones popt = {0};
     BestiaOptiones  bopt = {0};
@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
 
     char error[256] = {0};
     char *descriptio = NULL;
-    if (strcmp(modus, "pictura") == 0) {
+    if (strcmp(modus, "persona") == 0) {
         descriptio = rudis
             ? persona_generare_rudis(semen, &popt, error, sizeof error)
             : persona_generare(semen, &popt, error, sizeof error);
@@ -157,7 +157,7 @@ int main(int argc, char **argv) {
             ? bestia_generare_rudis(semen, &bopt, error, sizeof error)
             : bestia_generare(semen, &bopt, error, sizeof error);
     } else {
-        fprintf(stderr, "modus ignotus: %s (pictura|artista|bestia expectatur)\n", modus);
+        fprintf(stderr, "modus ignotus: %s (persona|artista|bestia expectatur)\n", modus);
         return 2;
     }
 
