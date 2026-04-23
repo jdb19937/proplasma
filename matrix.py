@@ -121,6 +121,39 @@ def system_prompt(n: int) -> str:
     )
 
 
+def generate_image(client, sys_msg: str, user_msg: str):
+    print('OpenAI responses.create with image_generation tool', file=sys.stderr)
+    resp = client.responses.create(
+        model='gpt-5.4',
+        input=[
+            {'role': 'system', 'content': sys_msg},
+            {'role': 'user', 'content': user_msg},
+        ],
+        tools=[{'type': 'image_generation', 'size': '1024x1024'}],
+    )
+    image_b64 = None
+    for item in resp.output:
+        if getattr(item, 'type', None) == 'image_generation_call':
+            image_b64 = getattr(item, 'result', None)
+            if image_b64:
+                break
+    if not image_b64:
+        print('no image returned in response', file=sys.stderr)
+        sys.exit(1)
+    img = Image.open(io.BytesIO(base64.b64decode(image_b64)))
+    u = getattr(resp, 'usage', None)
+    usage = None
+    if u is not None:
+        it = getattr(u, 'input_tokens', 0) or 0
+        ot = getattr(u, 'output_tokens', 0) or 0
+        tt = getattr(u, 'total_tokens', 0) or 0
+        det = getattr(u, 'input_tokens_details', None)
+        itx = getattr(det, 'text_tokens', 0) if det else 0
+        iim = getattr(det, 'image_tokens', 0) if det else 0
+        usage = (it, itx, iim, ot, tt)
+    return img, usage
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('-o', required=True, help='output PNG path')
@@ -133,6 +166,9 @@ def main():
                     help='which generator to call in promptum (default persona)')
     ap.add_argument('-r', '--rudis', action='store_true',
                     help='pass -r to promptum (rudis variant: echoes params)')
+    ap.add_argument('-1', '--singulatim', action='store_true',
+                    help='generate each cell independently with -n 1 and '
+                    'recompose into an NxN grid locally')
     args, extra = ap.parse_known_args()
 
     if args.n < 1 or args.n > 4:
@@ -152,6 +188,36 @@ def main():
                for _ in cells]
 
     client = OpenAI()
+
+    if args.singulatim and args.n > 1:
+        sys1 = system_prompt(1)
+        tiles = []
+        usus_in = usus_inx = usus_iim = usus_out = usus_tot = 0
+        for (r, c), p in zip(cells, prompts):
+            print(f'--- cell {cell_label(args.n, r, c)} ---', file=sys.stderr)
+            print(p, file=sys.stderr)
+            print('', file=sys.stderr)
+            tile, u = generate_image(client, sys1, p)
+            tiles.append(tile)
+            if u:
+                usus_in += u[0]; usus_inx += u[1]; usus_iim += u[2]
+                usus_out += u[3]; usus_tot += u[4]
+        tile_side = tiles[0].width
+        grid_side = tile_side * args.n
+        img = Image.new('RGB', (grid_side, grid_side))
+        for (r, c), t in zip(cells, tiles):
+            if t.width != tile_side or t.height != tile_side:
+                t = t.resize((tile_side, tile_side), Image.LANCZOS)
+            img.paste(t, ((c - 1) * tile_side, (r - 1) * tile_side))
+        if args.d != img.width or args.d != img.height:
+            img = img.resize((args.d, args.d), Image.LANCZOS)
+        img.save(args.o, format='PNG')
+        print(f'usus: input={usus_in} (text={usus_inx} image={usus_iim}) '
+              f'output={usus_out} total={usus_tot}', file=sys.stderr)
+        print(f'wrote {args.o} ({args.d}x{args.d}) n={args.n} '
+              f'cells={args.n*args.n} modus={args.modus} rudis={args.rudis} '
+              f'singulatim=True extra={extra}', file=sys.stderr)
+        return
 
     sys_msg = system_prompt(args.n)
     if args.n == 1:
@@ -176,11 +242,6 @@ def main():
             for (r, c), p in zip(cells, cell_prompts)
         )
 
-    input_msgs = [
-        {'role': 'system', 'content': sys_msg},
-        {'role': 'user', 'content': user_msg},
-    ]
-
     print('--- system ---', file=sys.stderr)
     print(sys_msg, file=sys.stderr)
     print('', file=sys.stderr)
@@ -188,39 +249,14 @@ def main():
     print(user_msg, file=sys.stderr)
     print('', file=sys.stderr)
 
-    print('OpenAI responses.create with image_generation tool', file=sys.stderr)
-    resp = client.responses.create(
-        model='gpt-5.4',
-        input=input_msgs,
-        tools=[{'type': 'image_generation', 'size': '1024x1024'}],
-    )
-
-    image_b64 = None
-    for item in resp.output:
-        if getattr(item, 'type', None) == 'image_generation_call':
-            image_b64 = getattr(item, 'result', None)
-            if image_b64:
-                break
-    if not image_b64:
-        print('no image returned in response', file=sys.stderr)
-        sys.exit(1)
-
-    img_bytes = base64.b64decode(image_b64)
-    img = Image.open(io.BytesIO(img_bytes))
+    img, u = generate_image(client, sys_msg, user_msg)
     if args.d != img.width or args.d != img.height:
         img = img.resize((args.d, args.d), Image.LANCZOS)
     img.save(args.o, format='PNG')
 
-    u = getattr(resp, 'usage', None)
-    if u is not None:
-        it = getattr(u, 'input_tokens', 0) or 0
-        ot = getattr(u, 'output_tokens', 0) or 0
-        tt = getattr(u, 'total_tokens', 0) or 0
-        det = getattr(u, 'input_tokens_details', None)
-        itx = getattr(det, 'text_tokens', 0) if det else 0
-        iim = getattr(det, 'image_tokens', 0) if det else 0
-        print(f'usus: input={it} (text={itx} image={iim}) '
-              f'output={ot} total={tt}', file=sys.stderr)
+    if u:
+        print(f'usus: input={u[0]} (text={u[1]} image={u[2]}) '
+              f'output={u[3]} total={u[4]}', file=sys.stderr)
 
     print(f'wrote {args.o} ({args.d}x{args.d}) n={args.n} '
           f'cells={args.n*args.n} modus={args.modus} rudis={args.rudis} '
