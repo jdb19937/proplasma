@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Usum programmatis exhibere. */
+/* Usum programmatis exhibere. Sectiones modorum ex ipsis modulis
+ * trahuntur, ut cum tabulis internis non discrepent. */
 static void usus(const char *nomen) {
     fprintf(
         stderr,
@@ -17,63 +18,20 @@ static void usus(const char *nomen) {
         "  -r, --rudis         variatio rudis (parametros mero modo iterat)\n"
         "  -h, --auxilium      hunc textum exhibere\n"
         "\n"
-        "Selectiones modi persona (quaeque ex semine alia defaltit):\n"
-        "      --sexus X       m|f|mas|femina\n"
-        "      --aetas N       numerus integer, 1..120\n"
-        "      --pulchritudo N  0|1|2|3|4\n"
-        "      --vestitus X    formalis|cotidianus|insolitus|nudus\n"
-        "      --cutis X       clara|media|obscura\n"
-        "      --fundus X      planum|candidum|ater|coloratum|\n"
-        "                      textura|ambitus|exterior\n"
-        "\n"
-        "Selectiones modi artista (quaeque ex semine alia defaltit):\n"
-        "      --artifex X     dalius|klimtius|mondrianus|vermerus|escherus|\n"
-        "                      kandinskius|magrittius|pollockius|picassonus|\n"
-        "                      vangoghus|warholus|schieleus|baconius|hopperus|\n"
-        "                      hokusaius|munchius|lichtensteinius|modiglianius|\n"
-        "                      rembrandtus|hockneius|freudus|basquiatus|\n"
-        "                      seuratus|rivereus|velaspinus|crispulus|nimbulus|\n"
-        "                      echokus|fulguritus|tesselarius|obscurus|\n"
-        "                      filumentus|chronofugus|somniator|vacuarius|\n"
-        "                      mortuarius|algorithmicus|holographus|\n"
-        "                      cryptolalus|interstitius\n"
-        "      --medium X      oleum|tempera|acrylicum|gouache|atramentum|\n"
-        "                      fresca|collage|musivum\n"
-        "      --palaestra X   calida|frigida|saturata|muta|monochroma|\n"
-        "                      primaria|terrea\n"
-        "      --habitus X     serenus|turbulentus|melancholicus|iubilans|\n"
-        "                      solemnis|tensus\n"
-        "      --fundus X      planum|ornatum|paesagium|abstractum|\n"
-        "                      tenebrosum|luminosum\n"
-        "\n"
-        "Selectiones modi bestia (quaeque ex semine alia defaltit):\n"
-        "      --species X     vulpes|corvus|bubo|lupus|lepus|felis|\n"
-        "                      aquila|cervus|serpens|simia|ursus|piscis|\n"
-        "                      mustela|testudo|aries|taurus|aranea|equus|\n"
-        "                      canis|leo|hircus|delphinus|vespertilio|pavo|\n"
-        "                      hydrochoerus|diomedea|elephas|camelus|\n"
-        "                      rhinoceros|tigris|pardus|lynx|hyaena|aper|\n"
-        "                      meles|sciurus|erinaceus|gorilla|\n"
-        "                      camelopardalis|cygnus|ciconia|ibis|psittacus|\n"
-        "                      gallus|falco|crocodilus|chamaeleon|rana|\n"
-        "                      carcharias|polypus|apis|papilio|scorpio|\n"
-        "                      cuniculus|mus|passer|castor|lutra|mantis|\n"
-        "                      cicada|salmo\n"
-        "      --gradus X      adumbratio|mixtura|theriocephalus|bestia_ipsa\n"
-        "      --ratio X       physiognomonicus|totemicus|fabularis|\n"
-        "                      mythicus|lusorius\n"
-        "      --gestus X      vigil|dormiens|venans|fugiens|superbus|\n"
-        "                      solemnis|pavidus|quietus|iratus|ridens|\n"
-        "                      meditans|supplex|curiosus|ludens|amans|\n"
-        "                      mirans\n"
-        "      --amictus X     nullus|nemes|collare|lorica|stola|pelta|\n"
-        "                      sertum|latrunculus|corona|velum|infula|\n"
-        "                      torquis|focale|taenia|flos|gemma\n"
-        "      --fundus X      planum|tenebrosum|luminosum|aureum|\n"
-        "                      paesagium|ornatum|silva|templum|coloratum|\n"
-        "                      aquaticum|nocturnum|crepusculum\n",
+        "Selectiones modi persona (quaeque ex semine alia defaltit):\n",
         nomen
     );
+    persona_usus(stderr);
+    fputs(
+        "\nSelectiones modi artista (quaeque ex semine alia defaltit):\n",
+        stderr
+    );
+    artista_usus(stderr);
+    fputs(
+        "\nSelectiones modi bestia (quaeque ex semine alia defaltit):\n",
+        stderr
+    );
+    bestia_usus(stderr);
 }
 
 /* Semen ex /dev/urandom legere. */
@@ -100,6 +58,7 @@ int main(int argc, char **argv) {
     ArtistaOptiones aopt = {0};
     PersonaOptiones popt = {0};
     BestiaOptiones  bopt = {0};
+    const char *arg_fundus = NULL;
 
     static struct option optiones_longae[] = {
         {"semen",       required_argument, 0, 's'},
@@ -165,9 +124,7 @@ int main(int argc, char **argv) {
             aopt.habitus     = optarg;
             break;
         case 1004:
-            aopt.fundus = optarg;
-            bopt.fundus = optarg;
-            popt.fundus = optarg;
+            arg_fundus = optarg;
             break;
         case 3000:
             bopt.species     = optarg;
@@ -199,14 +156,20 @@ int main(int argc, char **argv) {
     char error[256] = {0};
     char *descriptio = NULL;
     if (strcmp(modus, "persona") == 0) {
+        if (arg_fundus)
+            popt.fundus = arg_fundus;
         descriptio = rudis
             ? persona_generare_rudis(semen, &popt, error, sizeof error)
             : persona_generare(semen, &popt, error, sizeof error);
     } else if (strcmp(modus, "artista") == 0) {
+        if (arg_fundus)
+            aopt.fundus = arg_fundus;
         descriptio = rudis
             ? artista_generare_rudis(semen, &aopt, error, sizeof error)
             : artista_generare(semen, &aopt, error, sizeof error);
     } else if (strcmp(modus, "bestia") == 0) {
+        if (arg_fundus)
+            bopt.fundus = arg_fundus;
         descriptio = rudis
             ? bestia_generare_rudis(semen, &bopt, error, sizeof error)
             : bestia_generare(semen, &bopt, error, sizeof error);

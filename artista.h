@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /* Optiones picturae describendae. Campi per litteras NULL vacant,
  * eosdem valores accipiunt quos argumenta lineae mandatorum.
@@ -65,5 +66,9 @@ char *artista_generare_rudis(
     const ArtistaOptiones *optiones,
     char *error_locus, size_t error_longitudo
 );
+
+/* Selectiones modi in f imprimit, claves ex tabulis internis sumens,
+ * ut textus usus cum tabulis non discrepet. */
+void artista_usus(FILE *f);
 
 #endif

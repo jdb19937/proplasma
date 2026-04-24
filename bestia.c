@@ -1,79 +1,6 @@
 #include "bestia.h"
 #include "communia.h"
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-
-/* ---- alea: xorshift64*, ex semine determinata ---- */
-
-static uint64_t alea_status;
-
-static void alea_seminare(uint64_t s) {
-    if (s == 0)
-        s = 0x9E3779B97F4A7C15ULL;
-    alea_status = s;
-}
-
-static uint64_t alea_sequens(void) {
-    uint64_t x = alea_status;
-    x ^= x >> 12;
-    x ^= x << 25;
-    x ^= x >> 27;
-    alea_status = x;
-    return x * 0x2545F4914F6CDD1DULL;
-}
-
-static uint32_t alea_ambitus(uint32_t n) { return (uint32_t)(alea_sequens() % n); }
-
-static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
-    if (!capax || longitudo == 0)
-        return;
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(capax, longitudo, fmt, ap);
-    va_end(ap);
-}
-
-/* ---- charta crescens ---- */
-
-typedef struct {
-    char *d;
-    size_t n, cap;
-} Charta;
-
-static int charta_crescat(Charta *c, size_t plus) {
-    if (c->n + plus + 1 <= c->cap)
-        return 1;
-    size_t nc = c->cap ? c->cap : 1024;
-    while (nc < c->n + plus + 1)
-        nc *= 2;
-    char *nd = realloc(c->d, nc);
-    if (!nd)
-        return 0;
-    c->d   = nd;
-    c->cap = nc;
-    return 1;
-}
-static int charta_adde(Charta *c, const char *s) {
-    size_t len = strlen(s);
-    if (!charta_crescat(c, len))
-        return 0;
-    memcpy(c->d + c->n, s, len + 1);
-    c->n += len;
-    return 1;
-}
-static int charta_scribe(Charta *c, const char *fmt, ...) {
-    char buf[1024];
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(buf, sizeof buf, fmt, ap);
-    va_end(ap);
-    return charta_adde(c, buf);
-}
-
 /* ---- claves ontologicae ---- */
 
 enum { SPC_VULPES, SPC_CORVUS, SPC_BUBO, SPC_LUPUS, SPC_LEPUS,
@@ -764,13 +691,6 @@ static const char *const amictus_phrases[AMC_N] = {
 
 /* ---- compositio ---- */
 
-static int indicium_clavis(const char *v, const char *const *claves, int n) {
-    for (int i = 0; i < n; i++)
-        if (!strcmp(v, claves[i]))
-            return i;
-    return -1;
-}
-
 static int compone(
     Charta *out, const BestiaOptiones *o,
     char *error_locus, size_t error_longitudo
@@ -1208,4 +1128,43 @@ defecit:
     free(out.d);
     pone_errorem(error_locus, error_longitudo, "memoria defecit");
     return NULL;
+}
+
+void bestia_usus(FILE *f) {
+    usus_claves(
+        f,
+        "      --species X     ",
+        "                      ",
+        species_claves, SPC_N
+    );
+    usus_claves(
+        f,
+        "      --gradus X      ",
+        "                      ",
+        gradus_claves, GRD_N
+    );
+    usus_claves(
+        f,
+        "      --ratio X       ",
+        "                      ",
+        ratio_claves, RAT_N
+    );
+    usus_claves(
+        f,
+        "      --gestus X      ",
+        "                      ",
+        gestus_claves, GST_N
+    );
+    usus_claves(
+        f,
+        "      --amictus X     ",
+        "                      ",
+        amictus_claves, AMC_N
+    );
+    usus_claves(
+        f,
+        "      --fundus X      ",
+        "                      ",
+        fundus_claves, FND_N
+    );
 }

@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /* Optiones describendae effigiei theriomorphae. Campi per litteras
  * NULL vacant, eosdem valores accipiunt quos argumenta lineae
@@ -50,10 +51,12 @@ typedef struct {
                             *                   ut lapis in tabula picta stat) */
     const char *gestus;    /* vigil | dormiens | venans | fugiens |
                               superbus | solemnis | pavidus | quietus |
-                              iratus | ridens | meditans | supplex */
+                              iratus | ridens | meditans | supplex |
+                              curiosus | ludens | amans | mirans */
     const char *amictus;   /* nullus | nemes | collare | lorica | stola |
                               pelta | sertum | latrunculus | corona |
-                              velum | infula | torquis —
+                              velum | infula | torquis | focale |
+                              taenia | flos | gemma —
                               ornamentum rationi congruens */
     const char *fundus;    /* planum | tenebrosum | luminosum | aureum |
                               paesagium | ornatum | silva | templum |
@@ -89,5 +92,9 @@ char *bestia_generare_rudis(
     const BestiaOptiones *optiones,
     char *error_locus, size_t error_longitudo
 );
+
+/* Selectiones modi in f imprimit, claves ex tabulis internis sumens,
+ * ut textus usus cum tabulis non discrepet. */
+void bestia_usus(FILE *f);
 
 #endif

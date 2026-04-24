@@ -1,34 +1,6 @@
 #include "persona.h"
 #include "communia.h"
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-
-/* Generator numerorum fortuitorum: xorshift64*, ex semine determinatus. */
-static uint64_t alea_status;
-
-static void alea_seminare(uint64_t s) {
-    if (s == 0)
-        s = 0x9E3779B97F4A7C15ULL;
-    alea_status = s;
-}
-
-static uint64_t alea_sequens(void) {
-    uint64_t x = alea_status;
-    x ^= x >> 12;
-    x ^= x << 25;
-    x ^= x >> 27;
-    alea_status = x;
-    return x * 0x2545F4914F6CDD1DULL;
-}
-
-static uint32_t alea_ambitus(uint32_t n) { return (uint32_t)(alea_sequens() % n); }
-static double   alea_unitas(void) { return (alea_sequens() >> 11) * (1.0 / 9007199254740992.0); }
-static int      alea_fors(double p) { return alea_unitas() < p; }
-
 /* Electio ponderata: summa ponderum non necesse est una esse. */
 static int alea_ponderata(const double *pondera, int n) {
     double summa = 0;
@@ -53,16 +25,6 @@ static const char *articulus(const char *s) {
     if (c >= 'A' && c <= 'Z')
         c = c - 'A' + 'a';
     return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') ? "an" : "a";
-}
-
-/* Errorem in capaci vocantis deponere. */
-static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
-    if (!capax || longitudo == 0)
-        return;
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(capax, longitudo, fmt, ap);
-    va_end(ap);
 }
 
 /* ---- tabulae ---- */
@@ -1441,4 +1403,17 @@ char *persona_generare_rudis(
 
     fclose(exitus);
     return capax;
+}
+
+void persona_usus(FILE *f) {
+    fputs(
+        "      --sexus X       m|f|mas|femina\n"
+        "      --aetas N       numerus integer, 1..120\n"
+        "      --pulchritudo N 0|1|2|3|4\n"
+        "      --vestitus X    formalis|cotidianus|insolitus|nudus\n"
+        "      --cutis X       clara|media|obscura\n"
+        "      --fundus X      planum|candidum|ater|coloratum|\n"
+        "                      textura|ambitus|exterior\n",
+        f
+    );
 }

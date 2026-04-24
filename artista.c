@@ -1,84 +1,10 @@
 #include "artista.h"
 #include "communia.h"
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-/* Generator numerorum fortuitorum: xorshift64*, idem ac in persona.c,
- * ut modus describendi stabilis maneat per semina. */
-static uint64_t alea_status;
-
-static void alea_seminare(uint64_t s) {
-    if (s == 0)
-        s = 0x9E3779B97F4A7C15ULL;
-    alea_status = s;
-}
-
-static uint64_t alea_sequens(void) {
-    uint64_t x = alea_status;
-    x ^= x >> 12;
-    x ^= x << 25;
-    x ^= x >> 27;
-    alea_status = x;
-    return x * 0x2545F4914F6CDD1DULL;
-}
-
 #define N_OF(a) ((int)(sizeof(a) / sizeof((a)[0])))
-
-static uint32_t alea_ambitus(uint32_t n) { return (uint32_t)(alea_sequens() % n); }
-static double   alea_unitas(void) { return (alea_sequens() >> 11) * (1.0 / 9007199254740992.0); }
-static int      alea_fors(double p) { return alea_unitas() < p; }
 
 static const char *elige(const char *const *s, int n) {
     return s[alea_ambitus((uint32_t)n)];
-}
-
-static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
-    if (!capax || longitudo == 0)
-        return;
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(capax, longitudo, fmt, ap);
-    va_end(ap);
-}
-
-/* ---- charta crescens ---- */
-
-typedef struct {
-    char *d;
-    size_t n, cap;
-} Charta;
-
-static int charta_crescat(Charta *c, size_t plus) {
-    if (c->n + plus + 1 <= c->cap)
-        return 1;
-    size_t nc = c->cap ? c->cap : 1024;
-    while (nc < c->n + plus + 1)
-        nc *= 2;
-    char *nd = realloc(c->d, nc);
-    if (!nd)
-        return 0;
-    c->d   = nd;
-    c->cap = nc;
-    return 1;
-}
-static int charta_adde(Charta *c, const char *s) {
-    size_t len = strlen(s);
-    if (!charta_crescat(c, len))
-        return 0;
-    memcpy(c->d + c->n, s, len + 1);
-    c->n += len;
-    return 1;
-}
-static int charta_scribe(Charta *c, const char *fmt, ...) {
-    char buf[1024];
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(buf, sizeof buf, fmt, ap);
-    va_end(ap);
-    return charta_adde(c, buf);
 }
 
 /* ---- claves ontologicae ---- */
@@ -3635,4 +3561,37 @@ char *artista_generare(
         return NULL;
     }
     return out.d;
+}
+
+void artista_usus(FILE *f) {
+    usus_claves(
+        f,
+        "      --artifex X     ",
+        "                      ",
+        artifices_claves, ART_N
+    );
+    usus_claves(
+        f,
+        "      --medium X      ",
+        "                      ",
+        media_claves, MED_N
+    );
+    usus_claves(
+        f,
+        "      --palaestra X   ",
+        "                      ",
+        palettae_claves, PAL_N
+    );
+    usus_claves(
+        f,
+        "      --habitus X     ",
+        "                      ",
+        habitus_claves, HAB_N
+    );
+    usus_claves(
+        f,
+        "      --fundus X      ",
+        "                      ",
+        fundi_claves, FUN_N
+    );
 }

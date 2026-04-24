@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /* Optiones personam generandi. Campi per litteras NULL vacant,
  * eosdem valores accipiunt quos argumenta lineae mandatorum. */
@@ -43,5 +44,8 @@ char *persona_generare_rudis(
     const PersonaOptiones *optiones,
     char *error_locus, size_t error_longitudo
 );
+
+/* Selectiones modi in f imprimit. */
+void persona_usus(FILE *f);
 
 #endif
