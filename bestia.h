@@ -72,9 +72,11 @@ typedef struct {
  * error_longitudo > 0, nuntius ibi scribitur.
  *
  * Optiones NULL idem valent ac structura tota zeris impleta. */
-char *bestia_generare(uint64_t semen,
-                      const BestiaOptiones *optiones,
-                      char *error_locus, size_t error_longitudo);
+char *bestia_generare(
+    uint64_t semen,
+    const BestiaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 /* Variatio rudis: eodem modo vocatur ac bestia_generare, sed textus
  * emissus picturam non describit. Potius parametros mero modo iterat,
@@ -82,8 +84,10 @@ char *bestia_generare(uint64_t semen,
  * hybrid degree should be Y." Praecursor idem est ac in
  * persona_generare_rudis et artista_generare_rudis, ut imagines
  * comparari possint. */
-char *bestia_generare_rudis(uint64_t semen,
-                            const BestiaOptiones *optiones,
-                            char *error_locus, size_t error_longitudo);
+char *bestia_generare_rudis(
+    uint64_t semen,
+    const BestiaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 #endif

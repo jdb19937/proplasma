@@ -17,6 +17,12 @@ $(BIBLIOTHECA): $(OBJECTA)
 promptum: promptum.o $(BIBLIOTHECA)
 	ldi $^
 
+proba_prima: proba_prima.o $(BIBLIOTHECA)
+	ldi $^
+
+proba: proba_prima
+	./proba_prima
+
 colloca: omnia
 	install -d $(PREFIX)/bin
 	install -m 755 promptum $(PREFIX)/bin
@@ -25,9 +31,10 @@ colloca: omnia
 	install -m 644 $(CAPITA) $(PREFIX)/include/proplasma/
 
 purga:
-	rm -f $(OBJECTA) promptum.o $(BIBLIOTHECA) promptum
+	rm -f $(OBJECTA) promptum.o $(BIBLIOTHECA) promptum \
+	      proba_prima.o proba_prima
 
 linte:
 	insinulint -c $(FONTES) promptum.c $(CAPITA)
 
-.PHONY: omnia colloca purga linte
+.PHONY: omnia colloca purga linte proba

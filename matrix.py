@@ -123,14 +123,19 @@ def system_prompt(n: int) -> str:
 
 def generate_image(client, sys_msg: str, user_msg: str):
     print('OpenAI responses.create with image_generation tool', file=sys.stderr)
-    resp = client.responses.create(
-        model='gpt-5.4',
-        input=[
-            {'role': 'system', 'content': sys_msg},
-            {'role': 'user', 'content': user_msg},
-        ],
-        tools=[{'type': 'image_generation', 'size': '1024x1024'}],
-    )
+    try:
+        resp = client.responses.create(
+            model='gpt-5.4',
+            input=[
+                {'role': 'system', 'content': sys_msg},
+                {'role': 'user', 'content': user_msg},
+            ],
+            tools=[{'type': 'image_generation', 'size': '1024x1024'}],
+        )
+    except Exception as e:
+        print(f'image generation failed, substituting black: {e}',
+              file=sys.stderr)
+        return Image.new('RGB', (1024, 1024), 'black'), None
     image_b64 = None
     for item in resp.output:
         if getattr(item, 'type', None) == 'image_generation_call':
@@ -138,8 +143,9 @@ def generate_image(client, sys_msg: str, user_msg: str):
             if image_b64:
                 break
     if not image_b64:
-        print('no image returned in response', file=sys.stderr)
-        sys.exit(1)
+        print('no image returned in response, substituting black',
+              file=sys.stderr)
+        return Image.new('RGB', (1024, 1024), 'black'), None
     img = Image.open(io.BytesIO(base64.b64decode(image_b64)))
     u = getattr(resp, 'usage', None)
     usage = None

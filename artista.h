@@ -48,9 +48,11 @@ typedef struct {
  * error_longitudo > 0, nuntius ibi scribitur.
  *
  * Optiones NULL idem valent ac structura tota zeris impleta. */
-char *artista_generare(uint64_t semen,
-                       const ArtistaOptiones *optiones,
-                       char *error_locus, size_t error_longitudo);
+char *artista_generare(
+    uint64_t semen,
+    const ArtistaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 /* Variatio naiva: eodem modo vocatur ac artista_generare, sed textus
  * emissus picturam non describit. Potius parametros mero modo iterat,
@@ -58,8 +60,10 @@ char *artista_generare(uint64_t semen,
  * like. Also style should be X. Also palette should be Y." Praecursor
  * idem est ac in persona_generare_rudis, ut imagines comparari
  * possint. */
-char *artista_generare_rudis(uint64_t semen,
-                               const ArtistaOptiones *optiones,
-                               char *error_locus, size_t error_longitudo);
+char *artista_generare_rudis(
+    uint64_t semen,
+    const ArtistaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 #endif

@@ -12,7 +12,8 @@
 static uint64_t alea_status;
 
 static void alea_seminare(uint64_t s) {
-    if (s == 0) s = 0x9E3779B97F4A7C15ULL;
+    if (s == 0)
+        s = 0x9E3779B97F4A7C15ULL;
     alea_status = s;
 }
 
@@ -28,7 +29,8 @@ static uint64_t alea_sequens(void) {
 static uint32_t alea_ambitus(uint32_t n) { return (uint32_t)(alea_sequens() % n); }
 
 static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
-    if (!capax || longitudo == 0) return;
+    if (!capax || longitudo == 0)
+        return;
     va_list ap;
     va_start(ap, fmt);
     vsnprintf(capax, longitudo, fmt, ap);
@@ -37,20 +39,28 @@ static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
 
 /* ---- charta crescens ---- */
 
-typedef struct { char *d; size_t n, cap; } Charta;
+typedef struct {
+    char *d;
+    size_t n, cap;
+} Charta;
 
 static int charta_crescat(Charta *c, size_t plus) {
-    if (c->n + plus + 1 <= c->cap) return 1;
+    if (c->n + plus + 1 <= c->cap)
+        return 1;
     size_t nc = c->cap ? c->cap : 1024;
-    while (nc < c->n + plus + 1) nc *= 2;
+    while (nc < c->n + plus + 1)
+        nc *= 2;
     char *nd = realloc(c->d, nc);
-    if (!nd) return 0;
-    c->d = nd; c->cap = nc;
+    if (!nd)
+        return 0;
+    c->d   = nd;
+    c->cap = nc;
     return 1;
 }
 static int charta_adde(Charta *c, const char *s) {
     size_t len = strlen(s);
-    if (!charta_crescat(c, len)) return 0;
+    if (!charta_crescat(c, len))
+        return 0;
     memcpy(c->d + c->n, s, len + 1);
     c->n += len;
     return 1;
@@ -67,74 +77,78 @@ static int charta_scribe(Charta *c, const char *fmt, ...) {
 /* ---- claves ontologicae ---- */
 
 enum { SPC_VULPES, SPC_CORVUS, SPC_BUBO, SPC_LUPUS, SPC_LEPUS,
-       SPC_FELIS, SPC_AQUILA, SPC_CERVUS, SPC_SERPENS, SPC_SIMIA,
-       SPC_URSUS, SPC_PISCIS, SPC_MUSTELA, SPC_TESTUDO, SPC_ARIES,
-       SPC_TAURUS, SPC_ARANEA, SPC_EQUUS, SPC_CANIS, SPC_LEO,
-       SPC_HIRCUS, SPC_DELPHINUS, SPC_VESPERTILIO, SPC_PAVO,
-       SPC_HYDROCHOERUS, SPC_DIOMEDEA,
-       SPC_ELEPHAS, SPC_CAMELUS, SPC_RHINOCEROS, SPC_TIGRIS, SPC_PARDUS,
-       SPC_LYNX, SPC_HYAENA, SPC_APER, SPC_MELES, SPC_SCIURUS,
-       SPC_ERINACEUS, SPC_GORILLA, SPC_CAMELOPARDALIS, SPC_CYGNUS,
-       SPC_CICONIA, SPC_IBIS, SPC_PSITTACUS, SPC_GALLUS, SPC_FALCO,
-       SPC_CROCODILUS, SPC_CHAMAELEON, SPC_RANA, SPC_CARCHARIAS,
-       SPC_POLYPUS, SPC_APIS, SPC_PAPILIO, SPC_SCORPIO,
-       SPC_CUNICULUS, SPC_MUS, SPC_PASSER, SPC_CASTOR,
-       SPC_LUTRA, SPC_MANTIS, SPC_CICADA, SPC_SALMO,
-       SPC_N };
+    SPC_FELIS, SPC_AQUILA, SPC_CERVUS, SPC_SERPENS, SPC_SIMIA,
+    SPC_URSUS, SPC_PISCIS, SPC_MUSTELA, SPC_TESTUDO, SPC_ARIES,
+    SPC_TAURUS, SPC_ARANEA, SPC_EQUUS, SPC_CANIS, SPC_LEO,
+    SPC_HIRCUS, SPC_DELPHINUS, SPC_VESPERTILIO, SPC_PAVO,
+    SPC_HYDROCHOERUS, SPC_DIOMEDEA,
+    SPC_ELEPHAS, SPC_CAMELUS, SPC_RHINOCEROS, SPC_TIGRIS, SPC_PARDUS,
+    SPC_LYNX, SPC_HYAENA, SPC_APER, SPC_MELES, SPC_SCIURUS,
+    SPC_ERINACEUS, SPC_GORILLA, SPC_CAMELOPARDALIS, SPC_CYGNUS,
+    SPC_CICONIA, SPC_IBIS, SPC_PSITTACUS, SPC_GALLUS, SPC_FALCO,
+    SPC_CROCODILUS, SPC_CHAMAELEON, SPC_RANA, SPC_CARCHARIAS,
+    SPC_POLYPUS, SPC_APIS, SPC_PAPILIO, SPC_SCORPIO,
+    SPC_CUNICULUS, SPC_MUS, SPC_PASSER, SPC_CASTOR,
+    SPC_LUTRA, SPC_MANTIS, SPC_CICADA, SPC_SALMO,
+    SPC_N };
 
 static const char *const species_claves[SPC_N] = {
-    "vulpes","corvus","bubo","lupus","lepus",
-    "felis","aquila","cervus","serpens","simia",
-    "ursus","piscis","mustela","testudo","aries",
-    "taurus","aranea","equus","canis","leo",
-    "hircus","delphinus","vespertilio","pavo",
-    "hydrochoerus","diomedea",
-    "elephas","camelus","rhinoceros","tigris","pardus",
-    "lynx","hyaena","aper","meles","sciurus",
-    "erinaceus","gorilla","camelopardalis","cygnus",
-    "ciconia","ibis","psittacus","gallus","falco",
-    "crocodilus","chamaeleon","rana","carcharias",
-    "polypus","apis","papilio","scorpio",
-    "cuniculus","mus","passer","castor",
-    "lutra","mantis","cicada","salmo"
+    "vulpes", "corvus", "bubo", "lupus", "lepus",
+    "felis", "aquila", "cervus", "serpens", "simia",
+    "ursus", "piscis", "mustela", "testudo", "aries",
+    "taurus", "aranea", "equus", "canis", "leo",
+    "hircus", "delphinus", "vespertilio", "pavo",
+    "hydrochoerus", "diomedea",
+    "elephas", "camelus", "rhinoceros", "tigris", "pardus",
+    "lynx", "hyaena", "aper", "meles", "sciurus",
+    "erinaceus", "gorilla", "camelopardalis", "cygnus",
+    "ciconia", "ibis", "psittacus", "gallus", "falco",
+    "crocodilus", "chamaeleon", "rana", "carcharias",
+    "polypus", "apis", "papilio", "scorpio",
+    "cuniculus", "mus", "passer", "castor",
+    "lutra", "mantis", "cicada", "salmo"
 };
 
 enum { GRD_ADUMBRATIO, GRD_MIXTURA, GRD_THERIOCEPHALUS, GRD_BESTIA_IPSA, GRD_N };
 static const char *const gradus_claves[GRD_N] = {
-    "adumbratio","mixtura","theriocephalus","bestia_ipsa"
+    "adumbratio", "mixtura", "theriocephalus", "bestia_ipsa"
 };
 
 enum { RAT_PHYSIOGNOMONICUS, RAT_TOTEMICUS, RAT_FABULARIS,
-       RAT_MYTHICUS, RAT_LUSORIUS, RAT_N };
+    RAT_MYTHICUS, RAT_LUSORIUS, RAT_N };
 static const char *const ratio_claves[RAT_N] = {
-    "physiognomonicus","totemicus","fabularis","mythicus","lusorius"
+    "physiognomonicus", "totemicus", "fabularis", "mythicus", "lusorius"
 };
 
 enum { GST_VIGIL, GST_DORMIENS, GST_VENANS, GST_FUGIENS,
-       GST_SUPERBUS, GST_SOLEMNIS, GST_PAVIDUS, GST_QUIETUS,
-       GST_IRATUS, GST_RIDENS, GST_MEDITANS, GST_SUPPLEX, GST_N };
+    GST_SUPERBUS, GST_SOLEMNIS, GST_PAVIDUS, GST_QUIETUS,
+    GST_IRATUS, GST_RIDENS, GST_MEDITANS, GST_SUPPLEX,
+    GST_CURIOSUS, GST_LUDENS, GST_AMANS, GST_MIRANS, GST_N };
 static const char *const gestus_claves[GST_N] = {
-    "vigil","dormiens","venans","fugiens",
-    "superbus","solemnis","pavidus","quietus",
-    "iratus","ridens","meditans","supplex"
+    "vigil", "dormiens", "venans", "fugiens",
+    "superbus", "solemnis", "pavidus", "quietus",
+    "iratus", "ridens", "meditans", "supplex",
+    "curiosus", "ludens", "amans", "mirans"
 };
 
 enum { AMC_NULLUS, AMC_NEMES, AMC_COLLARE, AMC_LORICA,
-       AMC_STOLA, AMC_PELTA, AMC_SERTUM, AMC_LATRUNCULUS,
-       AMC_CORONA, AMC_VELUM, AMC_INFULA, AMC_TORQUIS, AMC_N };
+    AMC_STOLA, AMC_PELTA, AMC_SERTUM, AMC_LATRUNCULUS,
+    AMC_CORONA, AMC_VELUM, AMC_INFULA, AMC_TORQUIS,
+    AMC_FOCALE, AMC_TAENIA, AMC_FLOS, AMC_GEMMA, AMC_N };
 static const char *const amictus_claves[AMC_N] = {
-    "nullus","nemes","collare","lorica","stola","pelta","sertum","latrunculus",
-    "corona","velum","infula","torquis"
+    "nullus", "nemes", "collare", "lorica", "stola", "pelta", "sertum", "latrunculus",
+    "corona", "velum", "infula", "torquis",
+    "focale", "taenia", "flos", "gemma"
 };
 
 enum { FND_PLANUM, FND_TENEBROSUM, FND_LUMINOSUM, FND_AUREUM,
-       FND_PAESAGIUM, FND_ORNATUM, FND_SILVA, FND_TEMPLUM,
-       FND_COLORATUM, FND_AQUATICUM, FND_NOCTURNUM,
-       FND_CREPUSCULUM, FND_N };
+    FND_PAESAGIUM, FND_ORNATUM, FND_SILVA, FND_TEMPLUM,
+    FND_COLORATUM, FND_AQUATICUM, FND_NOCTURNUM,
+    FND_CREPUSCULUM, FND_N };
 static const char *const fundus_claves[FND_N] = {
-    "planum","tenebrosum","luminosum","aureum",
-    "paesagium","ornatum","silva","templum","coloratum",
-    "aquaticum","nocturnum","crepusculum"
+    "planum", "tenebrosum", "luminosum", "aureum",
+    "paesagium", "ornatum", "silva", "templum", "coloratum",
+    "aquaticum", "nocturnum", "crepusculum"
 };
 
 /* Pro gradu planum et coloratum, tabulae phrasium variantur; ceteri
@@ -282,7 +296,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "deep-set brown eyes under a shelving brow",
         "a wide nostril-flared nose and slightly parted heavy lips",
         "a heavy-browed, deep-jawed face with a simian set to the features",
-        "a monkey-headed scribe in the manner of Thoth's baboon aspect"
+        "a monkey-headed sage after Sun Wukong of the Journey to the West"
     },
     [SPC_URSUS] = {
         "bear", "thick brown-black fur, heavy around the shoulders",
@@ -322,7 +336,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "rectangular pupils set in pale gold eyes",
         "great spiralling horns framing the skull",
         "a long-faced, heavy-horned bearing with strange horizontal-pupiled eyes",
-        "a ram-headed Amun in the old Theban style"
+        "a ram-headed fertility-spirit of the Celtic iron age"
     },
     [SPC_TAURUS] = {
         "bull", "short black hide and a coarse forelock between the horns",
@@ -354,7 +368,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "warm brown eyes with a steady, trusting gaze",
         "a black wet nose and a lolling pink tongue",
         "a broad-cheeked, soft-eyed face with a loyal, canine set",
-        "the jackal-headed Anubis in funerary profile"
+        "a dog-headed Saint Christopher Cynocephalus from a Byzantine icon"
     },
     [SPC_LEO] = {
         "lion", "tawny golden hide ringed by a heavy russet mane",
@@ -362,7 +376,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "pale gold eyes under a heavy brow",
         "long ivory canines and a wet black nose",
         "a broad, square-jawed face wreathed as if by a mane, with heavy-lidded gold eyes",
-        "the lion-headed warrior-goddess Sekhmet"
+        "a lion-headed guardian at the gates of a Chinese imperial temple"
     },
     [SPC_HIRCUS] = {
         "goat", "shaggy dark-brown hair with a pale stripe down the face",
@@ -466,7 +480,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "small gold eyes with a sidelong evaluating stare",
         "powerful jaws and a permanent half-smile of bared teeth",
         "a heavy-jawed, sidelong-eyed face with a low unsettling smile",
-        "a hyena-headed necropolis-guardian after the Egyptian Ammit"
+        "a hyena-headed trickster of the Ethiopian highland tales"
     },
     [SPC_APER] = {
         "boar", "thick coarse black-brown bristles and a stiff dorsal crest",
@@ -562,7 +576,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "enormous dark eyes ringed in bright yellow cere-skin",
         "a short hooked beak and a notched upper mandible",
         "a hooded-eyed, sharp-cheeked, dark-streaked face with a raptor's unsettling focus",
-        "the falcon-headed Horus in royal profile"
+        "a falcon-headed herald from a Persian miniature"
     },
     [SPC_CROCODILUS] = {
         "crocodile", "plated olive-green scales with dark banding across the shoulders",
@@ -570,7 +584,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "small gold eyes with vertically slit pupils",
         "rows of conical teeth visible outside the closed jaw",
         "a low-slung, ridge-browed, slit-eyed face with an ancient reptilian stillness",
-        "the crocodile-headed Sobek in his temple pose"
+        "a crocodile-headed river-lord of the West African mangrove-cult"
     },
     [SPC_CHAMAELEON] = {
         "chameleon", "finely granulated skin shifting from pale green to turquoise over the shoulders",
@@ -586,7 +600,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "enormous gold-and-black eyes bulging above the skull",
         "a wide slit of a mouth and a soft pulsing throat-sac",
         "a wide-mouthed, bulge-eyed, smooth-skinned face with a damp amphibian calm",
-        "a frog-headed Heqet presiding over births"
+        "a frog-headed rain-bringer from a Mesoamerican codex"
     },
     [SPC_CARCHARIAS] = {
         "shark", "smooth steel-gray skin fading to white below",
@@ -626,7 +640,7 @@ static const SpeciesDatum species_data[SPC_N] = {
         "several small bead-like black eyes clustered on the carapace",
         "a curling, sting-tipped tail arched above the shoulder",
         "a chitin-plated, many-eyed, sting-tailed bearing with a poised arid menace",
-        "a scorpion-headed guardian after the Egyptian Serqet"
+        "a scorpion-headed desert-watcher of the Saharan Tuareg tradition"
     },
     [SPC_CUNICULUS] = {
         "rabbit", "soft dove-gray fur, downy across the cheeks and throat",
@@ -708,12 +722,30 @@ static const char *const gestus_phrases[GST_N] = {
     "wrathful, brow drawn low and lips parted on the edge of a snarl",
     "openly laughing, head thrown slightly back and eyes creased with mirth",
     "deep in contemplation, eyes half-closed and the head tilted forward in thought",
-    "imploring, the face turned slightly upward and the lips parted as if in supplication"
+    "imploring, the face turned slightly upward and the lips parted as if in supplication",
+    "warmly curious, head tilted quizzically to one side and the ears pricked forward",
+    "playful and delighted, the mouth softly open in a small happy grin and the eyes crinkled with mirth",
+    "tender and affectionate, the head softly inclined and the eyes unmistakably fond",
+    "wide-eyed with gentle wonder, the lips parted as though having just glimpsed something marvellous"
+};
+
+static const char *const amictus_nemes_opts[] = {
+    "an Egyptian nemes headcloth striped in blue and gold, gathered at the shoulders",
+    "a softly draped indigo-dyed cotton cowl pulled up close behind the head, in the manner of a Tuareg tagelmust",
+    "a pale linen head-wrap wound loosely about the crown, in the manner of a Levantine keffiyeh",
+    "a folded silk headcloth patterned in soft peach and ivory, in the manner of a Persian chador",
+    "a heavy embroidered gele of russet and gold wound into tall pleats, in the West African manner",
+    "a saffron silk headcloth falling in soft folds to the shoulders, in the manner of a monastic veil",
+    "a thick felted-wool cap pulled low over the ears, in the manner of the northern steppe-riders",
+    "a crisply folded Sikh dastar in sky-blue cotton, neatly pleated at the brow",
+    "a white Japanese hachimaki tied across the brow with the knot over one ear",
+    "a long trailing dupatta of pale-rose silk drawn lightly over the crown"
 };
 
 static const char *const amictus_phrases[AMC_N] = {
     "no ornament or garment beyond the plain ground of the portrait",
-    "an Egyptian nemes headcloth striped in blue and gold, gathered at the shoulders",
+    "an Egyptian nemes headcloth striped in blue and gold, gathered at the shoulders",  /* nemes:
+        tabula amictus_nemes_opts variationem praebet */
     "a heavy studded metal collar set with a single polished cabochon",
     "a segmented bronze lorica worked with scale and ring across the shoulders",
     "a draped white stola clasped at one shoulder with a bronze pin",
@@ -723,61 +755,116 @@ static const char *const amictus_phrases[AMC_N] = {
     "a high open crown of worked gold, set with a single cabochon ruby at the brow",
     "a sheer dark veil falling from the crown over the shoulders, the face just visible through the cloth",
     "broad white woollen infulae — the sacred ritual fillets — bound at the brow and trailing to the shoulders",
-    "a heavy twisted gold torc at the throat, its finials worked into small animal heads"
+    "a heavy twisted gold torc at the throat, its finials worked into small animal heads",
+    "a soft hand-knitted woollen scarf in cream and oatmeal, wrapped loosely at the throat",
+    "a small cheerful ribbon bow tied neatly just beneath the chin, in lemon-yellow or sky-blue",
+    "an oversized fresh daisy tucked behind one ear, its white petals standing out against the fur or skin",
+    "a simple strand of tiny river-pearls at the throat, clasped with a small silver heart"
 };
 
 /* ---- compositio ---- */
 
 static int indicium_clavis(const char *v, const char *const *claves, int n) {
-    for (int i = 0; i < n; i++) if (!strcmp(v, claves[i])) return i;
+    for (int i = 0; i < n; i++)
+        if (!strcmp(v, claves[i]))
+            return i;
     return -1;
 }
 
-static int compone(Charta *out, const BestiaOptiones *o,
-                   char *error_locus, size_t error_longitudo) {
+static int compone(
+    Charta *out, const BestiaOptiones *o,
+    char *error_locus, size_t error_longitudo
+) {
     int i_spc, i_grd, i_rat, i_gst, i_amc, i_fnd;
 
     if (o->species) {
         i_spc = indicium_clavis(o->species, species_claves, SPC_N);
-        if (i_spc < 0) { pone_errorem(error_locus, error_longitudo,
-            "species vitiosa: %s", o->species); return 0; }
-    } else i_spc = alea_ambitus(SPC_N);
+        if (i_spc < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "species vitiosa: %s", o->species
+        );
+            return 0;
+        }
+    } else
+        i_spc = alea_ambitus(SPC_N);
 
     if (o->gradus) {
         i_grd = indicium_clavis(o->gradus, gradus_claves, GRD_N);
-        if (i_grd < 0) { pone_errorem(error_locus, error_longitudo,
-            "gradus vitiosus: %s", o->gradus); return 0; }
-    } else i_grd = alea_ambitus(GRD_N);
+        if (i_grd < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "gradus vitiosus: %s", o->gradus
+        );
+            return 0;
+        }
+    } else
+        i_grd = alea_ambitus(GRD_N);
 
     if (o->ratio) {
         i_rat = indicium_clavis(o->ratio, ratio_claves, RAT_N);
-        if (i_rat < 0) { pone_errorem(error_locus, error_longitudo,
-            "ratio vitiosa: %s", o->ratio); return 0; }
-    } else i_rat = alea_ambitus(RAT_N);
+        if (i_rat < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "ratio vitiosa: %s", o->ratio
+        );
+            return 0;
+        }
+    } else {
+        /* lusorius rara sit: sine argumento tantum ~1/16 casuum eligitur,
+         * ne scaccorum tessellae inquadramentum dominentur. */
+        if (alea_ambitus(16) == 0)
+            i_rat = RAT_LUSORIUS;
+        else
+            i_rat = alea_ambitus(RAT_N - 1);
+    }
 
     if (o->gestus) {
         i_gst = indicium_clavis(o->gestus, gestus_claves, GST_N);
-        if (i_gst < 0) { pone_errorem(error_locus, error_longitudo,
-            "gestus vitiosus: %s", o->gestus); return 0; }
-    } else i_gst = alea_ambitus(GST_N);
+        if (i_gst < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "gestus vitiosus: %s", o->gestus
+        );
+            return 0;
+        }
+    } else
+        i_gst = alea_ambitus(GST_N);
 
     if (o->amictus) {
         i_amc = indicium_clavis(o->amictus, amictus_claves, AMC_N);
-        if (i_amc < 0) { pone_errorem(error_locus, error_longitudo,
-            "amictus vitiosus: %s", o->amictus); return 0; }
-    } else i_amc = alea_ambitus(AMC_N);
+        if (i_amc < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "amictus vitiosus: %s", o->amictus
+        );
+            return 0;
+        }
+    } else {
+        i_amc = alea_ambitus(AMC_N);
+        /* latrunculus (pendens scacci) thematice tantum cum lusorio congruit;
+         * alias amictus aliud eligitur. */
+        if (i_amc == AMC_LATRUNCULUS && i_rat != RAT_LUSORIUS) {
+            i_amc = alea_ambitus(AMC_N - 1);
+            if (i_amc >= AMC_LATRUNCULUS)
+                i_amc++;
+        }
+    }
 
     if (o->fundus) {
         i_fnd = indicium_clavis(o->fundus, fundus_claves, FND_N);
-        if (i_fnd < 0) { pone_errorem(error_locus, error_longitudo,
-            "fundus vitiosus: %s", o->fundus); return 0; }
-    } else i_fnd = alea_ambitus(FND_N);
+        if (i_fnd < 0) { pone_errorem(
+            error_locus, error_longitudo,
+            "fundus vitiosus: %s", o->fundus
+        );
+            return 0;
+        }
+    } else
+        i_fnd = alea_ambitus(FND_N);
 
     const SpeciesDatum *s = &species_data[i_spc];
-    const char *art = (s->anglice[0]=='a'||s->anglice[0]=='e'||s->anglice[0]=='i'||
-                       s->anglice[0]=='o'||s->anglice[0]=='u') ? "an" : "a";
+    const char *art = (
+        s->anglice[0] == 'a' || s->anglice[0] == 'e' || s->anglice[0] == 'i' ||
+        s->anglice[0] == 'o' || s->anglice[0] == 'u'
+    ) ? "an" : "a";
 
-    if (!charta_adde(out, INQUADRAMENTUM)) return 0;
+    if (!charta_adde(out, INQUADRAMENTUM))
+        return 0;
 
     /* Corpus effigiei secundum gradum — tres templata per casum, ex
      * semine unum eligitur. Argumenta per casum eadem manent. */
@@ -827,11 +914,12 @@ static int compone(Charta *out, const BestiaOptiones *o,
         "an adult human, but where a human head should be there is "
         "instead %1$s %2$s's head — %3$s — with %4$s, %5$s, and %6$s. "
         "The join is smooth, no mask. ",
-        "In the strict Egyptian theriocephalic manner: an ordinary adult "
-        "human body supports, at the neck, the anatomically exact head "
-        "of %1$s %2$s — %3$s, %4$s, %5$s, and %6$s. There is no costume "
-        "and no mask; fur or feather or scale meets human skin at the "
-        "collarbone as though it had always been so. "
+        "A classical theriocephalic composition drawn from the wide tradition "
+        "of animal-headed figures — Egyptian, Hindu, Mesoamerican, Celtic, "
+        "Byzantine — an ordinary adult human body supporting, at the neck, "
+        "the anatomically exact head of %1$s %2$s — %3$s, %4$s, %5$s, and "
+        "%6$s. There is no costume and no mask; fur or feather or scale "
+        "meets human skin at the collarbone as though it had always been so. "
     };
     static const char *const templ_bestia_ipsa[4] = {
         "There is no human in this portrait: the subject is %1$s %2$s, "
@@ -853,20 +941,32 @@ static int compone(Charta *out, const BestiaOptiones *o,
     };
     int v_grd = (int)alea_ambitus(4);
     switch (i_grd) {
-        case GRD_ADUMBRATIO:
-            if (!charta_scribe(out, templ_adumbratio[v_grd],
-                s->humanum, art, s->anglice)) return 0;
-            break;
-        case GRD_MIXTURA:
-            if (!charta_scribe(out, templ_mixtura[v_grd],
-                art, s->anglice, s->pellis, s->oculi)) return 0;
-            break;
-        case GRD_THERIOCEPHALUS:
-        case GRD_BESTIA_IPSA: {
+    case GRD_ADUMBRATIO:
+        if (
+            !charta_scribe(
+                out, templ_adumbratio[v_grd],
+                s->humanum, art, s->anglice
+            )
+        ) return 0;
+        break;
+    case GRD_MIXTURA:
+        if (
+            !charta_scribe(
+                out, templ_mixtura[v_grd],
+                art, s->anglice, s->pellis, s->oculi
+            )
+        ) return 0;
+        break;
+    case GRD_THERIOCEPHALUS:
+    case GRD_BESTIA_IPSA: {
             const char *const *t = (i_grd == GRD_THERIOCEPHALUS)
-                                 ? templ_theriocephalus : templ_bestia_ipsa;
-            if (!charta_scribe(out, t[v_grd],
-                art, s->anglice, s->caput, s->pellis, s->oculi, s->nota)) return 0;
+                ? templ_theriocephalus : templ_bestia_ipsa;
+            if (
+                !charta_scribe(
+                    out, t[v_grd],
+                    art, s->anglice, s->caput, s->pellis, s->oculi, s->nota
+                )
+            ) return 0;
             break;
         }
     }
@@ -963,31 +1063,46 @@ static int compone(Charta *out, const BestiaOptiones *o,
     };
     int v_rat = (int)alea_ambitus(4);
     switch (i_rat) {
-        case RAT_PHYSIOGNOMONICUS:
-            if (!charta_adde(out, templ_physiognomonicus[v_rat])) return 0;
-            break;
-        case RAT_TOTEMICUS:
-            if (!charta_scribe(out, templ_totemicus[v_rat], s->anglice)) return 0;
-            break;
-        case RAT_FABULARIS:
-            if (!charta_adde(out, templ_fabularis[v_rat])) return 0;
-            break;
-        case RAT_MYTHICUS:
-            if (!charta_scribe(out, templ_mythicus[v_rat], s->mythicum)) return 0;
-            break;
-        case RAT_LUSORIUS:
-            if (!charta_scribe(out, templ_lusorius[v_rat], s->anglice)) return 0;
-            break;
+    case RAT_PHYSIOGNOMONICUS:
+        if (!charta_adde(out, templ_physiognomonicus[v_rat]))
+            return 0;
+        break;
+    case RAT_TOTEMICUS:
+        if (!charta_scribe(out, templ_totemicus[v_rat], s->anglice))
+            return 0;
+        break;
+    case RAT_FABULARIS:
+        if (!charta_adde(out, templ_fabularis[v_rat]))
+            return 0;
+        break;
+    case RAT_MYTHICUS:
+        if (!charta_scribe(out, templ_mythicus[v_rat], s->mythicum))
+            return 0;
+        break;
+    case RAT_LUSORIUS:
+        if (!charta_scribe(out, templ_lusorius[v_rat], s->anglice))
+            return 0;
+        break;
     }
 
-    if (!charta_scribe(out, "The bearing is %s. ", gestus_phrases[i_gst])) return 0;
+    if (!charta_scribe(out, "The bearing is %s. ", gestus_phrases[i_gst]))
+        return 0;
 
     if (i_amc == AMC_NULLUS) {
-        if (!charta_adde(out, "There is no ornament or garment at the "
-                              "shoulders: only the bare form of the subject. ")) return 0;
+        if (
+            !charta_adde(
+                out, "There is no ornament or garment at the "
+                "shoulders: only the bare form of the subject. "
+            )
+        ) return 0;
     } else {
-        if (!charta_scribe(out, "At the shoulders is %s. ",
-                           amictus_phrases[i_amc])) return 0;
+        const char *amc_phrasis = (i_amc == AMC_NEMES)
+            ? amictus_nemes_opts[alea_ambitus(
+                sizeof amictus_nemes_opts / sizeof *amictus_nemes_opts
+            )]
+            : amictus_phrases[i_amc];
+        if (!charta_scribe(out, "At the shoulders is %s. ", amc_phrasis))
+            return 0;
     }
 
     const char *fundus_phrasis;
@@ -1000,17 +1115,22 @@ static int compone(Charta *out, const BestiaOptiones *o,
     } else {
         fundus_phrasis = fundus_scribenda[i_fnd];
     }
-    if (!charta_scribe(out, "The background is %s.\n", fundus_phrasis)) return 0;
+    if (!charta_scribe(out, "The background is %s.\n", fundus_phrasis))
+        return 0;
 
     return 1;
 }
 
-char *bestia_generare(uint64_t semen,
-                      const BestiaOptiones *optiones,
-                      char *error_locus, size_t error_longitudo) {
+char *bestia_generare(
+    uint64_t semen,
+    const BestiaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+) {
     static const BestiaOptiones vacua = {0};
-    if (!optiones) optiones = &vacua;
-    if (error_locus && error_longitudo) error_locus[0] = '\0';
+    if (!optiones)
+        optiones = &vacua;
+    if (error_locus && error_longitudo)
+        error_locus[0] = '\0';
 
     alea_seminare(semen);
 
@@ -1034,21 +1154,31 @@ static const char *const rudis_praecursor =
     "Generate a portrait. The subject's head is centered in the frame "
     "and the subject is facing the viewer. ";
 
-char *bestia_generare_rudis(uint64_t semen,
-                            const BestiaOptiones *optiones,
-                            char *error_locus, size_t error_longitudo) {
+char *bestia_generare_rudis(
+    uint64_t semen,
+    const BestiaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+) {
     static const BestiaOptiones vacua = {0};
-    if (!optiones) optiones = &vacua;
-    if (error_locus && error_longitudo) error_locus[0] = '\0';
+    if (!optiones)
+        optiones = &vacua;
+    if (error_locus && error_longitudo)
+        error_locus[0] = '\0';
 
     Charta out = {0};
-    if (!charta_adde(&out, rudis_praecursor)) goto defecit;
-    if (!charta_adde(&out,
+    if (!charta_adde(&out, rudis_praecursor))
+        goto defecit;
+    if (
+        !charta_adde(
+            &out,
             "This is a bestia: a theriomorphic portrait — a portrait in which "
             "the subject is either an animal, has the head of an animal, or "
             "otherwise bears a recognizable resemblance to an animal of your "
-            "own choosing. ")) goto defecit;
-    if (!charta_adde(&out, "Make a random portrait of someone.")) goto defecit;
+            "own choosing. "
+        )
+    ) goto defecit;
+    if (!charta_adde(&out, "Make a random portrait of someone."))
+        goto defecit;
     (void)semen;
 
     static const char *const claves_anglice[] = {
@@ -1060,12 +1190,18 @@ char *bestia_generare_rudis(uint64_t semen,
         optiones->gestus, optiones->amictus, optiones->fundus
     };
     for (int i = 0; i < 6; i++) {
-        if (!valores[i]) continue;
-        if (!charta_scribe(&out, " Also %s should be %s.",
-                           claves_anglice[i], valores[i]))
+        if (!valores[i])
+            continue;
+        if (
+            !charta_scribe(
+                &out, " Also %s should be %s.",
+                claves_anglice[i], valores[i]
+            )
+        )
             goto defecit;
     }
-    if (!charta_adde(&out, "\n")) goto defecit;
+    if (!charta_adde(&out, "\n"))
+        goto defecit;
     return out.d;
 
 defecit:

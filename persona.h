@@ -27,17 +27,21 @@ typedef struct {
  * error_longitudo > 0, nuntius ibi scribitur.
  *
  * Optiones NULL idem valent ac structura tota zeris impleta. */
-char *persona_generare(uint64_t semen,
-                       const PersonaOptiones *optiones,
-                       char *error_locus, size_t error_longitudo);
+char *persona_generare(
+    uint64_t semen,
+    const PersonaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 /* Variatio rudis: eodem modo vocatur ac persona_generare, sed textus
  * emissus personam non describit. Potius parametros mero modo iterat,
  * ut "Generate a portrait ... whatever you think seed N should look
  * like. Also age should be X. Also sex should be Y." Praecursor idem
  * est ac in artista_generare_rudis, ut imagines comparari possint. */
-char *persona_generare_rudis(uint64_t semen,
-                             const PersonaOptiones *optiones,
-                             char *error_locus, size_t error_longitudo);
+char *persona_generare_rudis(
+    uint64_t semen,
+    const PersonaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+);
 
 #endif

@@ -9,7 +9,8 @@
 
 /* Usum programmatis exhibere. */
 static void usus(const char *nomen) {
-    fprintf(stderr,
+    fprintf(
+        stderr,
         "usus: %s [-s semen] [--modus persona|artista|bestia] [-r] [selectiones]\n"
         "  -s, --semen N       semen generatoris (ex /dev/urandom si abest)\n"
         "      --modus M       persona (default) | artista | bestia\n"
@@ -63,29 +64,38 @@ static void usus(const char *nomen) {
         "                      mythicus|lusorius\n"
         "      --gestus X      vigil|dormiens|venans|fugiens|superbus|\n"
         "                      solemnis|pavidus|quietus|iratus|ridens|\n"
-        "                      meditans|supplex\n"
+        "                      meditans|supplex|curiosus|ludens|amans|\n"
+        "                      mirans\n"
         "      --amictus X     nullus|nemes|collare|lorica|stola|pelta|\n"
         "                      sertum|latrunculus|corona|velum|infula|\n"
-        "                      torquis\n"
+        "                      torquis|focale|taenia|flos|gemma\n"
         "      --fundus X      planum|tenebrosum|luminosum|aureum|\n"
         "                      paesagium|ornatum|silva|templum|coloratum|\n"
         "                      aquaticum|nocturnum|crepusculum\n",
-        nomen);
+        nomen
+    );
 }
 
 /* Semen ex /dev/urandom legere. */
 static int semen_ex_urandom(uint64_t *semen) {
     FILE *f = fopen("/dev/urandom", "rb");
-    if (!f) { perror("/dev/urandom"); return 0; }
-    if (fread(semen, sizeof *semen, 1, f) != 1) { perror("read"); fclose(f); return 0; }
+    if (!f) {
+        perror("/dev/urandom");
+        return 0;
+    }
+    if (fread(semen, sizeof *semen, 1, f) != 1) {
+        perror("read");
+        fclose(f);
+        return 0;
+    }
     fclose(f);
     return 1;
 }
 
 int main(int argc, char **argv) {
-    uint64_t semen = 0;
-    int habet_semen = 0;
-    int rudis = 0;
+    uint64_t semen    = 0;
+    int habet_semen   = 0;
+    int rudis         = 0;
     const char *modus = "persona";
     ArtistaOptiones aopt = {0};
     PersonaOptiones popt = {0};
@@ -111,36 +121,80 @@ int main(int argc, char **argv) {
         {"gestus",      required_argument, 0, 3003},
         {"amictus",     required_argument, 0, 3004},
         {"auxilium",    no_argument,       0, 'h'},
-        {0,0,0,0}
+        {0, 0, 0, 0}
     };
 
     int signum;
     while ((signum = getopt_long(argc, argv, "s:m:rh", optiones_longae, NULL)) != -1) {
         switch (signum) {
-            case 's':  semen = strtoull(optarg, NULL, 0); habet_semen = 1; break;
-            case 'm':  modus = optarg; break;
-            case 'r':  rudis = 1; break;
-            case 2000: popt.sexus       = optarg; break;
-            case 2001: popt.aetas       = optarg; break;
-            case 2002: popt.pulchritudo = optarg; break;
-            case 2003: popt.vestitus    = optarg; break;
-            case 2004: popt.cutis       = optarg; break;
-            case 1000: aopt.artifex     = optarg; break;
-            case 1001: aopt.medium      = optarg; break;
-            case 1002: aopt.palaestra   = optarg; break;
-            case 1003: aopt.habitus     = optarg; break;
-            case 1004: aopt.fundus      = optarg; bopt.fundus = optarg; popt.fundus = optarg; break;
-            case 3000: bopt.species     = optarg; break;
-            case 3001: bopt.gradus      = optarg; break;
-            case 3002: bopt.ratio       = optarg; break;
-            case 3003: bopt.gestus      = optarg; break;
-            case 3004: bopt.amictus     = optarg; break;
-            case 'h':  usus(argv[0]); return 0;
-            default:   usus(argv[0]); return 2;
+        case 's':
+            semen       = strtoull(optarg, NULL, 0);
+            habet_semen = 1;
+            break;
+        case 'm':
+            modus = optarg;
+            break;
+        case 'r':
+            rudis = 1;
+            break;
+        case 2000:
+            popt.sexus       = optarg;
+            break;
+        case 2001:
+            popt.aetas       = optarg;
+            break;
+        case 2002:
+            popt.pulchritudo = optarg;
+            break;
+        case 2003:
+            popt.vestitus    = optarg;
+            break;
+        case 2004:
+            popt.cutis       = optarg;
+            break;
+        case 1000:
+            aopt.artifex     = optarg;
+            break;
+        case 1001:
+            aopt.medium      = optarg;
+            break;
+        case 1002:
+            aopt.palaestra   = optarg;
+            break;
+        case 1003:
+            aopt.habitus     = optarg;
+            break;
+        case 1004:
+            aopt.fundus = optarg;
+            bopt.fundus = optarg;
+            popt.fundus = optarg;
+            break;
+        case 3000:
+            bopt.species     = optarg;
+            break;
+        case 3001:
+            bopt.gradus      = optarg;
+            break;
+        case 3002:
+            bopt.ratio       = optarg;
+            break;
+        case 3003:
+            bopt.gestus      = optarg;
+            break;
+        case 3004:
+            bopt.amictus     = optarg;
+            break;
+        case 'h':
+            usus(argv[0]);
+            return 0;
+        default:
+            usus(argv[0]);
+            return 2;
         }
     }
 
-    if (!habet_semen && !semen_ex_urandom(&semen)) return 1;
+    if (!habet_semen && !semen_ex_urandom(&semen))
+        return 1;
 
     char error[256] = {0};
     char *descriptio = NULL;

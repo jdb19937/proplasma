@@ -11,7 +11,8 @@
 static uint64_t alea_status;
 
 static void alea_seminare(uint64_t s) {
-    if (s == 0) s = 0x9E3779B97F4A7C15ULL;
+    if (s == 0)
+        s = 0x9E3779B97F4A7C15ULL;
     alea_status = s;
 }
 
@@ -35,7 +36,8 @@ static const char *elige(const char *const *s, int n) {
 }
 
 static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
-    if (!capax || longitudo == 0) return;
+    if (!capax || longitudo == 0)
+        return;
     va_list ap;
     va_start(ap, fmt);
     vsnprintf(capax, longitudo, fmt, ap);
@@ -44,20 +46,28 @@ static void pone_errorem(char *capax, size_t longitudo, const char *fmt, ...) {
 
 /* ---- charta crescens ---- */
 
-typedef struct { char *d; size_t n, cap; } Charta;
+typedef struct {
+    char *d;
+    size_t n, cap;
+} Charta;
 
 static int charta_crescat(Charta *c, size_t plus) {
-    if (c->n + plus + 1 <= c->cap) return 1;
+    if (c->n + plus + 1 <= c->cap)
+        return 1;
     size_t nc = c->cap ? c->cap : 1024;
-    while (nc < c->n + plus + 1) nc *= 2;
+    while (nc < c->n + plus + 1)
+        nc *= 2;
     char *nd = realloc(c->d, nc);
-    if (!nd) return 0;
-    c->d = nd; c->cap = nc;
+    if (!nd)
+        return 0;
+    c->d   = nd;
+    c->cap = nc;
     return 1;
 }
 static int charta_adde(Charta *c, const char *s) {
     size_t len = strlen(s);
-    if (!charta_crescat(c, len)) return 0;
+    if (!charta_crescat(c, len))
+        return 0;
     memcpy(c->d + c->n, s, len + 1);
     c->n += len;
     return 1;
@@ -74,38 +84,41 @@ static int charta_scribe(Charta *c, const char *fmt, ...) {
 /* ---- claves ontologicae ---- */
 
 enum { ART_DALIUS, ART_KLIMTIUS, ART_MONDRIANUS, ART_VERMERUS,
-       ART_ESCHERUS, ART_KANDINSKIUS, ART_MAGRITTIUS, ART_POLLOCKIUS,
-       ART_PICASSONUS, ART_VANGOGHUS, ART_WARHOLUS, ART_SCHIELEUS,
-       ART_BACONIUS, ART_HOPPERUS, ART_HOKUSAIUS, ART_MUNCHIUS,
-       ART_LICHTENSTEINIUS, ART_MODIGLIANIUS, ART_REMBRANDTUS,
-       ART_HOCKNEIUS, ART_FREUDUS, ART_BASQUIATUS, ART_SEURATUS,
-       ART_RIVEREUS,
-       ART_VELASPINUS, ART_CRISPULUS, ART_NIMBULUS, ART_ECHOKUS,
-       ART_FULGURITUS, ART_TESSELARIUS, ART_OBSCURUS, ART_FILUMENTUS,
-       ART_CHRONOFUGUS, ART_SOMNIATOR, ART_VACUARIUS, ART_MORTUARIUS,
-       ART_ALGORITHMICUS, ART_HOLOGRAPHUS, ART_CRYPTOLALUS, ART_INTERSTITIUS,
-       ART_N };
+    ART_ESCHERUS, ART_KANDINSKIUS, ART_MAGRITTIUS, ART_POLLOCKIUS,
+    ART_PICASSONUS, ART_VANGOGHUS, ART_WARHOLUS, ART_SCHIELEUS,
+    ART_BACONIUS, ART_HOPPERUS, ART_HOKUSAIUS, ART_MUNCHIUS,
+    ART_LICHTENSTEINIUS, ART_MODIGLIANIUS, ART_REMBRANDTUS,
+    ART_HOCKNEIUS, ART_FREUDUS, ART_BASQUIATUS, ART_SEURATUS,
+    ART_RIVEREUS,
+    ART_VELASPINUS, ART_CRISPULUS, ART_NIMBULUS, ART_ECHOKUS,
+    ART_FULGURITUS, ART_TESSELARIUS, ART_OBSCURUS, ART_FILUMENTUS,
+    ART_CHRONOFUGUS, ART_SOMNIATOR, ART_VACUARIUS, ART_MORTUARIUS,
+    ART_ALGORITHMICUS, ART_HOLOGRAPHUS, ART_CRYPTOLALUS, ART_INTERSTITIUS,
+    ART_N };
 static const char *const artifices_claves[ART_N] = {
-    "dalius","klimtius","mondrianus","vermerus",
-    "escherus","kandinskius","magrittius","pollockius",
-    "picassonus","vangoghus","warholus","schieleus",
-    "baconius","hopperus","hokusaius","munchius",
-    "lichtensteinius","modiglianius","rembrandtus","hockneius",
-    "freudus","basquiatus","seuratus","rivereus",
-    "velaspinus","crispulus","nimbulus","echokus",
-    "fulguritus","tesselarius","obscurus","filumentus",
-    "chronofugus","somniator","vacuarius","mortuarius",
-    "algorithmicus","holographus","cryptolalus","interstitius"
+    "dalius", "klimtius", "mondrianus", "vermerus",
+    "escherus", "kandinskius", "magrittius", "pollockius",
+    "picassonus", "vangoghus", "warholus", "schieleus",
+    "baconius", "hopperus", "hokusaius", "munchius",
+    "lichtensteinius", "modiglianius", "rembrandtus", "hockneius",
+    "freudus", "basquiatus", "seuratus", "rivereus",
+    "velaspinus", "crispulus", "nimbulus", "echokus",
+    "fulguritus", "tesselarius", "obscurus", "filumentus",
+    "chronofugus", "somniator", "vacuarius", "mortuarius",
+    "algorithmicus", "holographus", "cryptolalus", "interstitius"
 };
 
 enum { MED_OLEUM, MED_TEMPERA, MED_ACRYLICUM, MED_GOUACHE,
-       MED_ATRAMENTUM, MED_FRESCA, MED_COLLAGE, MED_MUSIVUM, MED_N };
+    MED_ATRAMENTUM, MED_FRESCA, MED_COLLAGE, MED_MUSIVUM, MED_N };
 static const char *const media_claves[MED_N] = {
-    "oleum","tempera","acrylicum","gouache",
-    "atramentum","fresca","collage","musivum"
+    "oleum", "tempera", "acrylicum", "gouache",
+    "atramentum", "fresca", "collage", "musivum"
 };
 /* Multipla nomina pro quaque clavi, ut descriptiones variae fiant. */
-typedef struct { const char *const *opts; int n; } PhraseSet;
+typedef struct {
+    const char *const *opts;
+    int n;
+} PhraseSet;
 
 static const char *const media_oleum[] = {
     "oil paint on a fine-weave linen canvas, 60 by 45 cm, glue-sized and twice-primed with lead white",
@@ -160,16 +173,16 @@ static const PhraseSet media_sets[MED_N] = {
 };
 
 enum { PAL_CALIDA, PAL_FRIGIDA, PAL_SATURATA, PAL_MUTA,
-       PAL_MONOCHROMA, PAL_PRIMARIA, PAL_TERREA, PAL_N };
+    PAL_MONOCHROMA, PAL_PRIMARIA, PAL_TERREA, PAL_N };
 static const char *const palettae_claves[PAL_N] = {
-    "calida","frigida","saturata","muta",
-    "monochroma","primaria","terrea"
+    "calida", "frigida", "saturata", "muta",
+    "monochroma", "primaria", "terrea"
 };
 
 enum { HAB_SERENUS, HAB_TURBULENTUS, HAB_MELANCHOLICUS, HAB_IUBILANS,
-       HAB_SOLEMNIS, HAB_TENSUS, HAB_N };
+    HAB_SOLEMNIS, HAB_TENSUS, HAB_N };
 static const char *const habitus_claves[HAB_N] = {
-    "serenus","turbulentus","melancholicus","iubilans","solemnis","tensus"
+    "serenus", "turbulentus", "melancholicus", "iubilans", "solemnis", "tensus"
 };
 static const char *const habitus_serenus[] = {
     "The overall affect is that of held stillness; the painted air behaves like dry, undisturbed glass.",
@@ -217,9 +230,9 @@ static const PhraseSet habitus_sets[HAB_N] = {
 };
 
 enum { FUN_PLANUM, FUN_ORNATUM, FUN_PAESAGIUM, FUN_ABSTRACTUM,
-       FUN_TENEBROSUM, FUN_LUMINOSUM, FUN_N };
+    FUN_TENEBROSUM, FUN_LUMINOSUM, FUN_N };
 static const char *const fundi_claves[FUN_N] = {
-    "planum","ornatum","paesagium","abstractum","tenebrosum","luminosum"
+    "planum", "ornatum", "paesagium", "abstractum", "tenebrosum", "luminosum"
 };
 
 /* ---- per artificem: phrases singulariter specificae ---- */
@@ -229,9 +242,11 @@ typedef struct {
     int n_media;
 
     /* figurae: sententia integra, quomodo sessor pingitur */
-    const char *const *figurae; int n_figurae;
+    const char *const *figurae;
+    int n_figurae;
     /* motiva: objecta specialissima, unum vel duo eligenda */
-    const char *const *motiva;  int n_motiva;
+    const char *const *motiva;
+    int n_motiva;
 
     /* palettae phrases specificae artifici, clavem PAL_* indexant */
     const char *palettae[PAL_N];
@@ -239,9 +254,12 @@ typedef struct {
     const char *fundi[FUN_N];
 
     /* tres aspectus communes artistici: lumen, textura, compositio */
-    const char *const *lumen;       int n_lumen;
-    const char *const *texturae;    int n_texturae;
-    const char *const *compositio;  int n_compositio;
+    const char *const *lumen;
+    int n_lumen;
+    const char *const *texturae;
+    int n_texturae;
+    const char *const *compositio;
+    int n_compositio;
 
     /* sententia ultima de technica */
     const char *signatura;
@@ -328,17 +346,23 @@ static const Stylus stylus_dalius = {
     {
         [PAL_CALIDA]    = "The colour is burnt ochre, dried-blood red, and bleached saffron, against a pale salmon sky.",
         [PAL_FRIGIDA]   = "The palette is pale Mediterranean blue, dove grey, and the exact grey-green of a dry olive leaf.",
-        [PAL_SATURATA]  = "Acid cadmium yellow meets deep cobalt, with no middle tones in between; the contrast is almost aggressive.",
-        [PAL_MUTA]      = "Dusty parchment and faded sand dominate; colour has been beaten back until it almost leaves the canvas.",
-        [PAL_MONOCHROMA]= "The picture is entirely in graded warm sepia, from bone white highlight to bitumen shadow.",
-        [PAL_PRIMARIA]  = "Pure red, yellow, and blue are set flat and untouched against a white ground, like three cards laid down.",
-        [PAL_TERREA]    = "Raw umber, burnt sienna, and yellow ochre cover everything; it looks mixed from the soil of the Empordà."
+        [PAL_SATURATA]  =
+            "Acid cadmium yellow meets deep cobalt, with no middle tones in between; the contrast is almost aggressive.",
+        [PAL_MUTA]      =
+            "Dusty parchment and faded sand dominate; colour has been beaten back until it almost leaves the canvas.",
+        [PAL_MONOCHROMA] = "The picture is entirely in graded warm sepia, from bone white highlight to bitumen shadow.",
+        [PAL_PRIMARIA]  =
+            "Pure red, yellow, and blue are set flat and untouched against a white ground, like three cards laid down.",
+        [PAL_TERREA]    =
+            "Raw umber, burnt sienna, and yellow ochre cover everything; it looks mixed from the soil of the Empordà."
     },
     {
         [FUN_PLANUM]     = "Behind the figure stretches an empty Catalan plain, razor-horizon, nothing on it for a kilometre.",
-        [FUN_ORNATUM]    = "Behind the figure, a dry lakebed is scattered with small ceremonial objects — a clockface, a bent spoon, a bone.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a dry lakebed is scattered with small ceremonial objects — a clockface, a bent spoon, a bone.",
         [FUN_PAESAGIUM]  = "Behind the figure, eroded sandstone cliffs recede into a windless distance, lit from the side.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the ground fades into nothing; only a single long, cast shadow tells you a ground exists at all.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the ground fades into nothing; only a single long, cast shadow tells you a ground exists at all.",
         [FUN_TENEBROSUM] = "Behind the figure, a dusk-blue plain lies under a last-light sky the colour of a bruise.",
         [FUN_LUMINOSUM]  = "Behind the figure, a flat desert noon burns every cast shadow into a hard, ink-black bar."
     },
@@ -407,19 +431,27 @@ static const Stylus stylus_klimtius = {
     klimtius_motiva, N_OF(klimtius_motiva),
     {
         [PAL_CALIDA]    = "The colour is beaten gold and soft olive-rose, with accents of warm madder at the lips and cheeks.",
-        [PAL_FRIGIDA]   = "The ornament is worked in silver leaf, slate blue, and cold mint green, set against very pale flesh.",
+        [PAL_FRIGIDA]   =
+            "The ornament is worked in silver leaf, slate blue, and cold mint green, set against very pale flesh.",
         [PAL_SATURATA]  = "Emerald, ruby, and sapphire enamels are set into the gold field at jewellery intensity.",
         [PAL_MUTA]      = "The gold is dulled to an aged brass and the pattern colours are smoke, dust-rose, and lichen grey.",
-        [PAL_MONOCHROMA]= "The whole picture is worked in graded gold and black alone, with only the flesh left in a single warm ivory note.",
-        [PAL_PRIMARIA]  = "The pattern squares alternate pure red, yellow, and blue against the gold field in strict repetition.",
-        [PAL_TERREA]    = "The gold is laid over an olive-brown bolus that shows through as warm earth where the leaf is worn thin."
+        [PAL_MONOCHROMA] =
+            "The whole picture is worked in graded gold and black alone, with only the flesh left in a single warm ivory note.",
+        [PAL_PRIMARIA]  =
+            "The pattern squares alternate pure red, yellow, and blue against the gold field in strict repetition.",
+        [PAL_TERREA]    =
+            "The gold is laid over an olive-brown bolus that shows through as warm earth where the leaf is worn thin."
     },
     {
         [FUN_PLANUM]     = "Behind the figure there is only a flat field of worked gold, unbroken from frame to frame.",
-        [FUN_ORNATUM]    = "The entire ground behind the figure is a dense ornamental wall of spirals, rosettes, and small eye shapes, worked in gold and black.",
-        [FUN_PAESAGIUM]  = "Far behind the ornamental body, a suggestion of a small alpine meadow appears through a doorway-shaped opening in the gold.",
-        [FUN_ABSTRACTUM] = "The ground is a drift of disconnected gold rectangles on black, reading as pattern rather than as a place.",
-        [FUN_TENEBROSUM] = "The gold is laid over a near-black ground that shows in the interstices, so the picture glows from darkness.",
+        [FUN_ORNATUM]    =
+            "The entire ground behind the figure is a dense ornamental wall of spirals, rosettes, and small eye shapes, worked in gold and black.",
+        [FUN_PAESAGIUM]  =
+            "Far behind the ornamental body, a suggestion of a small alpine meadow appears through a doorway-shaped opening in the gold.",
+        [FUN_ABSTRACTUM] =
+            "The ground is a drift of disconnected gold rectangles on black, reading as pattern rather than as a place.",
+        [FUN_TENEBROSUM] =
+            "The gold is laid over a near-black ground that shows in the interstices, so the picture glows from darkness.",
         [FUN_LUMINOSUM]  = "The gold is laid over a white ground and extended brightly to every edge of the panel."
     },
     klimtius_lumen, N_OF(klimtius_lumen),
@@ -485,19 +517,28 @@ static const Stylus stylus_mondrianus = {
     mondrianus_figurae, N_OF(mondrianus_figurae),
     mondrianus_motiva, N_OF(mondrianus_motiva),
     {
-        [PAL_CALIDA]    = "Red and yellow do all the colour work; blue is withheld entirely. The rest of the picture is white and black.",
-        [PAL_FRIGIDA]   = "Blue does all the colour work; red and yellow are withheld. The rest of the picture is white and black.",
-        [PAL_SATURATA]  = "The coloured fields are pure, uncut primaries at maximum saturation: signal red, canary yellow, cobalt blue.",
+        [PAL_CALIDA]    =
+            "Red and yellow do all the colour work; blue is withheld entirely. The rest of the picture is white and black.",
+        [PAL_FRIGIDA]   =
+            "Blue does all the colour work; red and yellow are withheld. The rest of the picture is white and black.",
+        [PAL_SATURATA]  =
+            "The coloured fields are pure, uncut primaries at maximum saturation: signal red, canary yellow, cobalt blue.",
         [PAL_MUTA]      = "The primaries are softened to brick red, mustard, and slate blue against a warm off-white.",
-        [PAL_MONOCHROMA]= "All colour is suppressed; the picture is composed only of black lines on white, with one field in grey.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue are set pure against black lines and white fields — no other colour appears anywhere in the picture.",
-        [PAL_TERREA]    = "The primaries are replaced by Venetian red, yellow ochre, and Prussian blue, giving the picture a warmer, older key."
+        [PAL_MONOCHROMA] =
+            "All colour is suppressed; the picture is composed only of black lines on white, with one field in grey.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue are set pure against black lines and white fields — no other colour appears anywhere in the picture.",
+        [PAL_TERREA]    =
+            "The primaries are replaced by Venetian red, yellow ochre, and Prussian blue, giving the picture a warmer, older key."
     },
     {
-        [FUN_PLANUM]     = "There is no background separate from the figure; the grid extends to all four frame edges as a single continuous partition.",
-        [FUN_ORNATUM]    = "Additional black lines subdivide the white fields into a finer inner grid, giving the picture an almost architectural density.",
+        [FUN_PLANUM]     =
+            "There is no background separate from the figure; the grid extends to all four frame edges as a single continuous partition.",
+        [FUN_ORNATUM]    =
+            "Additional black lines subdivide the white fields into a finer inner grid, giving the picture an almost architectural density.",
         [FUN_PAESAGIUM]  = "No landscape is present; the grid is absolute and admits no depth cue at all.",
-        [FUN_ABSTRACTUM] = "The grid itself is the whole world of the picture; there is no figure-ground split beyond the lines.",
+        [FUN_ABSTRACTUM] =
+            "The grid itself is the whole world of the picture; there is no figure-ground split beyond the lines.",
         [FUN_TENEBROSUM] = "The white fields are darkened to a warm graphite grey; the grid reads against a low, heavy light.",
         [FUN_LUMINOSUM]  = "The white fields are clean, cold, and bright; the grid reads as a diagram lit by a laboratory."
     },
@@ -531,7 +572,7 @@ static const char *const vermerus_motiva[] = {
     "a small carved ivory hair comb is tucked into the hair at the side of the head, its teeth catching the window light in fine parallel lines",
     "a narrow silver chain holds a plain dull-green enamel pendant at the throat, the pendant no wider than a fingernail",
     "a single sheet of folded paper, held lightly in the fingers, reflects a cool glow back up into the chin",
-    "an open letter lies on a table at the lower edge of the frame, one corner touched by the subject's fingertip",
+    "an open folded note lies on a table at the lower edge of the frame, one corner touched by the subject's fingertip, its inked surface too softly blurred to be read",
     "a wooden lute rests unseen in the subject's lap; only the tips of two pegs at the upper end catch the light",
     "a small, glazed blue-and-white Delft ceramic pot stands on a dark tabletop at the right; its lid is ajar by about a finger's width",
     "a single brass pushpin is set into the plastered wall above the subject's shoulder, holding nothing, its shadow a neat elongated ellipse",
@@ -564,21 +605,34 @@ static const Stylus stylus_vermerus = {
     vermerus_figurae, N_OF(vermerus_figurae),
     vermerus_motiva, N_OF(vermerus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm lead white, pale ochre flesh, a muted madder at the lips, and a lemon-yellow cloth accent.",
-        [PAL_FRIGIDA]   = "The palette is dominated by natural ultramarine blue and cool lead white, with only small passages of muted flesh warmth.",
-        [PAL_SATURATA]  = "A deep, pure ultramarine turban meets a saturated lead-tin yellow cloth at the shoulder; the flesh is kept neutral between them.",
-        [PAL_MUTA]      = "The whole picture is kept in quiet halftones: bone white, soft taupe, a dusky rose, and a dulled blue.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone, from bone white highlight to a deep, translucent dark brown shadow.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue are admitted, each desaturated slightly so the picture reads warmly rather than harshly.",
-        [PAL_TERREA]    = "The palette is raw umber, yellow ochre, bone black, lead white, and a very small touch of natural ultramarine at the cloth."
+        [PAL_CALIDA]    =
+            "The palette is warm lead white, pale ochre flesh, a muted madder at the lips, and a lemon-yellow cloth accent.",
+        [PAL_FRIGIDA]   =
+            "The palette is dominated by natural ultramarine blue and cool lead white, with only small passages of muted flesh warmth.",
+        [PAL_SATURATA]  =
+            "A deep, pure ultramarine turban meets a saturated lead-tin yellow cloth at the shoulder; the flesh is kept neutral between them.",
+        [PAL_MUTA]      =
+            "The whole picture is kept in quiet halftones: bone white, soft taupe, a dusky rose, and a dulled blue.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone, from bone white highlight to a deep, translucent dark brown shadow.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue are admitted, each desaturated slightly so the picture reads warmly rather than harshly.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, yellow ochre, bone black, lead white, and a very small touch of natural ultramarine at the cloth."
     },
     {
-        [FUN_PLANUM]     = "Behind the subject, a plain plastered wall in cool white catches the window light as a soft gradient from upper left to lower right.",
-        [FUN_ORNATUM]    = "A tooled leather map or a still-life of brass instruments hangs on the wall behind the subject, only partially visible at one edge.",
-        [FUN_PAESAGIUM]  = "Through a doorway to the left, a narrow view of a red-brick Delft street is visible under a pale, overcast sky.",
-        [FUN_ABSTRACTUM] = "Behind the subject is only the undifferentiated cool wall, with no object, map, or window allowed to break it.",
-        [FUN_TENEBROSUM] = "The wall behind the subject is a deep, warm black, so that only the lit side of the face glows out of it.",
-        [FUN_LUMINOSUM]  = "The wall behind the subject is a high, clean white lit by a second, indirect window, and the figure is almost backlit against it."
+        [FUN_PLANUM]     =
+            "Behind the subject, a plain plastered wall in cool white catches the window light as a soft gradient from upper left to lower right.",
+        [FUN_ORNATUM]    =
+            "A tooled leather map or a still-life of brass instruments hangs on the wall behind the subject, only partially visible at one edge.",
+        [FUN_PAESAGIUM]  =
+            "Through a doorway to the left, a narrow view of a red-brick Delft street is visible under a pale, overcast sky.",
+        [FUN_ABSTRACTUM] =
+            "Behind the subject is only the undifferentiated cool wall, with no object, map, or window allowed to break it.",
+        [FUN_TENEBROSUM] =
+            "The wall behind the subject is a deep, warm black, so that only the lit side of the face glows out of it.",
+        [FUN_LUMINOSUM]  =
+            "The wall behind the subject is a high, clean white lit by a second, indirect window, and the figure is almost backlit against it."
     },
     vermerus_lumen, N_OF(vermerus_lumen),
     vermerus_texturae, N_OF(vermerus_texturae),
@@ -623,19 +677,28 @@ static const Stylus stylus_escherus = {
     {
         [PAL_CALIDA]    = "The picture is black ink on warm cream laid paper; only the paper tone supplies any warmth.",
         [PAL_FRIGIDA]   = "The picture is black ink on cold pale-grey paper, with no warm element admitted anywhere.",
-        [PAL_SATURATA]  = "A single area — the reflecting sphere — is worked in saturated colour, while the rest of the picture remains black and white.",
-        [PAL_MUTA]      = "The ink is diluted in two passes to achieve a soft mid-grey; the picture reads as a quiet graphite drawing rather than a hard line work.",
-        [PAL_MONOCHROMA]= "Black ink on white paper; no other colour is admitted anywhere in the picture at any point.",
-        [PAL_PRIMARIA]  = "Three flat primary fields — red, yellow, blue — are inserted behind the otherwise black-and-white tessellation, visible only through small open gaps in the pattern.",
+        [PAL_SATURATA]  =
+            "A single area — the reflecting sphere — is worked in saturated colour, while the rest of the picture remains black and white.",
+        [PAL_MUTA]      =
+            "The ink is diluted in two passes to achieve a soft mid-grey; the picture reads as a quiet graphite drawing rather than a hard line work.",
+        [PAL_MONOCHROMA] = "Black ink on white paper; no other colour is admitted anywhere in the picture at any point.",
+        [PAL_PRIMARIA]  =
+            "Three flat primary fields — red, yellow, blue — are inserted behind the otherwise black-and-white tessellation, visible only through small open gaps in the pattern.",
         [PAL_TERREA]    = "Sepia ink replaces the black, producing a warm brown line on yellowed paper."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure, the white of the paper is allowed to remain uninterrupted to all four frame edges.",
-        [FUN_ORNATUM]    = "The ground behind the figure is filled from edge to edge with a single tessellating motif — interlocking birds and fish — with no empty space permitted anywhere.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a small Italian hill town is rendered in perspective, but its stairs, balconies, and roofs form a closed loop that a walker could circle forever.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the space itself is impossible: a staircase, a corridor, and a ceiling all meet at a single point that denies three-dimensional consistency.",
-        [FUN_TENEBROSUM] = "The ground behind the figure is solid black ink; the tessellating motifs are picked out as white reversals cut into the black.",
-        [FUN_LUMINOSUM]  = "The ground behind the figure is bright white paper, and the tessellating motifs begin only at the very edges of the frame."
+        [FUN_PLANUM]     =
+            "Behind the figure, the white of the paper is allowed to remain uninterrupted to all four frame edges.",
+        [FUN_ORNATUM]    =
+            "The ground behind the figure is filled from edge to edge with a single tessellating motif — interlocking birds and fish — with no empty space permitted anywhere.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a small Italian hill town is rendered in perspective, but its stairs, balconies, and roofs form a closed loop that a walker could circle forever.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the space itself is impossible: a staircase, a corridor, and a ceiling all meet at a single point that denies three-dimensional consistency.",
+        [FUN_TENEBROSUM] =
+            "The ground behind the figure is solid black ink; the tessellating motifs are picked out as white reversals cut into the black.",
+        [FUN_LUMINOSUM]  =
+            "The ground behind the figure is bright white paper, and the tessellating motifs begin only at the very edges of the frame."
     },
     escherus_lumen, N_OF(escherus_lumen),
     escherus_texturae, N_OF(escherus_texturae),
@@ -679,20 +742,31 @@ static const Stylus stylus_kandinskius = {
     kandinskius_figurae, N_OF(kandinskius_figurae),
     kandinskius_motiva, N_OF(kandinskius_motiva),
     {
-        [PAL_CALIDA]    = "The colour is dominated by cadmium red and chrome yellow; blue appears only as a small, sharp accent near the lower edge.",
-        [PAL_FRIGIDA]   = "The colour is dominated by cobalt and viridian; red appears only as a single small disc somewhere near the centre.",
-        [PAL_SATURATA]  = "Every shape is filled with pure, unmixed pigment at maximum saturation, set against a flat white ground.",
-        [PAL_MUTA]      = "The colour is softened to rose-beige, sage, and pale lilac; the forms are geometric but their palette is domestic.",
-        [PAL_MONOCHROMA]= "The picture is worked in black, white, and a single graded warm grey; all shapes retain their geometry but their colour is withheld.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue fill every coloured shape; no secondary or tertiary colour is admitted anywhere.",
-        [PAL_TERREA]    = "The shapes are filled with burnt sienna, yellow ochre, and terre verte; the geometry is preserved but the palette has been walked back into the earth."
+        [PAL_CALIDA]    =
+            "The colour is dominated by cadmium red and chrome yellow; blue appears only as a small, sharp accent near the lower edge.",
+        [PAL_FRIGIDA]   =
+            "The colour is dominated by cobalt and viridian; red appears only as a single small disc somewhere near the centre.",
+        [PAL_SATURATA]  =
+            "Every shape is filled with pure, unmixed pigment at maximum saturation, set against a flat white ground.",
+        [PAL_MUTA]      =
+            "The colour is softened to rose-beige, sage, and pale lilac; the forms are geometric but their palette is domestic.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in black, white, and a single graded warm grey; all shapes retain their geometry but their colour is withheld.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue fill every coloured shape; no secondary or tertiary colour is admitted anywhere.",
+        [PAL_TERREA]    =
+            "The shapes are filled with burnt sienna, yellow ochre, and terre verte; the geometry is preserved but the palette has been walked back into the earth."
     },
     {
         [FUN_PLANUM]     = "Behind the shapes there is only a single flat white ground; nothing further is added.",
-        [FUN_ORNATUM]    = "The ground behind the shapes is itself a wash of fainter coloured geometry — pale circles and translucent rectangles in washed pastels.",
-        [FUN_PAESAGIUM]  = "Far behind the geometry, a narrow strip of saturated landscape — cobalt hills, yellow fields — is visible at the lower edge of the picture.",
-        [FUN_ABSTRACTUM] = "The ground is itself a second layer of floating shapes, identical in construction to the figure, so that figure and ground cannot be separated.",
-        [FUN_TENEBROSUM] = "The shapes are set against a deep, warm black that absorbs their edges and makes the colours read as lit signs.",
+        [FUN_ORNATUM]    =
+            "The ground behind the shapes is itself a wash of fainter coloured geometry — pale circles and translucent rectangles in washed pastels.",
+        [FUN_PAESAGIUM]  =
+            "Far behind the geometry, a narrow strip of saturated landscape — cobalt hills, yellow fields — is visible at the lower edge of the picture.",
+        [FUN_ABSTRACTUM] =
+            "The ground is itself a second layer of floating shapes, identical in construction to the figure, so that figure and ground cannot be separated.",
+        [FUN_TENEBROSUM] =
+            "The shapes are set against a deep, warm black that absorbs their edges and makes the colours read as lit signs.",
         [FUN_LUMINOSUM]  = "The shapes float on a bright, cold white, their coloured areas hovering as if lit from behind."
     },
     kandinskius_lumen, N_OF(kandinskius_lumen),
@@ -744,21 +818,34 @@ static const Stylus stylus_magrittius = {
     magrittius_figurae, N_OF(magrittius_figurae),
     magrittius_motiva, N_OF(magrittius_motiva),
     {
-        [PAL_CALIDA]    = "The colour is muted — soft warm grey sky, black jacket, white collar, with only the substituting object carrying any warm chromatic accent.",
-        [PAL_FRIGIDA]   = "The entire picture is keyed cool: slate sky, black wool jacket, pale blue-white collar, and a single cool-toned substitute at the face.",
-        [PAL_SATURATA]  = "The substituting object at the face is worked at full, unexpected saturation against a restrained grey-and-black background.",
-        [PAL_MUTA]      = "Every surface is pulled toward grey; even the substituting object at the face has been walked back into the same quiet register.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded grey alone, from ivory at the brightest highlight to bone-black at the jacket.",
-        [PAL_PRIMARIA]  = "The substituting object at the face is painted in a single pure primary colour — red, yellow, or blue — against an otherwise grey-and-black picture.",
-        [PAL_TERREA]    = "The palette is earth brown, ivory, and sandstone; the substituting object at the face is a single weathered ordinary thing in the same earthy register."
+        [PAL_CALIDA]    =
+            "The colour is muted — soft warm grey sky, black jacket, white collar, with only the substituting object carrying any warm chromatic accent.",
+        [PAL_FRIGIDA]   =
+            "The entire picture is keyed cool: slate sky, black wool jacket, pale blue-white collar, and a single cool-toned substitute at the face.",
+        [PAL_SATURATA]  =
+            "The substituting object at the face is worked at full, unexpected saturation against a restrained grey-and-black background.",
+        [PAL_MUTA]      =
+            "Every surface is pulled toward grey; even the substituting object at the face has been walked back into the same quiet register.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded grey alone, from ivory at the brightest highlight to bone-black at the jacket.",
+        [PAL_PRIMARIA]  =
+            "The substituting object at the face is painted in a single pure primary colour — red, yellow, or blue — against an otherwise grey-and-black picture.",
+        [PAL_TERREA]    =
+            "The palette is earth brown, ivory, and sandstone; the substituting object at the face is a single weathered ordinary thing in the same earthy register."
     },
     {
-        [FUN_PLANUM]     = "Behind the subject is a plain wall in a single uninflected mid-grey; no architectural detail is permitted to break it.",
-        [FUN_ORNATUM]    = "Behind the subject, a wooden-framed domestic interior is fully depicted: picture rails, wallpaper in a small repeating leaf motif, a lit sconce at the left.",
-        [FUN_PAESAGIUM]  = "Behind the subject, a Belgian landscape of low fields and a single dirt road recedes under the same overcast grey sky that fills the subject's body.",
-        [FUN_ABSTRACTUM] = "Behind the subject, the wall has been replaced by an identical view of the sky; the picture is clearly indoors and clearly not.",
-        [FUN_TENEBROSUM] = "The room behind the subject is dark brown, nearly unlit; only the substituting object at the face is brought forward by illumination.",
-        [FUN_LUMINOSUM]  = "The wall behind the subject is a bright, overcast daylight grey, uniform to every edge of the frame."
+        [FUN_PLANUM]     =
+            "Behind the subject is a plain wall in a single uninflected mid-grey; no architectural detail is permitted to break it.",
+        [FUN_ORNATUM]    =
+            "Behind the subject, a wooden-framed domestic interior is fully depicted: picture rails, wallpaper in a small repeating leaf motif, a lit sconce at the left.",
+        [FUN_PAESAGIUM]  =
+            "Behind the subject, a Belgian landscape of low fields and a single dirt road recedes under the same overcast grey sky that fills the subject's body.",
+        [FUN_ABSTRACTUM] =
+            "Behind the subject, the wall has been replaced by an identical view of the sky; the picture is clearly indoors and clearly not.",
+        [FUN_TENEBROSUM] =
+            "The room behind the subject is dark brown, nearly unlit; only the substituting object at the face is brought forward by illumination.",
+        [FUN_LUMINOSUM]  =
+            "The wall behind the subject is a bright, overcast daylight grey, uniform to every edge of the frame."
     },
     magrittius_lumen, N_OF(magrittius_lumen),
     magrittius_texturae, N_OF(magrittius_texturae),
@@ -804,19 +891,28 @@ static const Stylus stylus_pollockius = {
     {
         [PAL_CALIDA]    = "The skeins are burnt orange, signal red, and aluminium silver on a bare cotton ground.",
         [PAL_FRIGIDA]   = "The skeins are cobalt, viridian, and lead white on a cold unbleached linen ground.",
-        [PAL_SATURATA]  = "The skeins are pure red, pure yellow, and pure blue laid over one another at full saturation; the canvas ground is pulled almost out of sight.",
-        [PAL_MUTA]      = "The skeins are mixed greys, olive, and a single soft ivory; the picture reads as a quiet tangle rather than as a storm.",
-        [PAL_MONOCHROMA]= "The skeins are only black and white enamel on raw canvas; no other colour is admitted anywhere in the picture.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue enamel cover the canvas in separate skeins that never quite overlap — where they would, the canvas has been scraped back to raw.",
-        [PAL_TERREA]    = "The skeins are raw umber, burnt sienna, and yellow ochre; the painting has the colour of earth being thrown over a body."
+        [PAL_SATURATA]  =
+            "The skeins are pure red, pure yellow, and pure blue laid over one another at full saturation; the canvas ground is pulled almost out of sight.",
+        [PAL_MUTA]      =
+            "The skeins are mixed greys, olive, and a single soft ivory; the picture reads as a quiet tangle rather than as a storm.",
+        [PAL_MONOCHROMA] =
+            "The skeins are only black and white enamel on raw canvas; no other colour is admitted anywhere in the picture.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue enamel cover the canvas in separate skeins that never quite overlap — where they would, the canvas has been scraped back to raw.",
+        [PAL_TERREA]    =
+            "The skeins are raw umber, burnt sienna, and yellow ochre; the painting has the colour of earth being thrown over a body."
     },
     {
-        [FUN_PLANUM]     = "The ground is bare, unsized cotton canvas, visible in small gaps throughout; nothing else lies behind the figure.",
-        [FUN_ORNATUM]    = "Behind the figure, a second layer of finer skeins is laid in pale colours beneath the dominant ones, visible only at the gaps in the overlay.",
+        [FUN_PLANUM]     =
+            "The ground is bare, unsized cotton canvas, visible in small gaps throughout; nothing else lies behind the figure.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a second layer of finer skeins is laid in pale colours beneath the dominant ones, visible only at the gaps in the overlay.",
         [FUN_PAESAGIUM]  = "There is no landscape; the canvas itself, raw and unprimed, carries the entire notion of ground.",
         [FUN_ABSTRACTUM] = "The ground is completely abstract; figure and background are both only paint and canvas.",
-        [FUN_TENEBROSUM] = "The canvas has been soaked with a dark stain before the skeins were thrown; the picture reads out of near-black rather than out of white.",
-        [FUN_LUMINOSUM]  = "The canvas is bright raw cotton, left mostly bare; the skeins read as dark tangle on an almost glaring ground."
+        [FUN_TENEBROSUM] =
+            "The canvas has been soaked with a dark stain before the skeins were thrown; the picture reads out of near-black rather than out of white.",
+        [FUN_LUMINOSUM]  =
+            "The canvas is bright raw cotton, left mostly bare; the skeins read as dark tangle on an almost glaring ground."
     },
     pollockius_lumen, N_OF(pollockius_lumen),
     pollockius_texturae, N_OF(pollockius_texturae),
@@ -839,16 +935,16 @@ static const char *const picassonus_figurae[] = {
     "The face is a single heavy almond shape, outlined in a dark line 4 mm thick; inside, features are indicated by five or six intersecting straight lines rather than by any modelled form."
 };
 static const char *const picassonus_motiva[] = {
-    "a single pasted fragment of newspaper, with visible letterforms reading 'LE JOURNAL', is glued flat into the chest area",
+    "a single pasted fragment of torn newspaper is glued flat into the chest area, its surface scrubbed with a thin grey wash so any print is illegible",
     "a semi-circle of warm yellow slices in from the right edge, suggesting a sun or a plate with no perspective",
-    "a cluster of three painted letters — S, U, R — floats free across the forehead in stencilled black",
+    "a cluster of three stencilled black glyph-shapes, belonging to no alphabet the viewer can name, floats free across the forehead",
     "a half-moon of pure black occupies what would have been the left eye socket",
     "a flattened mandolin shape, reduced to its silhouette, is tucked against the chest beneath the chin",
     "a painted pipe hangs from the lower lip at an impossible angle; its bowl points back at the face",
     "the ear has been detached from the side of the head and reattached 6 cm lower, upside down",
     "an angular black Z-shape represents the hair, rising from the top of the head as if a single lightning bolt",
     "a fragment of corrugated cardboard is collaged into the chest area, its ridges still visible under a thin grey wash",
-    "two angular painted stencil-letters — the A and the E of a torn-off word — float free above the right shoulder in red",
+    "two angular painted stencil-shapes in red float free above the right shoulder, their forms suggesting letters of some unnamed alphabet but resolving into none",
     "a small gridded piece of fishing net is glued over one cheek and painted flat over, so the plane beneath shows through the mesh",
     "a cluster of three painted black nails points inward toward the throat from three different directions",
     "a single bent copper wire is painted in perfect flat silhouette running from the top of the head to the lower edge of the picture"
@@ -873,21 +969,33 @@ static const Stylus stylus_picassonus = {
     picassonus_figurae, N_OF(picassonus_figurae),
     picassonus_motiva, N_OF(picassonus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, raw umber, terracotta, and a single sharp vermilion accent, all painted flat against off-white.",
-        [PAL_FRIGIDA]   = "The palette is lead white, cool grey, slate blue, and a single dull Prussian blue; no warm pigment is admitted.",
-        [PAL_SATURATA]  = "Saturated fields of pure red, yellow, and blue are set adjacent to one another without mixing, each bounded by a heavy black line.",
-        [PAL_MUTA]      = "The entire picture is worked in a narrow grey-brown middle range — ivory, mushroom, putty, stone — with only one small accent of pure colour.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded grey alone, from bone white highlight to lamp-black shadow; no colour is admitted.",
-        [PAL_PRIMARIA]  = "Only pure red, yellow, and blue are used; the planes of the face are filled with these three colours and a black-outlined white.",
-        [PAL_TERREA]    = "Earth pigments alone — raw umber, burnt sienna, yellow ochre, and an unmixed warm black — do all the colour work."
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, raw umber, terracotta, and a single sharp vermilion accent, all painted flat against off-white.",
+        [PAL_FRIGIDA]   =
+            "The palette is lead white, cool grey, slate blue, and a single dull Prussian blue; no warm pigment is admitted.",
+        [PAL_SATURATA]  =
+            "Saturated fields of pure red, yellow, and blue are set adjacent to one another without mixing, each bounded by a heavy black line.",
+        [PAL_MUTA]      =
+            "The entire picture is worked in a narrow grey-brown middle range — ivory, mushroom, putty, stone — with only one small accent of pure colour.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded grey alone, from bone white highlight to lamp-black shadow; no colour is admitted.",
+        [PAL_PRIMARIA]  =
+            "Only pure red, yellow, and blue are used; the planes of the face are filled with these three colours and a black-outlined white.",
+        [PAL_TERREA]    =
+            "Earth pigments alone — raw umber, burnt sienna, yellow ochre, and an unmixed warm black — do all the colour work."
     },
     {
         [FUN_PLANUM]     = "The background behind the figure is a single flat mid-grey, unmarked, with no illusion of depth.",
-        [FUN_ORNATUM]    = "The background is a field of small pasted fragments — labels, ticket stubs, printed text — overlaid with thin washes of grey paint.",
-        [FUN_PAESAGIUM]  = "A flattened landscape, shown from above, runs along the lower edge of the picture: small geometric houses and a river rendered as a single bent ribbon of blue.",
-        [FUN_ABSTRACTUM] = "The background consists of further faceted planes, identical in construction to the face, so that figure and ground interpenetrate without separation.",
-        [FUN_TENEBROSUM] = "The background is a deep, warm black; the planes of the figure emerge from it only where they are lightest.",
-        [FUN_LUMINOSUM]  = "The background is a flat field of high white, pushed to the point where it out-values even the brightest plane of the face."
+        [FUN_ORNATUM]    =
+            "The background is a field of small pasted fragments — labels, ticket stubs, printed text — overlaid with thin washes of grey paint.",
+        [FUN_PAESAGIUM]  =
+            "A flattened landscape, shown from above, runs along the lower edge of the picture: small geometric houses and a river rendered as a single bent ribbon of blue.",
+        [FUN_ABSTRACTUM] =
+            "The background consists of further faceted planes, identical in construction to the face, so that figure and ground interpenetrate without separation.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep, warm black; the planes of the figure emerge from it only where they are lightest.",
+        [FUN_LUMINOSUM]  =
+            "The background is a flat field of high white, pushed to the point where it out-values even the brightest plane of the face."
     },
     picassonus_lumen, N_OF(picassonus_lumen),
     picassonus_texturae, N_OF(picassonus_texturae),
@@ -945,21 +1053,34 @@ static const Stylus stylus_vangoghus = {
     vangoghus_figurae, N_OF(vangoghus_figurae),
     vangoghus_motiva, N_OF(vangoghus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is chrome yellow, cadmium orange, and vermilion, with a single cobalt accent at the eyes and collar.",
-        [PAL_FRIGIDA]   = "The palette is dominated by cobalt and ultramarine, with small areas of unmixed viridian and only a single passage of pale flesh warmth.",
-        [PAL_SATURATA]  = "Every stroke is laid down at pigment-jar saturation; no colour has been toned with white or grey, and no two adjacent strokes share a hue.",
-        [PAL_MUTA]      = "The colour is pulled down toward sage, dust-yellow, and a cold ivory; the paint is still thick but the chroma has been walked back.",
-        [PAL_MONOCHROMA]= "The picture is worked entirely in graded ultramarine and white, with a single sulphur-yellow accent at the pupils.",
-        [PAL_PRIMARIA]  = "Pure red, yellow, and blue are used for almost every passage; the secondary colours appear only where two primaries physically overlap in the wet paint.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, yellow ochre, and terre verte, with only a single cobalt accent for the eyes."
+        [PAL_CALIDA]    =
+            "The palette is chrome yellow, cadmium orange, and vermilion, with a single cobalt accent at the eyes and collar.",
+        [PAL_FRIGIDA]   =
+            "The palette is dominated by cobalt and ultramarine, with small areas of unmixed viridian and only a single passage of pale flesh warmth.",
+        [PAL_SATURATA]  =
+            "Every stroke is laid down at pigment-jar saturation; no colour has been toned with white or grey, and no two adjacent strokes share a hue.",
+        [PAL_MUTA]      =
+            "The colour is pulled down toward sage, dust-yellow, and a cold ivory; the paint is still thick but the chroma has been walked back.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked entirely in graded ultramarine and white, with a single sulphur-yellow accent at the pupils.",
+        [PAL_PRIMARIA]  =
+            "Pure red, yellow, and blue are used for almost every passage; the secondary colours appear only where two primaries physically overlap in the wet paint.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, yellow ochre, and terre verte, with only a single cobalt accent for the eyes."
     },
     {
-        [FUN_PLANUM]     = "The background is a single flat-but-brushy field of Prussian blue, worked in short horizontal strokes edge to edge.",
-        [FUN_ORNATUM]    = "Behind the figure, a wallpaper of small impasto yellow flowers on a cobalt ground covers the entire plane.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a field of wheat in impasto yellow strokes stretches to a horizon crossed by a single line of dark cypresses.",
-        [FUN_ABSTRACTUM] = "The entire background is a whirling field of concentric spiral strokes in blue, green, and white, radiating outward from the head.",
-        [FUN_TENEBROSUM] = "The background is a deep warm black worked in heavy horizontal strokes; the figure glows against it in hot orange and yellow.",
-        [FUN_LUMINOSUM]  = "The background is a high cobalt-and-white field shot through with short parallel lines; the picture reads as though lit from behind."
+        [FUN_PLANUM]     =
+            "The background is a single flat-but-brushy field of Prussian blue, worked in short horizontal strokes edge to edge.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a wallpaper of small impasto yellow flowers on a cobalt ground covers the entire plane.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a field of wheat in impasto yellow strokes stretches to a horizon crossed by a single line of dark cypresses.",
+        [FUN_ABSTRACTUM] =
+            "The entire background is a whirling field of concentric spiral strokes in blue, green, and white, radiating outward from the head.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep warm black worked in heavy horizontal strokes; the figure glows against it in hot orange and yellow.",
+        [FUN_LUMINOSUM]  =
+            "The background is a high cobalt-and-white field shot through with short parallel lines; the picture reads as though lit from behind."
     },
     vangoghus_lumen, N_OF(vangoghus_lumen),
     vangoghus_texturae, N_OF(vangoghus_texturae),
@@ -1009,21 +1130,33 @@ static const Stylus stylus_warholus = {
     warholus_figurae, N_OF(warholus_figurae),
     warholus_motiva, N_OF(warholus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is hot pink, tangerine, and canary yellow against a warm orange ground; every colour is unmixed and unshaded.",
-        [PAL_FRIGIDA]   = "The palette is aquamarine, teal, and pale lavender against a sharp ice blue; no warm pigment is admitted.",
-        [PAL_SATURATA]  = "Every colour is set to maximum saturation — fuchsia, lime, electric orange, chrome yellow — and laid flat in adjacent unmodulated fields.",
-        [PAL_MUTA]      = "The saturation is pulled back to sherbet tones — melon, pistachio, dusty lilac, cream — still flat, still printed, but no longer aggressive.",
-        [PAL_MONOCHROMA]= "The entire image is printed as a single black screen over a flat white canvas; only the line carries any information.",
-        [PAL_PRIMARIA]  = "Pure red, yellow, and blue are set as three separate flat fields filling the face, with black used only for the key-line edges.",
-        [PAL_TERREA]    = "The palette is rust, mustard, avocado, and burnt cream — a seventies print-advertisement key, all colours flat and all unmixed."
+        [PAL_CALIDA]    =
+            "The palette is hot pink, tangerine, and canary yellow against a warm orange ground; every colour is unmixed and unshaded.",
+        [PAL_FRIGIDA]   =
+            "The palette is aquamarine, teal, and pale lavender against a sharp ice blue; no warm pigment is admitted.",
+        [PAL_SATURATA]  =
+            "Every colour is set to maximum saturation — fuchsia, lime, electric orange, chrome yellow — and laid flat in adjacent unmodulated fields.",
+        [PAL_MUTA]      =
+            "The saturation is pulled back to sherbet tones — melon, pistachio, dusty lilac, cream — still flat, still printed, but no longer aggressive.",
+        [PAL_MONOCHROMA] =
+            "The entire image is printed as a single black screen over a flat white canvas; only the line carries any information.",
+        [PAL_PRIMARIA]  =
+            "Pure red, yellow, and blue are set as three separate flat fields filling the face, with black used only for the key-line edges.",
+        [PAL_TERREA]    =
+            "The palette is rust, mustard, avocado, and burnt cream — a seventies print-advertisement key, all colours flat and all unmixed."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of one saturated colour, unmarked, extending to every frame edge.",
-        [FUN_ORNATUM]    = "Behind the figure, a repeated printed pattern — identical flowers, dollar signs, or cans — tiles the entire plane.",
-        [FUN_PAESAGIUM]  = "No landscape is represented; a printed backdrop (a city skyline, a studio curtain) stands in for it in flat silhouetted colour.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of one saturated colour, unmarked, extending to every frame edge.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a repeated printed pattern — identical flowers, dollar signs, or cans — tiles the entire plane.",
+        [FUN_PAESAGIUM]  =
+            "No landscape is represented; a printed backdrop (a city skyline, a studio curtain) stands in for it in flat silhouetted colour.",
         [FUN_ABSTRACTUM] = "Behind the figure, further misregistered colour fields overlap one another; no depth is implied.",
-        [FUN_TENEBROSUM] = "Behind the figure is a single flat black screen; the figure's bright colours read as neon against it.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a single flat field of printer's white, illuminated with commercial photographic evenness."
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a single flat black screen; the figure's bright colours read as neon against it.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a single flat field of printer's white, illuminated with commercial photographic evenness."
     },
     warholus_lumen, N_OF(warholus_lumen),
     warholus_texturae, N_OF(warholus_texturae),
@@ -1077,21 +1210,34 @@ static const Stylus stylus_schieleus = {
     schieleus_figurae, N_OF(schieleus_figurae),
     schieleus_motiva, N_OF(schieleus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is raw ochre, bruised orange, and a dry burnt sienna; the skin runs to a jaundiced warmth.",
-        [PAL_FRIGIDA]   = "The palette is grey-green, slate, and chalky white, with only a single stripe of cold red at the lips or collar.",
-        [PAL_SATURATA]  = "A single saturated passage — a red scarf or ribbon — punctuates an otherwise undernourished palette of ochre, grey, and ivory.",
-        [PAL_MUTA]      = "The colour is pulled almost entirely out of the picture: grey paper, pale ochre flesh, a single thin red line.",
-        [PAL_MONOCHROMA]= "The picture is worked in sepia ink wash and black line on cream paper; no colour is admitted anywhere.",
-        [PAL_PRIMARIA]  = "Primary colours appear only at single small hotspots — a red collar, a yellow button, a blue nail — against an otherwise desaturated sheet.",
-        [PAL_TERREA]    = "The palette is raw umber, yellow ochre, and a sickly olive green; the whole picture reads as though unearthed rather than painted."
+        [PAL_CALIDA]    =
+            "The palette is raw ochre, bruised orange, and a dry burnt sienna; the skin runs to a jaundiced warmth.",
+        [PAL_FRIGIDA]   =
+            "The palette is grey-green, slate, and chalky white, with only a single stripe of cold red at the lips or collar.",
+        [PAL_SATURATA]  =
+            "A single saturated passage — a red scarf or ribbon — punctuates an otherwise undernourished palette of ochre, grey, and ivory.",
+        [PAL_MUTA]      =
+            "The colour is pulled almost entirely out of the picture: grey paper, pale ochre flesh, a single thin red line.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in sepia ink wash and black line on cream paper; no colour is admitted anywhere.",
+        [PAL_PRIMARIA]  =
+            "Primary colours appear only at single small hotspots — a red collar, a yellow button, a blue nail — against an otherwise desaturated sheet.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, yellow ochre, and a sickly olive green; the whole picture reads as though unearthed rather than painted."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure, the paper or canvas is left almost completely bare, with only a few thin stains of colour bleeding outward from the silhouette.",
-        [FUN_ORNATUM]    = "Behind the figure, a scatter of rough calligraphic marks — dates, initials, short angular lines — is distributed sparsely across the ground.",
-        [FUN_PAESAGIUM]  = "A suggestion of a steep, angular Austrian village roofscape is indicated behind the shoulder in a few hard, dry lines.",
-        [FUN_ABSTRACTUM] = "The ground is raw paper; around the figure, a few irregular patches of washed colour float without clear relation to one another.",
-        [FUN_TENEBROSUM] = "The ground is a warm blackish wash that gathers around the figure like a close-fitting atmosphere; the figure is barely separated from it.",
-        [FUN_LUMINOSUM]  = "The ground is a high, chalky, almost glaring white; the figure's contour reads all the more sharply against it."
+        [FUN_PLANUM]     =
+            "Behind the figure, the paper or canvas is left almost completely bare, with only a few thin stains of colour bleeding outward from the silhouette.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a scatter of rough calligraphic marks — dates, initials, short angular lines — is distributed sparsely across the ground.",
+        [FUN_PAESAGIUM]  =
+            "A suggestion of a steep, angular Austrian village roofscape is indicated behind the shoulder in a few hard, dry lines.",
+        [FUN_ABSTRACTUM] =
+            "The ground is raw paper; around the figure, a few irregular patches of washed colour float without clear relation to one another.",
+        [FUN_TENEBROSUM] =
+            "The ground is a warm blackish wash that gathers around the figure like a close-fitting atmosphere; the figure is barely separated from it.",
+        [FUN_LUMINOSUM]  =
+            "The ground is a high, chalky, almost glaring white; the figure's contour reads all the more sharply against it."
     },
     schieleus_lumen, N_OF(schieleus_lumen),
     schieleus_texturae, N_OF(schieleus_texturae),
@@ -1144,21 +1290,34 @@ static const Stylus stylus_baconius = {
     baconius_figurae, N_OF(baconius_figurae),
     baconius_motiva, N_OF(baconius_motiva),
     {
-        [PAL_CALIDA]    = "The palette is raw-meat pink, liver red, and bone-white against a warm orange-brown ground; the colours are those of a butcher's window.",
-        [PAL_FRIGIDA]   = "The palette is pale surgical green, slate grey, and cold violet, against a single flat field of clinical blue.",
-        [PAL_SATURATA]  = "A saturated vermilion interior of the mouth collides with a saturated cobalt background; the flesh is held between them in bruised desaturated pinks.",
-        [PAL_MUTA]      = "The colour is pulled toward grey, putty, and a dusty rose; even the meat tones are held low in chroma.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded cold grey alone, except for a single passage of saturated blood red at the mouth.",
-        [PAL_PRIMARIA]  = "The large flat background fields are in pure primary colours; the figure is held entirely in dirtied flesh tones against them.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, and bone black, with a single cold bone-white highlight at the wet lip."
+        [PAL_CALIDA]    =
+            "The palette is raw-meat pink, liver red, and bone-white against a warm orange-brown ground; the colours are those of a butcher's window.",
+        [PAL_FRIGIDA]   =
+            "The palette is pale surgical green, slate grey, and cold violet, against a single flat field of clinical blue.",
+        [PAL_SATURATA]  =
+            "A saturated vermilion interior of the mouth collides with a saturated cobalt background; the flesh is held between them in bruised desaturated pinks.",
+        [PAL_MUTA]      =
+            "The colour is pulled toward grey, putty, and a dusty rose; even the meat tones are held low in chroma.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded cold grey alone, except for a single passage of saturated blood red at the mouth.",
+        [PAL_PRIMARIA]  =
+            "The large flat background fields are in pure primary colours; the figure is held entirely in dirtied flesh tones against them.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, and bone black, with a single cold bone-white highlight at the wet lip."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of unmodulated, matte oil colour, extending to all four edges without inflection.",
-        [FUN_ORNATUM]    = "Behind the figure, a subtle pattern of small evenly-spaced dots (about 4 mm apart) covers the entire plane in a slightly darker shade of the ground.",
-        [FUN_PAESAGIUM]  = "Through a small painted doorway visible at the far right, a compressed view of an anonymous city street can be seen; the street is empty.",
-        [FUN_ABSTRACTUM] = "The background is divided into three rectangles of different unmodulated colours — a band of each, like a flag stood on end.",
-        [FUN_TENEBROSUM] = "Behind the figure is a flat, deep, slightly warmed black; the figure emerges from it only at the wet lip and the whites of the eyes.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a flat, cold, almost violent orange; the figure reads against it as a darker, disintegrating form."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of unmodulated, matte oil colour, extending to all four edges without inflection.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a subtle pattern of small evenly-spaced dots (about 4 mm apart) covers the entire plane in a slightly darker shade of the ground.",
+        [FUN_PAESAGIUM]  =
+            "Through a small painted doorway visible at the far right, a compressed view of an anonymous city street can be seen; the street is empty.",
+        [FUN_ABSTRACTUM] =
+            "The background is divided into three rectangles of different unmodulated colours — a band of each, like a flag stood on end.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a flat, deep, slightly warmed black; the figure emerges from it only at the wet lip and the whites of the eyes.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a flat, cold, almost violent orange; the figure reads against it as a darker, disintegrating form."
     },
     baconius_lumen, N_OF(baconius_lumen),
     baconius_texturae, N_OF(baconius_texturae),
@@ -1208,21 +1367,34 @@ static const Stylus stylus_hopperus = {
     hopperus_figurae, N_OF(hopperus_figurae),
     hopperus_motiva, N_OF(hopperus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm cream, burnt orange, and yellow ochre, with a single cool slate accent at the shaded wall.",
-        [PAL_FRIGIDA]   = "The palette is cool grey, slate blue, and desaturated olive; the warm passages are reserved only for the small rectangle of direct sunlight.",
-        [PAL_SATURATA]  = "A single rectangle of saturated chrome-orange afternoon sun falls across an otherwise desaturated field of grey and putty.",
-        [PAL_MUTA]      = "The palette is entirely pulled toward grey, putty, and cream; even the sunlit passages are held just below saturation.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm grey alone, from bone white in direct sun to warm umber in the deepest corners of the room.",
-        [PAL_PRIMARIA]  = "The architecture is painted in pure saturated primaries — a red brick wall, a yellow window frame, a blue doorway — while the figure remains in restrained flesh tones.",
-        [PAL_TERREA]    = "The palette is raw sienna, burnt umber, and ivory black, with a single slate-blue accent at the window or distant wall."
+        [PAL_CALIDA]    =
+            "The palette is warm cream, burnt orange, and yellow ochre, with a single cool slate accent at the shaded wall.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool grey, slate blue, and desaturated olive; the warm passages are reserved only for the small rectangle of direct sunlight.",
+        [PAL_SATURATA]  =
+            "A single rectangle of saturated chrome-orange afternoon sun falls across an otherwise desaturated field of grey and putty.",
+        [PAL_MUTA]      =
+            "The palette is entirely pulled toward grey, putty, and cream; even the sunlit passages are held just below saturation.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm grey alone, from bone white in direct sun to warm umber in the deepest corners of the room.",
+        [PAL_PRIMARIA]  =
+            "The architecture is painted in pure saturated primaries — a red brick wall, a yellow window frame, a blue doorway — while the figure remains in restrained flesh tones.",
+        [PAL_TERREA]    =
+            "The palette is raw sienna, burnt umber, and ivory black, with a single slate-blue accent at the window or distant wall."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a plain interior wall in a flat warm cream, crossed only by a single hard diagonal shadow.",
-        [FUN_ORNATUM]    = "Behind the figure is a modest interior: a framed picture on the wall, a partly-visible doorway, a hanging electric lamp, each painted with the same restraint.",
-        [FUN_PAESAGIUM]  = "Through a window behind the shoulder, a fragment of small-town street is visible: a clapboard house, a bare tree, a patch of sky.",
-        [FUN_ABSTRACTUM] = "Behind the figure is simply a flat arrangement of three large rectangles — wall, window, shadow — that read as pure geometry first and as a room second.",
-        [FUN_TENEBROSUM] = "The room behind the figure is nearly dark; only a narrow hot rectangle of afternoon sun falls across the far wall.",
-        [FUN_LUMINOSUM]  = "The room behind the figure is flooded with direct afternoon sun; the whole wall glows a warm cream and the figure catches every edge of it."
+        [FUN_PLANUM]     =
+            "Behind the figure is a plain interior wall in a flat warm cream, crossed only by a single hard diagonal shadow.",
+        [FUN_ORNATUM]    =
+            "Behind the figure is a modest interior: a framed picture on the wall, a partly-visible doorway, a hanging electric lamp, each painted with the same restraint.",
+        [FUN_PAESAGIUM]  =
+            "Through a window behind the shoulder, a fragment of small-town street is visible: a clapboard house, a bare tree, a patch of sky.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure is simply a flat arrangement of three large rectangles — wall, window, shadow — that read as pure geometry first and as a room second.",
+        [FUN_TENEBROSUM] =
+            "The room behind the figure is nearly dark; only a narrow hot rectangle of afternoon sun falls across the far wall.",
+        [FUN_LUMINOSUM]  =
+            "The room behind the figure is flooded with direct afternoon sun; the whole wall glows a warm cream and the figure catches every edge of it."
     },
     hopperus_lumen, N_OF(hopperus_lumen),
     hopperus_texturae, N_OF(hopperus_texturae),
@@ -1274,20 +1446,32 @@ static const Stylus stylus_hokusaius = {
     hokusaius_motiva, N_OF(hokusaius_motiva),
     {
         [PAL_CALIDA]    = "The palette is pale ochre, red madder, and warm cream, with a single accent of sulphur yellow.",
-        [PAL_FRIGIDA]   = "The palette is dominated by deep Prussian blue, pale celadon, and black, against a warm off-white ground.",
-        [PAL_SATURATA]  = "The colour fields are printed at high saturation — coral, vermilion, indigo, sap green — each absolutely flat and bounded by black line.",
-        [PAL_MUTA]      = "The palette is soft mineral tones — celadon, persimmon, oyster — each at half saturation, the overall register quiet and decorative.",
-        [PAL_MONOCHROMA]= "The picture is printed in black line on cream paper, with no colour added at all; only the keyblock is used.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue are used as colour fields, each flat and unmixed, bounded by the black keyline.",
-        [PAL_TERREA]    = "The palette is yellow ochre, red iron oxide, and charcoal black, against a natural paper-cream ground."
+        [PAL_FRIGIDA]   =
+            "The palette is dominated by deep Prussian blue, pale celadon, and black, against a warm off-white ground.",
+        [PAL_SATURATA]  =
+            "The colour fields are printed at high saturation — coral, vermilion, indigo, sap green — each absolutely flat and bounded by black line.",
+        [PAL_MUTA]      =
+            "The palette is soft mineral tones — celadon, persimmon, oyster — each at half saturation, the overall register quiet and decorative.",
+        [PAL_MONOCHROMA] =
+            "The picture is printed in black line on cream paper, with no colour added at all; only the keyblock is used.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue are used as colour fields, each flat and unmixed, bounded by the black keyline.",
+        [PAL_TERREA]    =
+            "The palette is yellow ochre, red iron oxide, and charcoal black, against a natural paper-cream ground."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of unmodulated pale colour, extending to all four edges of the print.",
-        [FUN_ORNATUM]    = "Behind the figure, a decorative pattern — stylised clouds, or a diapered field of small fans — covers the entire plane.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a flat landscape is drawn in receding bands: a field in one colour, a river in another, a distant mountain in a third, each bounded by black line.",
-        [FUN_ABSTRACTUM] = "Behind the figure, a stylised abstract pattern of wave-forms, mountain silhouettes, or geometric cloud shapes fills the ground.",
-        [FUN_TENEBROSUM] = "The ground is a single flat deep Prussian blue, against which the figure's pale flesh and bright clothing read as floating.",
-        [FUN_LUMINOSUM]  = "The ground is simply the cream of the paper, allowed to breathe around the figure without further printing."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of unmodulated pale colour, extending to all four edges of the print.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a decorative pattern — stylised clouds, or a diapered field of small fans — covers the entire plane.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a flat landscape is drawn in receding bands: a field in one colour, a river in another, a distant mountain in a third, each bounded by black line.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, a stylised abstract pattern of wave-forms, mountain silhouettes, or geometric cloud shapes fills the ground.",
+        [FUN_TENEBROSUM] =
+            "The ground is a single flat deep Prussian blue, against which the figure's pale flesh and bright clothing read as floating.",
+        [FUN_LUMINOSUM]  =
+            "The ground is simply the cream of the paper, allowed to breathe around the figure without further printing."
     },
     hokusaius_lumen, N_OF(hokusaius_lumen),
     hokusaius_texturae, N_OF(hokusaius_texturae),
@@ -1342,21 +1526,34 @@ static const Stylus stylus_munchius = {
     munchius_figurae, N_OF(munchius_figurae),
     munchius_motiva, N_OF(munchius_motiva),
     {
-        [PAL_CALIDA]    = "The sky is painted in bands of blood red, cadmium orange, and burnt ochre; the figure stands against it in sickly yellow-green flesh and black wool.",
-        [PAL_FRIGIDA]   = "The sky is painted in cold bands of Prussian blue, slate, and greenish-grey; the figure's flesh is a pale cold olive against it.",
-        [PAL_SATURATA]  = "Every band of the sky is laid in at full, unmixed saturation; the figure's flesh is kept desaturated so the sky reads the more aggressively.",
-        [PAL_MUTA]      = "The palette is pulled to dusk tones — mushroom, grey-violet, pale olive, cold ochre — and the urgency of the picture is carried by gesture rather than colour.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded blue-grey alone, with one single passage of dull red at the mouth or sky.",
-        [PAL_PRIMARIA]  = "The sky is painted in bands of red, yellow, and blue only; the figure's flesh is painted in a single flat green that is nearly their optical mix.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, yellow ochre, and terre verte; the sky bands are muted into the same earthy register as the figure."
+        [PAL_CALIDA]    =
+            "The sky is painted in bands of blood red, cadmium orange, and burnt ochre; the figure stands against it in sickly yellow-green flesh and black wool.",
+        [PAL_FRIGIDA]   =
+            "The sky is painted in cold bands of Prussian blue, slate, and greenish-grey; the figure's flesh is a pale cold olive against it.",
+        [PAL_SATURATA]  =
+            "Every band of the sky is laid in at full, unmixed saturation; the figure's flesh is kept desaturated so the sky reads the more aggressively.",
+        [PAL_MUTA]      =
+            "The palette is pulled to dusk tones — mushroom, grey-violet, pale olive, cold ochre — and the urgency of the picture is carried by gesture rather than colour.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded blue-grey alone, with one single passage of dull red at the mouth or sky.",
+        [PAL_PRIMARIA]  =
+            "The sky is painted in bands of red, yellow, and blue only; the figure's flesh is painted in a single flat green that is nearly their optical mix.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, yellow ochre, and terre verte; the sky bands are muted into the same earthy register as the figure."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of wavering horizontal strokes, all in one colour band; no landscape or object intrudes.",
-        [FUN_ORNATUM]    = "Behind the figure, parallel wavering contours radiate outward in echoing rings from the head, filling the entire upper plane.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a cold northern coast recedes into the distance: a low dark shore, a stretch of slate-blue sea, a single dark tree standing on its own in the middle distance.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the sky has dissolved into pure wavering horizontal stripes of colour, with no horizon visible at all.",
-        [FUN_TENEBROSUM] = "The ground is a deep, heavy near-black, worked in long horizontal strokes; only the figure's face and the sky's lowest band are lit.",
-        [FUN_LUMINOSUM]  = "The sky behind the figure is a hot, saturated bright orange that fills the upper two-thirds of the picture and casts a warm stain over the figure itself."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of wavering horizontal strokes, all in one colour band; no landscape or object intrudes.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, parallel wavering contours radiate outward in echoing rings from the head, filling the entire upper plane.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a cold northern coast recedes into the distance: a low dark shore, a stretch of slate-blue sea, a single dark tree standing on its own in the middle distance.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the sky has dissolved into pure wavering horizontal stripes of colour, with no horizon visible at all.",
+        [FUN_TENEBROSUM] =
+            "The ground is a deep, heavy near-black, worked in long horizontal strokes; only the figure's face and the sky's lowest band are lit.",
+        [FUN_LUMINOSUM]  =
+            "The sky behind the figure is a hot, saturated bright orange that fills the upper two-thirds of the picture and casts a warm stain over the figure itself."
     },
     munchius_lumen, N_OF(munchius_lumen),
     munchius_texturae, N_OF(munchius_texturae),
@@ -1382,7 +1579,7 @@ static const char *const lichtensteinius_motiva[] = {
     "a single graphic tear in the shape of a comma hangs from the lower lash of the right eye, outlined in black and filled in flat blue",
     "a stylised black telephone handset is held up to one ear, its coiled cord curling out of the frame in a flat black spiral",
     "a field of tightly-packed blue dots tiles the upper portion of the background, each dot identical and spaced 2 mm centre to centre",
-    "a single unread stencilled block of capital letters — POW or WHAAM or similar — is painted in flat black across the upper edge",
+    "a hard-edged starburst silhouette — the angular outline of a comic-book onomatopoeia with no letters inside — is painted in flat black across the upper edge",
     "the whole image carries a slight cyan misregistration, so that every edge shows a 1 mm ghost of cyan slightly offset",
     "a row of three thin white exclamation-marks runs above the head, each drawn in hard flat white line"
 };
@@ -1406,21 +1603,33 @@ static const Stylus stylus_lichtensteinius = {
     lichtensteinius_figurae, N_OF(lichtensteinius_figurae),
     lichtensteinius_motiva, N_OF(lichtensteinius_motiva),
     {
-        [PAL_CALIDA]    = "The palette is hot red dots on white skin, canary-yellow hair, and warm cream — no cool colour is admitted.",
-        [PAL_FRIGIDA]   = "The palette is pure cobalt blue dots on white, aqua, and flat black outlines; warm notes appear only as small red accents at the lips.",
-        [PAL_SATURATA]  = "Every colour is laid flat at maximum saturation — signal red, canary yellow, pure cobalt — separated by thick black line, never blended.",
-        [PAL_MUTA]      = "The saturation is pulled back to soft printing inks — salmon, butter yellow, cornflower — but the flat, dotted, outlined construction remains.",
-        [PAL_MONOCHROMA]= "The entire picture is printed in black ink on a white ground; all halftones are carried exclusively by varying densities of black dots.",
-        [PAL_PRIMARIA]  = "Only pure red, yellow, and blue are admitted as colour; the black outlines and white ground complete the palette.",
-        [PAL_TERREA]    = "The bright pops are replaced by earth halftones — sienna, ochre, and olive dots on cream — though the mechanical dot-and-line construction is unchanged."
+        [PAL_CALIDA]    =
+            "The palette is hot red dots on white skin, canary-yellow hair, and warm cream — no cool colour is admitted.",
+        [PAL_FRIGIDA]   =
+            "The palette is pure cobalt blue dots on white, aqua, and flat black outlines; warm notes appear only as small red accents at the lips.",
+        [PAL_SATURATA]  =
+            "Every colour is laid flat at maximum saturation — signal red, canary yellow, pure cobalt — separated by thick black line, never blended.",
+        [PAL_MUTA]      =
+            "The saturation is pulled back to soft printing inks — salmon, butter yellow, cornflower — but the flat, dotted, outlined construction remains.",
+        [PAL_MONOCHROMA] =
+            "The entire picture is printed in black ink on a white ground; all halftones are carried exclusively by varying densities of black dots.",
+        [PAL_PRIMARIA]  =
+            "Only pure red, yellow, and blue are admitted as colour; the black outlines and white ground complete the palette.",
+        [PAL_TERREA]    =
+            "The bright pops are replaced by earth halftones — sienna, ochre, and olive dots on cream — though the mechanical dot-and-line construction is unchanged."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of one pure primary colour, unmarked, extending to every frame edge.",
-        [FUN_ORNATUM]    = "Behind the figure, a field of dense red dots tiles the entire plane; each dot identical in size and position to every other.",
-        [FUN_PAESAGIUM] = "A stylised landscape is indicated behind the figure in flat fields: a green patch for grass, a flat yellow field for sky, a triangular grey peak, each bounded by black line.",
-        [FUN_ABSTRACTUM] = "The background is a set of overlapping rays, starbursts, and dot-fields in three primary colours, arranged as for a comic-book panel.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of one pure primary colour, unmarked, extending to every frame edge.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a field of dense red dots tiles the entire plane; each dot identical in size and position to every other.",
+        [FUN_PAESAGIUM] =
+            "A stylised landscape is indicated behind the figure in flat fields: a green patch for grass, a flat yellow field for sky, a triangular grey peak, each bounded by black line.",
+        [FUN_ABSTRACTUM] =
+            "The background is a set of overlapping rays, starbursts, and dot-fields in three primary colours, arranged as for a comic-book panel.",
         [FUN_TENEBROSUM] = "Behind the figure is solid flat black, against which the dotted face reads as sharply lit.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a flat field of pure white, as if on newsprint, extending to every edge without inflection."
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a flat field of pure white, as if on newsprint, extending to every edge without inflection."
     },
     lichtensteinius_lumen, N_OF(lichtensteinius_lumen),
     lichtensteinius_texturae, N_OF(lichtensteinius_texturae),
@@ -1465,20 +1674,32 @@ static const Stylus stylus_modiglianius = {
     modiglianius_figurae, N_OF(modiglianius_figurae),
     modiglianius_motiva, N_OF(modiglianius_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, terracotta, and rose flesh against a warm umber ground; the whole picture glows quietly in the yellow-to-red range.",
-        [PAL_FRIGIDA]   = "The palette is pale olive, grey-green, and cool ivory, with only a single muted rose accent at the lips.",
-        [PAL_SATURATA]  = "A single deep ultramarine garment meets warm ochre skin at the neckline; the saturation of the two colours carries the whole picture.",
-        [PAL_MUTA]      = "The entire picture is held in quiet halftones: ivory, taupe, dusky rose, and pale olive, each at half chroma.",
-        [PAL_MONOCHROMA]= "The picture is worked entirely in graded warm sepia, from bone white at the cheek to dark umber at the neck and hair.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue are admitted; the flesh is rendered as a warm optical mix, the garment as a single saturated primary field.",
-        [PAL_TERREA]    = "The palette is raw umber, yellow ochre, Venetian red, and terre verte; the whole picture has the register of worked earth."
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, terracotta, and rose flesh against a warm umber ground; the whole picture glows quietly in the yellow-to-red range.",
+        [PAL_FRIGIDA]   =
+            "The palette is pale olive, grey-green, and cool ivory, with only a single muted rose accent at the lips.",
+        [PAL_SATURATA]  =
+            "A single deep ultramarine garment meets warm ochre skin at the neckline; the saturation of the two colours carries the whole picture.",
+        [PAL_MUTA]      =
+            "The entire picture is held in quiet halftones: ivory, taupe, dusky rose, and pale olive, each at half chroma.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked entirely in graded warm sepia, from bone white at the cheek to dark umber at the neck and hair.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue are admitted; the flesh is rendered as a warm optical mix, the garment as a single saturated primary field.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, yellow ochre, Venetian red, and terre verte; the whole picture has the register of worked earth."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single plain field of warm ochre or olive, unmodulated, with no object in it at all.",
-        [FUN_ORNATUM]    = "Behind the figure, a patterned wall of small repeating motifs — diamonds, stars — is suggested in soft warm browns.",
-        [FUN_PAESAGIUM]  = "Behind the figure, through a small window or doorway, a simplified hill landscape is visible in warm ochres and olives.",
-        [FUN_ABSTRACTUM] = "The background is a warm, shadowed, largely undefined space of overlapping brushstrokes; no specific object is rendered.",
-        [FUN_TENEBROSUM] = "The background is a deep, warm dark brown; the figure emerges from it only at the lit side of the face and the highlights of the neck.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single plain field of warm ochre or olive, unmodulated, with no object in it at all.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a patterned wall of small repeating motifs — diamonds, stars — is suggested in soft warm browns.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, through a small window or doorway, a simplified hill landscape is visible in warm ochres and olives.",
+        [FUN_ABSTRACTUM] =
+            "The background is a warm, shadowed, largely undefined space of overlapping brushstrokes; no specific object is rendered.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep, warm dark brown; the figure emerges from it only at the lit side of the face and the highlights of the neck.",
         [FUN_LUMINOSUM]  = "The background is a pale ivory-gold; the elongated figure reads as a darker silhouette against it."
     },
     modiglianius_lumen, N_OF(modiglianius_lumen),
@@ -1528,21 +1749,34 @@ static const Stylus stylus_rembrandtus = {
     rembrandtus_figurae, N_OF(rembrandtus_figurae),
     rembrandtus_motiva, N_OF(rembrandtus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, madder red, and raw umber, with small impasto lead-white highlights; the whole picture glows golden.",
-        [PAL_FRIGIDA]   = "The palette is cool umber and bone black, with a single cool highlight of lead white; the warm notes are confined to the pupils of the eyes.",
-        [PAL_SATURATA]  = "A deep saturated madder red dominates the garment; the skin is kept quieter, and the contrast of saturated cloth and restrained flesh carries the picture.",
-        [PAL_MUTA]      = "The palette is pulled toward warm grey-brown throughout: everything is a variation of umber, ochre, and bone, held at low chroma.",
-        [PAL_MONOCHROMA]= "The picture is painted in graded warm brown alone, from bone white highlight to deep translucent bitumen shadow.",
-        [PAL_PRIMARIA]  = "Only warm red, yellow, and a single deep blue are admitted; the whole picture is held in earthy variations of these three colours.",
-        [PAL_TERREA]    = "Raw umber, burnt sienna, Venetian red, and yellow ochre do almost all the colour work; a single small touch of natural ultramarine appears at the eyes."
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, madder red, and raw umber, with small impasto lead-white highlights; the whole picture glows golden.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool umber and bone black, with a single cool highlight of lead white; the warm notes are confined to the pupils of the eyes.",
+        [PAL_SATURATA]  =
+            "A deep saturated madder red dominates the garment; the skin is kept quieter, and the contrast of saturated cloth and restrained flesh carries the picture.",
+        [PAL_MUTA]      =
+            "The palette is pulled toward warm grey-brown throughout: everything is a variation of umber, ochre, and bone, held at low chroma.",
+        [PAL_MONOCHROMA] =
+            "The picture is painted in graded warm brown alone, from bone white highlight to deep translucent bitumen shadow.",
+        [PAL_PRIMARIA]  =
+            "Only warm red, yellow, and a single deep blue are admitted; the whole picture is held in earthy variations of these three colours.",
+        [PAL_TERREA]    =
+            "Raw umber, burnt sienna, Venetian red, and yellow ochre do almost all the colour work; a single small touch of natural ultramarine appears at the eyes."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single dark, warm, nearly-black field painted in slow varied brown strokes; no architectural detail is admitted.",
-        [FUN_ORNATUM]    = "Behind the figure, a suggestion of patterned tapestry or tooled leather is just visible in the shadow, rendered in deep warm glazes.",
-        [FUN_PAESAGIUM]  = "Behind the figure, through an arched opening at the far left, a narrow view of an atmospheric landscape recedes into golden distance.",
-        [FUN_ABSTRACTUM] = "The background is undifferentiated atmospheric shadow; no plane, object, or horizon is specifically indicated.",
-        [FUN_TENEBROSUM] = "The background is a deep warm near-black; the figure emerges from it only where the single warm light source strikes.",
-        [FUN_LUMINOSUM]  = "The background is warmer than usual — a glowing dim gold — so the figure reads as a darker silhouette against it."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single dark, warm, nearly-black field painted in slow varied brown strokes; no architectural detail is admitted.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a suggestion of patterned tapestry or tooled leather is just visible in the shadow, rendered in deep warm glazes.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, through an arched opening at the far left, a narrow view of an atmospheric landscape recedes into golden distance.",
+        [FUN_ABSTRACTUM] =
+            "The background is undifferentiated atmospheric shadow; no plane, object, or horizon is specifically indicated.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep warm near-black; the figure emerges from it only where the single warm light source strikes.",
+        [FUN_LUMINOSUM]  =
+            "The background is warmer than usual — a glowing dim gold — so the figure reads as a darker silhouette against it."
     },
     rembrandtus_lumen, N_OF(rembrandtus_lumen),
     rembrandtus_texturae, N_OF(rembrandtus_texturae),
@@ -1588,19 +1822,30 @@ static const Stylus stylus_hockneius = {
     hockneius_motiva, N_OF(hockneius_motiva),
     {
         [PAL_CALIDA]    = "The palette is warm peach flesh, sunny yellow, and bright terracotta against a clean cream ground.",
-        [PAL_FRIGIDA]   = "The palette is pool blue, viridian, and cool lavender, against a clean white ground; warm notes are limited to the flesh.",
-        [PAL_SATURATA]  = "Every field is a saturated modern colour — pool blue, signal yellow, hot pink, lime — set adjacent, all flat and unmodulated.",
-        [PAL_MUTA]      = "The saturation is pulled back to pale ice-cream tones — mint, peach, pale lilac — each still laid flat and hard-edged.",
-        [PAL_MONOCHROMA]= "The picture is worked in flat fields of one graded warm grey, with a single saturated accent at the shirt or scarf.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue are laid as flat saturated fields; the skin is a clean warm optical mix between them.",
-        [PAL_TERREA]    = "The palette is warm terracotta, burnt sienna, and sand, against an olive-grey ground; the colours are flat but the key is warm and earthy."
+        [PAL_FRIGIDA]   =
+            "The palette is pool blue, viridian, and cool lavender, against a clean white ground; warm notes are limited to the flesh.",
+        [PAL_SATURATA]  =
+            "Every field is a saturated modern colour — pool blue, signal yellow, hot pink, lime — set adjacent, all flat and unmodulated.",
+        [PAL_MUTA]      =
+            "The saturation is pulled back to pale ice-cream tones — mint, peach, pale lilac — each still laid flat and hard-edged.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in flat fields of one graded warm grey, with a single saturated accent at the shirt or scarf.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue are laid as flat saturated fields; the skin is a clean warm optical mix between them.",
+        [PAL_TERREA]    =
+            "The palette is warm terracotta, burnt sienna, and sand, against an olive-grey ground; the colours are flat but the key is warm and earthy."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of one saturated modern colour, clean and unmarked, extending to every frame edge.",
-        [FUN_ORNATUM]    = "Behind the figure, a clean flat pattern of modern geometric shapes — circles, bars, zigzags — in three primary colours tiles the entire plane.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a simplified California garden is visible: a slab of pool blue, a green lawn, a single stylised palm tree, each a flat field of saturated colour.",
-        [FUN_ABSTRACTUM] = "The background is three large flat rectangles of saturated colour, abutting one another without transition.",
-        [FUN_TENEBROSUM] = "Behind the figure is a single deep teal-black; the figure's clean bright fields read all the more sharply against it.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of one saturated modern colour, clean and unmarked, extending to every frame edge.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a clean flat pattern of modern geometric shapes — circles, bars, zigzags — in three primary colours tiles the entire plane.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a simplified California garden is visible: a slab of pool blue, a green lawn, a single stylised palm tree, each a flat field of saturated colour.",
+        [FUN_ABSTRACTUM] =
+            "The background is three large flat rectangles of saturated colour, abutting one another without transition.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a single deep teal-black; the figure's clean bright fields read all the more sharply against it.",
         [FUN_LUMINOSUM]  = "Behind the figure is a single bright clean lemon-yellow or sky blue, flooded edge to edge."
     },
     hockneius_lumen, N_OF(hockneius_lumen),
@@ -1645,21 +1890,34 @@ static const Stylus stylus_freudus = {
     freudus_figurae, N_OF(freudus_figurae),
     freudus_motiva, N_OF(freudus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, madder, rose, and a quiet burnt sienna; the flesh is a varied honest warmth.",
-        [PAL_FRIGIDA]   = "The palette is cool olive, slate, grey-violet, and ivory; the flesh is painted in muted cold greens and blues.",
-        [PAL_SATURATA]  = "The flesh is painted at unexpected full saturation: bright warm rose at the cheek, strong ochre at the forehead, clear umber in the shadow.",
-        [PAL_MUTA]      = "The saturation is pulled down to muted earthy tones; the paint remains thick but the chroma is domestic rather than vivid.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone; the impasto and the honest modelling remain, but colour is withheld.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue are admitted as colour; the flesh is painted as their optical mix, never directly blended.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, yellow ochre, and terre verte, with small lead-white impasto highlights."
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, madder, rose, and a quiet burnt sienna; the flesh is a varied honest warmth.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool olive, slate, grey-violet, and ivory; the flesh is painted in muted cold greens and blues.",
+        [PAL_SATURATA]  =
+            "The flesh is painted at unexpected full saturation: bright warm rose at the cheek, strong ochre at the forehead, clear umber in the shadow.",
+        [PAL_MUTA]      =
+            "The saturation is pulled down to muted earthy tones; the paint remains thick but the chroma is domestic rather than vivid.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone; the impasto and the honest modelling remain, but colour is withheld.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue are admitted as colour; the flesh is painted as their optical mix, never directly blended.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, yellow ochre, and terre verte, with small lead-white impasto highlights."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a plain studio wall in a single quiet warm grey, worked in patient matte strokes.",
-        [FUN_ORNATUM]    = "Behind the figure, a corner of a working studio is visible: an unmade cot, a paint-spattered floor, a stack of canvases.",
-        [FUN_PAESAGIUM]  = "Through a small window visible at the upper right, a modest view of a London courtyard garden is suggested in patient small strokes.",
-        [FUN_ABSTRACTUM] = "The background is a single close, undifferentiated shadow; only a faint suggestion of wall or floor is admitted.",
-        [FUN_TENEBROSUM] = "The background is a deep close warm brown; the figure is brought forward out of it by the light on the face alone.",
-        [FUN_LUMINOSUM]  = "The background is a high, soft white; the figure is pressed forward from this light in full physical paint."
+        [FUN_PLANUM]     =
+            "Behind the figure is a plain studio wall in a single quiet warm grey, worked in patient matte strokes.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a corner of a working studio is visible: an unmade cot, a paint-spattered floor, a stack of canvases.",
+        [FUN_PAESAGIUM]  =
+            "Through a small window visible at the upper right, a modest view of a London courtyard garden is suggested in patient small strokes.",
+        [FUN_ABSTRACTUM] =
+            "The background is a single close, undifferentiated shadow; only a faint suggestion of wall or floor is admitted.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep close warm brown; the figure is brought forward out of it by the light on the face alone.",
+        [FUN_LUMINOSUM]  =
+            "The background is a high, soft white; the figure is pressed forward from this light in full physical paint."
     },
     freudus_lumen, N_OF(freudus_lumen),
     freudus_texturae, N_OF(freudus_texturae),
@@ -1675,16 +1933,16 @@ static const char *const basquiatus_figurae[] = {
     "The face is drawn with the rough confidence of a subway line: a few thick black strokes define the silhouette, the eyes are two wide black-and-white discs, the teeth are visible as a row of hard white rectangles. The face reads as raw, urgent, alive.",
     "The head is rendered as a skull-like form over flat flesh: the structure of bone beneath is visible through hatched lines at the temples and the jaw, but the eyes, nose, and mouth are painted whole and fierce on top.",
     "The subject's face is painted in a scribbled field of many marks — short strokes, scratchings, reversals, annotations — yet the underlying portrait is unmistakable: a real person looking directly out of the picture.",
-    "Across the face are painted short labels — single words, arrows, scratched-out corrections — done in oil stick over the wet paint, as though the picture were being annotated by its maker.",
+    "Across the face are painted short scrawled marks — arrows, scratched-out rectangles, illegible tally-strokes — done in oil stick over the wet paint, as though the picture were being annotated by its maker.",
     "The eyes are large, frontal, and filled with a single flat colour; the pupils are hard black dots; the whites have been stained with a thin oil-stick yellow scrubbed across them."
 };
 static const char *const basquiatus_motiva[] = {
     "a three-pointed black crown with small ticks along its rim is painted above the head in thick black oil stick, standing 5 cm proud of the picture's top edge",
-    "a single word — usually in capitals, sometimes crossed out — is scrawled across the forehead in confident oil-stick line",
+    "a single hard angular glyph belonging to no alphabet, sometimes crossed out, is scrawled across the forehead in confident oil-stick line",
     "a stylised skeleton arm is visible through the flesh of the upper chest, each rib drawn as a single hard white stroke",
     "a copyright symbol (© or ℗) has been painted small near the shoulder, as though marking the figure as a product",
-    "a scatter of annotations — single letters, tally marks, short mathematical-looking fragments — is distributed across the background in oil stick",
-    "the painter's own scrawled signature crosses the lower edge of the picture in a single decisive line",
+    "a scatter of annotations — tally marks, short diagrammatic fragments, small crossed-out shapes — is distributed across the background in oil stick",
+    "a single decisive oil-stick gesture crosses the lower edge of the picture, its shape a loose abstract scribble that reads as mark rather than writing",
     "a single dark arrow, 15 cm long, points inward at the crown from the upper-right edge, drawn with a paint-loaded brush"
 };
 static const char *const basquiatus_lumen[] = {
@@ -1704,21 +1962,33 @@ static const Stylus stylus_basquiatus = {
     basquiatus_figurae, N_OF(basquiatus_figurae),
     basquiatus_motiva, N_OF(basquiatus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is raw cadmium red, signal orange, and sulphur yellow, against a hot coffee-stained brown ground.",
-        [PAL_FRIGIDA]   = "The palette is cool cobalt, slate, and viridian, against a dirty white ground; warm notes are limited to the flesh of the face.",
-        [PAL_SATURATA]  = "Every passage is at full saturation — cadmium red, signal yellow, pure cobalt, cool green — against a black-and-white scribbled ground.",
-        [PAL_MUTA]      = "The saturation is pulled back to dirty neutrals — mushroom, rust, olive, cream — while the black oil-stick marks remain hard and saturated.",
-        [PAL_MONOCHROMA]= "The picture is worked in black oil stick on a cream or dirty white ground; no colour is admitted.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue are used as flat saturated fields; black oil stick is laid over them for every line and annotation.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, yellow ochre, and ivory; the marks are laid in black oil stick over warm stained ground."
+        [PAL_CALIDA]    =
+            "The palette is raw cadmium red, signal orange, and sulphur yellow, against a hot coffee-stained brown ground.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool cobalt, slate, and viridian, against a dirty white ground; warm notes are limited to the flesh of the face.",
+        [PAL_SATURATA]  =
+            "Every passage is at full saturation — cadmium red, signal yellow, pure cobalt, cool green — against a black-and-white scribbled ground.",
+        [PAL_MUTA]      =
+            "The saturation is pulled back to dirty neutrals — mushroom, rust, olive, cream — while the black oil-stick marks remain hard and saturated.",
+        [PAL_MONOCHROMA] = "The picture is worked in black oil stick on a cream or dirty white ground; no colour is admitted.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue are used as flat saturated fields; black oil stick is laid over them for every line and annotation.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, yellow ochre, and ivory; the marks are laid in black oil stick over warm stained ground."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single scrubbed field of one raw colour, laid on in broad confident brushstrokes that leave the underlying canvas partly visible.",
-        [FUN_ORNATUM]    = "Behind the figure, a scatter of painted fragments — single letters, tally marks, small diagrams, crowns — fills the space without repetition.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a rough urban skyline of rectangular silhouettes is indicated in a few confident dark strokes along the horizon.",
-        [FUN_ABSTRACTUM] = "The background is a field of layered marks, lines, and labels laid on top of a rough painted ground; no coherent space is implied.",
-        [FUN_TENEBROSUM] = "The background is a deep scribbled near-black, against which the figure's face and annotations glow in warm colour.",
-        [FUN_LUMINOSUM]  = "The background is a dirty flat white, against which every oil-stick mark and every saturated colour-field stands out sharply."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single scrubbed field of one raw colour, laid on in broad confident brushstrokes that leave the underlying canvas partly visible.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a scatter of painted fragments — single letters, tally marks, small diagrams, crowns — fills the space without repetition.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a rough urban skyline of rectangular silhouettes is indicated in a few confident dark strokes along the horizon.",
+        [FUN_ABSTRACTUM] =
+            "The background is a field of layered marks, lines, and labels laid on top of a rough painted ground; no coherent space is implied.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep scribbled near-black, against which the figure's face and annotations glow in warm colour.",
+        [FUN_LUMINOSUM]  =
+            "The background is a dirty flat white, against which every oil-stick mark and every saturated colour-field stands out sharply."
     },
     basquiatus_lumen, N_OF(basquiatus_lumen),
     basquiatus_texturae, N_OF(basquiatus_texturae),
@@ -1763,21 +2033,34 @@ static const Stylus stylus_seuratus = {
     seuratus_figurae, N_OF(seuratus_figurae),
     seuratus_motiva, N_OF(seuratus_motiva),
     {
-        [PAL_CALIDA]    = "The dots are primarily warm — chrome yellow, vermilion, warm ochre, soft madder — with violet and green used only in the shadow passages.",
-        [PAL_FRIGIDA]   = "The dots are primarily cool — cobalt, viridian, grey-violet — with only a small field of warm ochre dots in the flesh.",
-        [PAL_SATURATA]  = "The dots are laid at full pigment saturation; the optical mix from a distance reads as richly coloured but the individual dots are unmixed.",
-        [PAL_MUTA]      = "The dot palette is pulled to soft, atmospheric tones — mushroom, dove, cream, pale lilac — and the picture reads as a quiet dusty field.",
-        [PAL_MONOCHROMA]= "The entire picture is built from dots of black and white alone on a cream ground; halftones are produced by dot density.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue dots are admitted; every perceived hue is produced as an optical mix between pairs of these primaries.",
-        [PAL_TERREA]    = "The dot palette is raw umber, burnt sienna, yellow ochre, and terre verte; the picture reads warm and earthy at viewing distance."
+        [PAL_CALIDA]    =
+            "The dots are primarily warm — chrome yellow, vermilion, warm ochre, soft madder — with violet and green used only in the shadow passages.",
+        [PAL_FRIGIDA]   =
+            "The dots are primarily cool — cobalt, viridian, grey-violet — with only a small field of warm ochre dots in the flesh.",
+        [PAL_SATURATA]  =
+            "The dots are laid at full pigment saturation; the optical mix from a distance reads as richly coloured but the individual dots are unmixed.",
+        [PAL_MUTA]      =
+            "The dot palette is pulled to soft, atmospheric tones — mushroom, dove, cream, pale lilac — and the picture reads as a quiet dusty field.",
+        [PAL_MONOCHROMA] =
+            "The entire picture is built from dots of black and white alone on a cream ground; halftones are produced by dot density.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue dots are admitted; every perceived hue is produced as an optical mix between pairs of these primaries.",
+        [PAL_TERREA]    =
+            "The dot palette is raw umber, burnt sienna, yellow ochre, and terre verte; the picture reads warm and earthy at viewing distance."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure, the ground is a single uniform field of dots of one dominant cool hue, extending to every edge.",
-        [FUN_ORNATUM]    = "Behind the figure, a field of dot-built small flowers and grass blades tiles the plane in quiet regular rhythm.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a Sunday park of the Île de la Grande Jatte is implied — grass in warm and cool greens, a strip of river blue, figures in distant dot-silhouettes.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the dots continue as an almost uniform warm grey field, producing an atmospheric rather than representational space.",
-        [FUN_TENEBROSUM] = "The background dots are clustered into a deep cool violet-black; the figure's warmer dots glow against it.",
-        [FUN_LUMINOSUM]  = "The background dots are clustered into a bright warm cream; the figure reads as a soft darker silhouette against it."
+        [FUN_PLANUM]     =
+            "Behind the figure, the ground is a single uniform field of dots of one dominant cool hue, extending to every edge.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a field of dot-built small flowers and grass blades tiles the plane in quiet regular rhythm.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a Sunday park of the Île de la Grande Jatte is implied — grass in warm and cool greens, a strip of river blue, figures in distant dot-silhouettes.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the dots continue as an almost uniform warm grey field, producing an atmospheric rather than representational space.",
+        [FUN_TENEBROSUM] =
+            "The background dots are clustered into a deep cool violet-black; the figure's warmer dots glow against it.",
+        [FUN_LUMINOSUM]  =
+            "The background dots are clustered into a bright warm cream; the figure reads as a soft darker silhouette against it."
     },
     seuratus_lumen, N_OF(seuratus_lumen),
     seuratus_texturae, N_OF(seuratus_texturae),
@@ -1822,21 +2105,34 @@ static const Stylus stylus_rivereus = {
     rivereus_figurae, N_OF(rivereus_figurae),
     rivereus_motiva, N_OF(rivereus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, burnt sienna, Venetian red, and sulphur yellow, against a sun-warmed earth-pink ground.",
-        [PAL_FRIGIDA]   = "The palette is cool stone grey, pale turquoise, and jade green, against a muted cool stone ground; the flesh is kept restrained.",
-        [PAL_SATURATA]  = "A saturated red embroidered garment or flower meets warm ochre skin; the saturation of the single strong accent carries the whole picture.",
-        [PAL_MUTA]      = "The palette is quiet earth tones — sand, clay, putty, ivory — and the picture reads with a dignified, sunlit restraint.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm earth tones alone, from cream to deep sienna, giving the register of a fresco seen in raking light.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue are used as flat saturated fields in the garment, accessories, and background; the flesh is kept in quiet optical mixes.",
-        [PAL_TERREA]    = "The palette is entirely earth pigments — raw umber, yellow ochre, burnt sienna, terre verte — with small accents of carbon black and lead white."
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, burnt sienna, Venetian red, and sulphur yellow, against a sun-warmed earth-pink ground.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool stone grey, pale turquoise, and jade green, against a muted cool stone ground; the flesh is kept restrained.",
+        [PAL_SATURATA]  =
+            "A saturated red embroidered garment or flower meets warm ochre skin; the saturation of the single strong accent carries the whole picture.",
+        [PAL_MUTA]      =
+            "The palette is quiet earth tones — sand, clay, putty, ivory — and the picture reads with a dignified, sunlit restraint.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm earth tones alone, from cream to deep sienna, giving the register of a fresco seen in raking light.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue are used as flat saturated fields in the garment, accessories, and background; the flesh is kept in quiet optical mixes.",
+        [PAL_TERREA]    =
+            "The palette is entirely earth pigments — raw umber, yellow ochre, burnt sienna, terre verte — with small accents of carbon black and lead white."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field of warm stone-pink, painted in quiet matte brushstrokes that do not draw attention.",
-        [FUN_ORNATUM]    = "Behind the figure, a low wall patterned with stylised pre-Columbian motifs — stepped crosses, serpent scales, small sun shapes — rises to shoulder height.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a stylised Mexican landscape recedes into the distance: a band of corn field, a terraced hill, a distant volcano, each a flat area of confident earth colour.",
-        [FUN_ABSTRACTUM] = "The background is a broad flat division of two or three warm earth fields, abutting one another as large simple bands.",
-        [FUN_TENEBROSUM] = "The background is a deep warm umber that surrounds the figure like the interior of a shaded courtyard; only the figure's face and shoulders catch the day.",
-        [FUN_LUMINOSUM]  = "The background is a bright warm buff, the colour of sunlit plaster; the figure reads as a rich warm silhouette against it."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field of warm stone-pink, painted in quiet matte brushstrokes that do not draw attention.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a low wall patterned with stylised pre-Columbian motifs — stepped crosses, serpent scales, small sun shapes — rises to shoulder height.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a stylised Mexican landscape recedes into the distance: a band of corn field, a terraced hill, a distant volcano, each a flat area of confident earth colour.",
+        [FUN_ABSTRACTUM] =
+            "The background is a broad flat division of two or three warm earth fields, abutting one another as large simple bands.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep warm umber that surrounds the figure like the interior of a shaded courtyard; only the figure's face and shoulders catch the day.",
+        [FUN_LUMINOSUM]  =
+            "The background is a bright warm buff, the colour of sunlit plaster; the figure reads as a rich warm silhouette against it."
     },
     rivereus_lumen, N_OF(rivereus_lumen),
     rivereus_texturae, N_OF(rivereus_texturae),
@@ -1862,7 +2158,7 @@ static const char *const velaspinus_motiva[] = {
     "where the veil crosses the mouth, the subject's breath has fogged it in a faint soft circle about 6 cm across",
     "the veil catches a diagonal highlight along its entire length, a soft pale pearl stripe running upper-left to lower-right",
     "one corner of the veil has been rolled back by a breath of wind and a small patch of face beneath is revealed sharply",
-    "the painter's small stamped monogram — a spidery V — is visible along the veil's lower hem, in black thread",
+    "a small stamped ornament in the shape of a spidery curlicue is visible along the veil's lower hem, in black thread",
     "a second narrow veil, barely visible, runs perpendicular to the first; the two veils intersect at the throat in a woven cross",
     "a small dragonfly has alighted on the veil and is painted in precise miniature at the outer fold",
     "a row of six tiny silver sequins is stitched along the upper edge of the veil, each catching its own pinpoint highlight",
@@ -1886,21 +2182,34 @@ static const Stylus stylus_velaspinus = {
     velaspinus_figurae, N_OF(velaspinus_figurae),
     velaspinus_motiva, N_OF(velaspinus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm cream flesh, pale honey, and a quiet rose, with the veil in a warm pearl that catches every highlight.",
-        [PAL_FRIGIDA]   = "The palette is cool pearl, slate grey, and pale ice-blue; the veil is the coldest note in the picture and the face is warmed only at the lips.",
-        [PAL_SATURATA]  = "Beneath the veil the saturation is full and deep; through the veil it is halved; the contrast between the two halves is the picture's saturation story.",
-        [PAL_MUTA]      = "The whole picture is kept in a narrow band of soft pearl, taupe, and dove, the veil barely distinguishable from the flesh beneath.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm pearl alone, with the veil indicated only by a subtle shift in value.",
-        [PAL_PRIMARIA]  = "The veil is a translucent cream; beneath it, flat fields of pure red, yellow, and blue have been painted as the underlying garments, visible through the veil as desaturated primary shapes.",
-        [PAL_TERREA]    = "The palette is raw umber, yellow ochre, and a soft warm cream for the veil; the picture reads as though painted on aged linen."
+        [PAL_CALIDA]    =
+            "The palette is warm cream flesh, pale honey, and a quiet rose, with the veil in a warm pearl that catches every highlight.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool pearl, slate grey, and pale ice-blue; the veil is the coldest note in the picture and the face is warmed only at the lips.",
+        [PAL_SATURATA]  =
+            "Beneath the veil the saturation is full and deep; through the veil it is halved; the contrast between the two halves is the picture's saturation story.",
+        [PAL_MUTA]      =
+            "The whole picture is kept in a narrow band of soft pearl, taupe, and dove, the veil barely distinguishable from the flesh beneath.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm pearl alone, with the veil indicated only by a subtle shift in value.",
+        [PAL_PRIMARIA]  =
+            "The veil is a translucent cream; beneath it, flat fields of pure red, yellow, and blue have been painted as the underlying garments, visible through the veil as desaturated primary shapes.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, yellow ochre, and a soft warm cream for the veil; the picture reads as though painted on aged linen."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure and the veil is a single flat field of warm pearl, lit as softly as the veil itself.",
-        [FUN_ORNATUM]    = "Behind the figure, a patterned damask wall is visible — small repeating vine-motifs — further softened by the veil where the veil crosses it.",
-        [FUN_PAESAGIUM]  = "Behind the figure, through a window visible at one edge, a far pale landscape can be made out — softened still further by the veil.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the ground fades into a soft gradient of pearl, with no object or horizon indicated.",
-        [FUN_TENEBROSUM] = "Behind the figure is a deep warm near-black; the veil, where it crosses this ground, reads as a luminous diagonal stripe of grey.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a flat high pearl-white; the veil is almost invisible against it and the face reads as quietly backlit."
+        [FUN_PLANUM]     =
+            "Behind the figure and the veil is a single flat field of warm pearl, lit as softly as the veil itself.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a patterned damask wall is visible — small repeating vine-motifs — further softened by the veil where the veil crosses it.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, through a window visible at one edge, a far pale landscape can be made out — softened still further by the veil.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the ground fades into a soft gradient of pearl, with no object or horizon indicated.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a deep warm near-black; the veil, where it crosses this ground, reads as a luminous diagonal stripe of grey.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a flat high pearl-white; the veil is almost invisible against it and the face reads as quietly backlit."
     },
     velaspinus_lumen, N_OF(velaspinus_lumen),
     velaspinus_texturae, N_OF(velaspinus_texturae),
@@ -1923,7 +2232,7 @@ static const char *const crispulus_motiva[] = {
     "the upper-right corner of the picture has curled inward by about 2 cm, its edge blackened and ragged",
     "a narrow strip of the collar is charred black at its outermost edge, the black giving way to brown and then to cream toward the throat",
     "a single visible burn-hole, 8 mm across, sits just above the left eyebrow, its edges dark and curled",
-    "the signature at the lower right is half burned away; only the first three letters remain legible",
+    "a small inked mark at the lower right is half burned away; only a charred fragment of the original gesture survives",
     "a thin line of dark umber runs horizontally across the chest, where a seam in the paper has been weakened by heat",
     "the hair carries streaks of silver-grey ash at its crown, as though fine dust had settled there",
     "a faint blueish smoke-ring stains the background just behind the right shoulder, soft at its centre and darker at its rim"
@@ -1945,21 +2254,34 @@ static const Stylus stylus_crispulus = {
     crispulus_figurae, N_OF(crispulus_figurae),
     crispulus_motiva, N_OF(crispulus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is cream, pale ivory, and warm scorch-brown; the picture glows in the range from paper to embers.",
-        [PAL_FRIGIDA]   = "The picture is worked in cool ash-grey and pale blue-smoke over a cream ground; the scorch is present but has cooled to a silver register.",
-        [PAL_SATURATA]  = "A single saturated ember-orange stripe runs across one corner of the picture where the scorch has almost caught fire; the rest remains quiet cream.",
-        [PAL_MUTA]      = "The whole picture is held in soft warm neutrals — cream, oatmeal, dust-brown — with only the faintest scorch-marks admitted.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm brown alone, from pale cream at the cleanest areas to near-black at the deepest burns.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue appear only as three small saturated motifs painted on the scorched ground; the rest of the palette is ash and cream.",
-        [PAL_TERREA]    = "The palette is entirely earth browns — raw umber, burnt sienna, yellow ochre, warm cream — with no bright colour admitted."
+        [PAL_CALIDA]    =
+            "The palette is cream, pale ivory, and warm scorch-brown; the picture glows in the range from paper to embers.",
+        [PAL_FRIGIDA]   =
+            "The picture is worked in cool ash-grey and pale blue-smoke over a cream ground; the scorch is present but has cooled to a silver register.",
+        [PAL_SATURATA]  =
+            "A single saturated ember-orange stripe runs across one corner of the picture where the scorch has almost caught fire; the rest remains quiet cream.",
+        [PAL_MUTA]      =
+            "The whole picture is held in soft warm neutrals — cream, oatmeal, dust-brown — with only the faintest scorch-marks admitted.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm brown alone, from pale cream at the cleanest areas to near-black at the deepest burns.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue appear only as three small saturated motifs painted on the scorched ground; the rest of the palette is ash and cream.",
+        [PAL_TERREA]    =
+            "The palette is entirely earth browns — raw umber, burnt sienna, yellow ochre, warm cream — with no bright colour admitted."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is an unmarked field of cream paper; the scorching fades outward from the figure to clean paper at the edges.",
-        [FUN_ORNATUM]    = "Behind the figure, a pattern of stencilled dark lines and small rosettes is visible, partly obscured by the same scorching that marks the figure.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a small far landscape drawn in pale brown ink is visible through the smoke-stain, its features softened by heat-damage.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the paper ground carries uneven brown staining in soft drifting shapes, like slow fire seen from above.",
-        [FUN_TENEBROSUM] = "Behind the figure, the ground has been scorched almost to black, and the figure emerges from the smoked dark as a slightly paler silhouette.",
-        [FUN_LUMINOSUM]  = "Behind the figure, the cream paper remains nearly untouched, bright and clean; only the figure itself carries the warm scorched halation."
+        [FUN_PLANUM]     =
+            "Behind the figure is an unmarked field of cream paper; the scorching fades outward from the figure to clean paper at the edges.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a pattern of stencilled dark lines and small rosettes is visible, partly obscured by the same scorching that marks the figure.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a small far landscape drawn in pale brown ink is visible through the smoke-stain, its features softened by heat-damage.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the paper ground carries uneven brown staining in soft drifting shapes, like slow fire seen from above.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure, the ground has been scorched almost to black, and the figure emerges from the smoked dark as a slightly paler silhouette.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure, the cream paper remains nearly untouched, bright and clean; only the figure itself carries the warm scorched halation."
     },
     crispulus_lumen, N_OF(crispulus_lumen),
     crispulus_texturae, N_OF(crispulus_texturae),
@@ -2004,21 +2326,34 @@ static const Stylus stylus_nimbulus = {
     nimbulus_figurae, N_OF(nimbulus_figurae),
     nimbulus_motiva, N_OF(nimbulus_motiva),
     {
-        [PAL_CALIDA]    = "The weather is golden: warm drizzle like amber, a small honey-coloured cloud, and sunbeams through it in warm chrome yellow.",
-        [PAL_FRIGIDA]   = "The weather is cool and wintry: grey cloud, silver frost, blue-white mist, and fine white snow; the flesh beneath is cool and slightly chilled.",
-        [PAL_SATURATA]  = "The personal rainbow is at full saturation — a thin compact arc of red, yellow, green, and violet — contrasting with the quieter flesh beneath.",
-        [PAL_MUTA]      = "The weather is pulled to soft grey tones — dove cloud, pearl mist, silver rain — and barely separates from the quiet flesh.",
-        [PAL_MONOCHROMA]= "The entire picture is worked in graded cool grey; the weather is visible only by a slight difference in value between the air above the head and the flesh.",
-        [PAL_PRIMARIA]  = "The weather uses only red, yellow, and blue: a yellow sunbeam, a blue cloud, a few small red raindrops; the flesh remains a quiet warm mix.",
-        [PAL_TERREA]    = "The weather takes on earth colours — a brown dusty cloud, an ochre drizzle, a faint rose fog — as though the subject stood in a windswept field."
+        [PAL_CALIDA]    =
+            "The weather is golden: warm drizzle like amber, a small honey-coloured cloud, and sunbeams through it in warm chrome yellow.",
+        [PAL_FRIGIDA]   =
+            "The weather is cool and wintry: grey cloud, silver frost, blue-white mist, and fine white snow; the flesh beneath is cool and slightly chilled.",
+        [PAL_SATURATA]  =
+            "The personal rainbow is at full saturation — a thin compact arc of red, yellow, green, and violet — contrasting with the quieter flesh beneath.",
+        [PAL_MUTA]      =
+            "The weather is pulled to soft grey tones — dove cloud, pearl mist, silver rain — and barely separates from the quiet flesh.",
+        [PAL_MONOCHROMA] =
+            "The entire picture is worked in graded cool grey; the weather is visible only by a slight difference in value between the air above the head and the flesh.",
+        [PAL_PRIMARIA]  =
+            "The weather uses only red, yellow, and blue: a yellow sunbeam, a blue cloud, a few small red raindrops; the flesh remains a quiet warm mix.",
+        [PAL_TERREA]    =
+            "The weather takes on earth colours — a brown dusty cloud, an ochre drizzle, a faint rose fog — as though the subject stood in a windswept field."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat neutral wall, unmarked; the personal weather is the only non-flat element in the picture.",
-        [FUN_ORNATUM]    = "Behind the figure, an ordinary domestic interior is indicated: a picture frame on the wall, a bookcase at the edge; each dry and untouched by the figure's personal weather.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a calm sunlit landscape extends into the distance — contradicting the figure's personal storm, which remains localised to their head and shoulders.",
-        [FUN_ABSTRACTUM] = "The background is a soft neutral gradient of atmospheric grey, without specific objects; the figure's weather is the only spatial event in the picture.",
-        [FUN_TENEBROSUM] = "The room behind the figure is dark, but the figure's personal weather carries its own faint light, so the figure is visible as if self-illuminated.",
-        [FUN_LUMINOSUM]  = "The room behind the figure is brightly lit; the personal weather reads as a soft anomaly against the otherwise cheerful ground."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat neutral wall, unmarked; the personal weather is the only non-flat element in the picture.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, an ordinary domestic interior is indicated: a picture frame on the wall, a bookcase at the edge; each dry and untouched by the figure's personal weather.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a calm sunlit landscape extends into the distance — contradicting the figure's personal storm, which remains localised to their head and shoulders.",
+        [FUN_ABSTRACTUM] =
+            "The background is a soft neutral gradient of atmospheric grey, without specific objects; the figure's weather is the only spatial event in the picture.",
+        [FUN_TENEBROSUM] =
+            "The room behind the figure is dark, but the figure's personal weather carries its own faint light, so the figure is visible as if self-illuminated.",
+        [FUN_LUMINOSUM]  =
+            "The room behind the figure is brightly lit; the personal weather reads as a soft anomaly against the otherwise cheerful ground."
     },
     nimbulus_lumen, N_OF(nimbulus_lumen),
     nimbulus_texturae, N_OF(nimbulus_texturae),
@@ -2063,21 +2398,34 @@ static const Stylus stylus_echokus = {
     echokus_figurae, N_OF(echokus_figurae),
     echokus_motiva, N_OF(echokus_motiva),
     {
-        [PAL_CALIDA]    = "Both primary and ghost are painted in warm ochre and rose flesh; the ghost is the same palette at reduced value and chroma.",
-        [PAL_FRIGIDA]   = "Both figures are cool: pale blue-grey flesh and silvered hair; the ghost is paler still, approaching the colour of the background wall.",
-        [PAL_SATURATA]  = "The primary figure is at full saturation; the ghost is at exactly one-third saturation, so the difference between them is carried by chroma rather than by hue.",
-        [PAL_MUTA]      = "Both primary and ghost are kept in a narrow range of soft halftones; the distinction between them is so quiet it is almost subliminal.",
-        [PAL_MONOCHROMA]= "The entire picture is worked in graded warm grey; primary and ghost differ only by value and by hard versus soft contour.",
-        [PAL_PRIMARIA]  = "The primary figure is painted in saturated primary colour areas; the ghost is painted in the same areas at half opacity over a white ground.",
-        [PAL_TERREA]    = "Both figures are worked in raw umber, burnt sienna, and yellow ochre; the ghost is thinner, letting the warm ground beneath show through."
+        [PAL_CALIDA]    =
+            "Both primary and ghost are painted in warm ochre and rose flesh; the ghost is the same palette at reduced value and chroma.",
+        [PAL_FRIGIDA]   =
+            "Both figures are cool: pale blue-grey flesh and silvered hair; the ghost is paler still, approaching the colour of the background wall.",
+        [PAL_SATURATA]  =
+            "The primary figure is at full saturation; the ghost is at exactly one-third saturation, so the difference between them is carried by chroma rather than by hue.",
+        [PAL_MUTA]      =
+            "Both primary and ghost are kept in a narrow range of soft halftones; the distinction between them is so quiet it is almost subliminal.",
+        [PAL_MONOCHROMA] =
+            "The entire picture is worked in graded warm grey; primary and ghost differ only by value and by hard versus soft contour.",
+        [PAL_PRIMARIA]  =
+            "The primary figure is painted in saturated primary colour areas; the ghost is painted in the same areas at half opacity over a white ground.",
+        [PAL_TERREA]    =
+            "Both figures are worked in raw umber, burnt sienna, and yellow ochre; the ghost is thinner, letting the warm ground beneath show through."
     },
     {
-        [FUN_PLANUM]     = "Behind both figures is a single flat quiet ground against which both primary and ghost read cleanly.",
-        [FUN_ORNATUM]    = "Behind both figures is a patterned wall — paisley, damask, or small stars — visible clearly through the ghost and only faintly through the primary.",
-        [FUN_PAESAGIUM]  = "Behind both figures, a view through a window shows a calm landscape; it is unchanged between primary and ghost, as though the figures moved but the world did not.",
-        [FUN_ABSTRACTUM] = "The background is a soft atmospheric field with no specific object; the displacement of the ghost is the picture's only spatial signal.",
-        [FUN_TENEBROSUM] = "The background is deep warm dark; the primary figure emerges from it strongly, the ghost only faintly, as two successive moments of illumination.",
-        [FUN_LUMINOSUM]  = "The background is clean bright white; both figures read as silhouettes against it, one crisp and one faint."
+        [FUN_PLANUM]     =
+            "Behind both figures is a single flat quiet ground against which both primary and ghost read cleanly.",
+        [FUN_ORNATUM]    =
+            "Behind both figures is a patterned wall — paisley, damask, or small stars — visible clearly through the ghost and only faintly through the primary.",
+        [FUN_PAESAGIUM]  =
+            "Behind both figures, a view through a window shows a calm landscape; it is unchanged between primary and ghost, as though the figures moved but the world did not.",
+        [FUN_ABSTRACTUM] =
+            "The background is a soft atmospheric field with no specific object; the displacement of the ghost is the picture's only spatial signal.",
+        [FUN_TENEBROSUM] =
+            "The background is deep warm dark; the primary figure emerges from it strongly, the ghost only faintly, as two successive moments of illumination.",
+        [FUN_LUMINOSUM]  =
+            "The background is clean bright white; both figures read as silhouettes against it, one crisp and one faint."
     },
     echokus_lumen, N_OF(echokus_lumen),
     echokus_texturae, N_OF(echokus_texturae),
@@ -2122,21 +2470,33 @@ static const Stylus stylus_fulguritus = {
     fulguritus_figurae, N_OF(fulguritus_figurae),
     fulguritus_motiva, N_OF(fulguritus_motiva),
     {
-        [PAL_CALIDA]    = "The glass is warm amber; the internal light is gold; the eyes and mouth are deep resin-brown; the picture glows in a honey register.",
-        [PAL_FRIGIDA]   = "The glass is cold pale blue; the internal light is almost white; the background is a deep cold navy; the figure looks as though lit from ice.",
-        [PAL_SATURATA]  = "The internal lightning is pure electric violet; the glass body is a saturated amber; the contrast reads as pulled from a neon sign.",
-        [PAL_MUTA]      = "Both glass and internal light are pulled to pale tones — dusty peach, faint celadon, soft lilac — and the effect is quiet rather than dramatic.",
-        [PAL_MONOCHROMA]= "The entire picture is worked in graded blue-white, from palest ice at the lightning to deepest marine at the shadow of the jaw.",
-        [PAL_PRIMARIA]  = "The internal lightning branches into three separate colours — pure red, yellow, and blue — each radiating from its own point inside the chest.",
-        [PAL_TERREA]    = "The glass reads as earthen amber and smoked brown; the internal light is muted gold; the whole picture has the register of worked resin or amber."
+        [PAL_CALIDA]    =
+            "The glass is warm amber; the internal light is gold; the eyes and mouth are deep resin-brown; the picture glows in a honey register.",
+        [PAL_FRIGIDA]   =
+            "The glass is cold pale blue; the internal light is almost white; the background is a deep cold navy; the figure looks as though lit from ice.",
+        [PAL_SATURATA]  =
+            "The internal lightning is pure electric violet; the glass body is a saturated amber; the contrast reads as pulled from a neon sign.",
+        [PAL_MUTA]      =
+            "Both glass and internal light are pulled to pale tones — dusty peach, faint celadon, soft lilac — and the effect is quiet rather than dramatic.",
+        [PAL_MONOCHROMA] =
+            "The entire picture is worked in graded blue-white, from palest ice at the lightning to deepest marine at the shadow of the jaw.",
+        [PAL_PRIMARIA]  =
+            "The internal lightning branches into three separate colours — pure red, yellow, and blue — each radiating from its own point inside the chest.",
+        [PAL_TERREA]    =
+            "The glass reads as earthen amber and smoked brown; the internal light is muted gold; the whole picture has the register of worked resin or amber."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single deep flat dark; the glass body is the only bright object in the picture.",
-        [FUN_ORNATUM]    = "Behind the figure, a pattern of small painted stars or tiny light-points covers the dark ground, as though the figure stood in a night sky.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a dark storm-landscape is visible in the far distance, with small bright branches of external lightning echoing the internal ones.",
-        [FUN_ABSTRACTUM] = "The background is a field of slow cool gradients; the figure's internal glow is the picture's only hard light.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single deep flat dark; the glass body is the only bright object in the picture.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a pattern of small painted stars or tiny light-points covers the dark ground, as though the figure stood in a night sky.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a dark storm-landscape is visible in the far distance, with small bright branches of external lightning echoing the internal ones.",
+        [FUN_ABSTRACTUM] =
+            "The background is a field of slow cool gradients; the figure's internal glow is the picture's only hard light.",
         [FUN_TENEBROSUM] = "The background is pure black; the figure reads as a single luminous object floating in nothing.",
-        [FUN_LUMINOSUM]  = "The background is a bright cool white; the glass body reads as a faint refractive silhouette against it, with the internal lightning only barely visible."
+        [FUN_LUMINOSUM]  =
+            "The background is a bright cool white; the glass body reads as a faint refractive silhouette against it, with the internal lightning only barely visible."
     },
     fulguritus_lumen, N_OF(fulguritus_lumen),
     fulguritus_texturae, N_OF(fulguritus_texturae),
@@ -2181,21 +2541,34 @@ static const Stylus stylus_tesselarius = {
     tesselarius_figurae, N_OF(tesselarius_figurae),
     tesselarius_motiva, N_OF(tesselarius_motiva),
     {
-        [PAL_CALIDA]    = "The tiles carry warm ochre, terracotta, and rose tones; the grout is a warm dark brown; the whole picture reads as fired clay reassembled.",
-        [PAL_FRIGIDA]   = "The tiles carry cool grey, pale blue, and stone-green tones; the grout is a cool dark slate; the picture reads as porcelain, not earthenware.",
-        [PAL_SATURATA]  = "The tiles are painted at full saturation in their individual fragments; the grout between them is dark, so the picture reads as stained-glass in its colour force.",
-        [PAL_MUTA]      = "The tiles are painted in soft quiet tones; the grout between them is almost invisible; the picture reads as subtly segmented rather than as openly fragmented.",
-        [PAL_MONOCHROMA]= "All tiles are painted in graded warm sepia; the grout is a single fixed dark brown, consistent across the picture.",
-        [PAL_PRIMARIA]  = "Tiles cycle through red, yellow, blue, and white in a strict but irregular order; each tile is a flat field of one primary colour carrying its fragment of portrait.",
-        [PAL_TERREA]    = "The tiles are entirely earth-coloured — umber, sienna, ochre, cream — as though the portrait were made from fragments of ancient plaster."
+        [PAL_CALIDA]    =
+            "The tiles carry warm ochre, terracotta, and rose tones; the grout is a warm dark brown; the whole picture reads as fired clay reassembled.",
+        [PAL_FRIGIDA]   =
+            "The tiles carry cool grey, pale blue, and stone-green tones; the grout is a cool dark slate; the picture reads as porcelain, not earthenware.",
+        [PAL_SATURATA]  =
+            "The tiles are painted at full saturation in their individual fragments; the grout between them is dark, so the picture reads as stained-glass in its colour force.",
+        [PAL_MUTA]      =
+            "The tiles are painted in soft quiet tones; the grout between them is almost invisible; the picture reads as subtly segmented rather than as openly fragmented.",
+        [PAL_MONOCHROMA] =
+            "All tiles are painted in graded warm sepia; the grout is a single fixed dark brown, consistent across the picture.",
+        [PAL_PRIMARIA]  =
+            "Tiles cycle through red, yellow, blue, and white in a strict but irregular order; each tile is a flat field of one primary colour carrying its fragment of portrait.",
+        [PAL_TERREA]    =
+            "The tiles are entirely earth-coloured — umber, sienna, ochre, cream — as though the portrait were made from fragments of ancient plaster."
     },
     {
-        [FUN_PLANUM]     = "Behind the tiled figure is a single flat neutral field extending to all frame edges; the tiles of the figure end at a clean silhouette.",
-        [FUN_ORNATUM]    = "The tiles continue beyond the figure into the background, where they carry small painted motifs — stars, lines, small plants — rather than portrait-fragments.",
-        [FUN_PAESAGIUM]  = "The tiles continue beyond the figure into a tiled landscape — a field of tiles carrying fragments of hill, sky, and road behind the shoulder.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the tiles continue as abstract fragments of colour with no underlying image; the grid of tiles itself becomes the background.",
-        [FUN_TENEBROSUM] = "Behind the figure, the tiles are much darker — deep warm near-black — and only a faint change in hue distinguishes them from pure ground.",
-        [FUN_LUMINOSUM]  = "Behind the figure, the tiles are bright ivory and catch the room-light cleanly; the figure reads as a slightly darker patch of grid."
+        [FUN_PLANUM]     =
+            "Behind the tiled figure is a single flat neutral field extending to all frame edges; the tiles of the figure end at a clean silhouette.",
+        [FUN_ORNATUM]    =
+            "The tiles continue beyond the figure into the background, where they carry small painted motifs — stars, lines, small plants — rather than portrait-fragments.",
+        [FUN_PAESAGIUM]  =
+            "The tiles continue beyond the figure into a tiled landscape — a field of tiles carrying fragments of hill, sky, and road behind the shoulder.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the tiles continue as abstract fragments of colour with no underlying image; the grid of tiles itself becomes the background.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure, the tiles are much darker — deep warm near-black — and only a faint change in hue distinguishes them from pure ground.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure, the tiles are bright ivory and catch the room-light cleanly; the figure reads as a slightly darker patch of grid."
     },
     tesselarius_lumen, N_OF(tesselarius_lumen),
     tesselarius_texturae, N_OF(tesselarius_texturae),
@@ -2240,21 +2613,33 @@ static const Stylus stylus_obscurus = {
     obscurus_figurae, N_OF(obscurus_figurae),
     obscurus_motiva, N_OF(obscurus_motiva),
     {
-        [PAL_CALIDA]    = "The internal light is warm amber-gold; the darkness around it is a deep warm brown-black; nothing cool is admitted.",
-        [PAL_FRIGIDA]   = "The internal light is cold pale blue; the darkness around it is a deep cool navy; the figure reads as though lit by a moon swallowed.",
-        [PAL_SATURATA]  = "The internal light is pure saturated signal-red or orange; its colour dominates the face entirely and bleeds outward into the surrounding dark.",
-        [PAL_MUTA]      = "The internal light is a pale ivory; the surrounding dark is a warm ashen brown; the effect is quiet and almost ceremonial.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone; the internal light is the lightest value, the surrounding dark the deepest, with no colour elsewhere.",
-        [PAL_PRIMARIA]  = "The internal light is one pure primary colour — red, yellow, or blue — and the surrounding dark is its complement at very low value.",
-        [PAL_TERREA]    = "The internal light is a warm ochre-gold; the surrounding darkness is raw umber and burnt sienna; the picture reads as worked earth lit from within."
+        [PAL_CALIDA]    =
+            "The internal light is warm amber-gold; the darkness around it is a deep warm brown-black; nothing cool is admitted.",
+        [PAL_FRIGIDA]   =
+            "The internal light is cold pale blue; the darkness around it is a deep cool navy; the figure reads as though lit by a moon swallowed.",
+        [PAL_SATURATA]  =
+            "The internal light is pure saturated signal-red or orange; its colour dominates the face entirely and bleeds outward into the surrounding dark.",
+        [PAL_MUTA]      =
+            "The internal light is a pale ivory; the surrounding dark is a warm ashen brown; the effect is quiet and almost ceremonial.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone; the internal light is the lightest value, the surrounding dark the deepest, with no colour elsewhere.",
+        [PAL_PRIMARIA]  =
+            "The internal light is one pure primary colour — red, yellow, or blue — and the surrounding dark is its complement at very low value.",
+        [PAL_TERREA]    =
+            "The internal light is a warm ochre-gold; the surrounding darkness is raw umber and burnt sienna; the picture reads as worked earth lit from within."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single unmodulated deep warm dark, indistinguishable from the ground at the picture's edges.",
-        [FUN_ORNATUM]    = "Behind the figure, in the outer dark, a few tiny distant pale motifs — small painted stars or candles — are just barely visible as further points of internal light.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a far dark landscape is indicated: a low horizon, a single dark tree, a distant hill, all painted at very low value.",
+        [FUN_PLANUM]     =
+            "Behind the figure is a single unmodulated deep warm dark, indistinguishable from the ground at the picture's edges.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, in the outer dark, a few tiny distant pale motifs — small painted stars or candles — are just barely visible as further points of internal light.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a far dark landscape is indicated: a low horizon, a single dark tree, a distant hill, all painted at very low value.",
         [FUN_ABSTRACTUM] = "The background is pure warm black; no object, no horizon, no edge is indicated anywhere.",
-        [FUN_TENEBROSUM] = "The background is the deepest passage in the picture; it absorbs all but the internal light, and the figure emerges from it only where that light reaches.",
-        [FUN_LUMINOSUM]  = "The background is a single lit distant glow at the far horizon, lower than the figure; it provides only the faintest cool rim behind the shoulders."
+        [FUN_TENEBROSUM] =
+            "The background is the deepest passage in the picture; it absorbs all but the internal light, and the figure emerges from it only where that light reaches.",
+        [FUN_LUMINOSUM]  =
+            "The background is a single lit distant glow at the far horizon, lower than the figure; it provides only the faintest cool rim behind the shoulders."
     },
     obscurus_lumen, N_OF(obscurus_lumen),
     obscurus_texturae, N_OF(obscurus_texturae),
@@ -2300,20 +2685,32 @@ static const Stylus stylus_filumentus = {
     filumentus_motiva, N_OF(filumentus_motiva),
     {
         [PAL_CALIDA]    = "The threads are warm — ochre, sienna, coral, gold — and the picture glows in a fire register.",
-        [PAL_FRIGIDA]   = "The threads are cool — slate, viridian, pale cobalt, silver — and the picture reads as though woven from winter sky.",
-        [PAL_SATURATA]  = "Every thread is at full saturation; adjacent threads contrast sharply in hue, so the weave reads as chromatic and almost loud at close distance.",
-        [PAL_MUTA]      = "The threads are kept in a narrow band of soft halftones — mushroom, cream, pale rose, dust-blue — and the weave reads as quiet and atmospheric.",
-        [PAL_MONOCHROMA]= "All threads are in graded warm sepia alone; the modelling of the face is produced by density and value of the threads, not by hue.",
-        [PAL_PRIMARIA]  = "Only red, yellow, and blue threads are admitted; the apparent colours of flesh and hair are produced by the interleaving of these three primaries.",
-        [PAL_TERREA]    = "The threads are raw umber, burnt sienna, yellow ochre, and terre verte — the palette of an ancient worn tapestry."
+        [PAL_FRIGIDA]   =
+            "The threads are cool — slate, viridian, pale cobalt, silver — and the picture reads as though woven from winter sky.",
+        [PAL_SATURATA]  =
+            "Every thread is at full saturation; adjacent threads contrast sharply in hue, so the weave reads as chromatic and almost loud at close distance.",
+        [PAL_MUTA]      =
+            "The threads are kept in a narrow band of soft halftones — mushroom, cream, pale rose, dust-blue — and the weave reads as quiet and atmospheric.",
+        [PAL_MONOCHROMA] =
+            "All threads are in graded warm sepia alone; the modelling of the face is produced by density and value of the threads, not by hue.",
+        [PAL_PRIMARIA]  =
+            "Only red, yellow, and blue threads are admitted; the apparent colours of flesh and hair are produced by the interleaving of these three primaries.",
+        [PAL_TERREA]    =
+            "The threads are raw umber, burnt sienna, yellow ochre, and terre verte — the palette of an ancient worn tapestry."
     },
     {
-        [FUN_PLANUM]     = "The threads of the background run in the same direction as those of the figure, but all in a single muted hue; no specific object is indicated.",
-        [FUN_ORNATUM]    = "The background threads weave a geometric pattern — diamonds, stars, small flowers — in two or three contrasting hues behind the figure.",
-        [FUN_PAESAGIUM]  = "The background threads change hue in horizontal bands to suggest a landscape: a band of greens for grass, a band of blues for sky, each still woven as parallel threads.",
-        [FUN_ABSTRACTUM] = "The background is an uninflected field of threads in a single mid-grey tone; no distinction between figure-weave and ground-weave is admitted except by small hue shifts.",
-        [FUN_TENEBROSUM] = "The background threads are deep warm dark, and the figure's threads emerge from them only by slight value shifts; the weave reads as a single dark cloth.",
-        [FUN_LUMINOSUM]  = "The background threads are pale bright cream; the figure's threads read as a slightly denser, more varied passage of weave within a luminous whole."
+        [FUN_PLANUM]     =
+            "The threads of the background run in the same direction as those of the figure, but all in a single muted hue; no specific object is indicated.",
+        [FUN_ORNATUM]    =
+            "The background threads weave a geometric pattern — diamonds, stars, small flowers — in two or three contrasting hues behind the figure.",
+        [FUN_PAESAGIUM]  =
+            "The background threads change hue in horizontal bands to suggest a landscape: a band of greens for grass, a band of blues for sky, each still woven as parallel threads.",
+        [FUN_ABSTRACTUM] =
+            "The background is an uninflected field of threads in a single mid-grey tone; no distinction between figure-weave and ground-weave is admitted except by small hue shifts.",
+        [FUN_TENEBROSUM] =
+            "The background threads are deep warm dark, and the figure's threads emerge from them only by slight value shifts; the weave reads as a single dark cloth.",
+        [FUN_LUMINOSUM]  =
+            "The background threads are pale bright cream; the figure's threads read as a slightly denser, more varied passage of weave within a luminous whole."
     },
     filumentus_lumen, N_OF(filumentus_lumen),
     filumentus_texturae, N_OF(filumentus_texturae),
@@ -2357,21 +2754,33 @@ static const Stylus stylus_chronofugus = {
     chronofugus_figurae, N_OF(chronofugus_figurae),
     chronofugus_motiva, N_OF(chronofugus_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm ochre, muted madder, and lead-white, with every hue aged slightly toward the warm end — as though already in an archive.",
+        [PAL_CALIDA]    =
+            "The palette is warm ochre, muted madder, and lead-white, with every hue aged slightly toward the warm end — as though already in an archive.",
         [PAL_FRIGIDA]   = "The palette is cool grey, slate blue, and pale olive, held as though under museum glass.",
-        [PAL_SATURATA]  = "A single saturated passage — a ribbon, a badge — reads as period-accurate; everything else is held in a quieter archival register.",
-        [PAL_MUTA]      = "The whole picture is held in quiet museum tones — taupe, dust, cream, stone — every colour pulled down as though seen through a century of varnish.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone, with the formality and distance of a posthumous daguerreotype.",
-        [PAL_PRIMARIA]  = "The three primary colours appear only as small symbolic accents in archival detail — a red ribbon, a yellow emblem, a blue thread — each period-appropriate but placed slightly wrongly.",
-        [PAL_TERREA]    = "The palette is raw umber, burnt sienna, and yellow ochre, aged toward the olive end; the picture reads as fresco copied from a damaged original."
+        [PAL_SATURATA]  =
+            "A single saturated passage — a ribbon, a badge — reads as period-accurate; everything else is held in a quieter archival register.",
+        [PAL_MUTA]      =
+            "The whole picture is held in quiet museum tones — taupe, dust, cream, stone — every colour pulled down as though seen through a century of varnish.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone, with the formality and distance of a posthumous daguerreotype.",
+        [PAL_PRIMARIA]  =
+            "The three primary colours appear only as small symbolic accents in archival detail — a red ribbon, a yellow emblem, a blue thread — each period-appropriate but placed slightly wrongly.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, burnt sienna, and yellow ochre, aged toward the olive end; the picture reads as fresco copied from a damaged original."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single plain flat field painted in the quiet register of a museum backdrop, with no specific object.",
-        [FUN_ORNATUM]    = "Behind the figure, period-appropriate ornamental elements are present — a pilaster, a drapery, a carved inscription — but at least one detail is from the wrong century.",
-        [FUN_PAESAGIUM]  = "Through a window visible at one edge, a landscape is shown that does not match any known present: a distant structure whose engineering is not yet invented, beneath a recognisable sky.",
-        [FUN_ABSTRACTUM] = "Behind the figure, a soft atmospheric field with no specific objects, as though the picture had been mounted against an unmarked archival paper.",
-        [FUN_TENEBROSUM] = "Behind the figure is a dignified near-black, the conventional backing for an official portrait two centuries ago and two centuries hence.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a high clean archival grey lit from above, as though the picture were already hanging in its future gallery."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single plain flat field painted in the quiet register of a museum backdrop, with no specific object.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, period-appropriate ornamental elements are present — a pilaster, a drapery, a carved inscription — but at least one detail is from the wrong century.",
+        [FUN_PAESAGIUM]  =
+            "Through a window visible at one edge, a landscape is shown that does not match any known present: a distant structure whose engineering is not yet invented, beneath a recognisable sky.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, a soft atmospheric field with no specific objects, as though the picture had been mounted against an unmarked archival paper.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a dignified near-black, the conventional backing for an official portrait two centuries ago and two centuries hence.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a high clean archival grey lit from above, as though the picture were already hanging in its future gallery."
     },
     chronofugus_lumen, N_OF(chronofugus_lumen),
     chronofugus_texturae, N_OF(chronofugus_texturae),
@@ -2393,7 +2802,7 @@ static const char *const somniator_figurae[] = {
 static const char *const somniator_motiva[] = {
     "a small object — a seashell, a spool of thread, a key — is held loosely in the hand, its specific identity changing as the viewer looks at it",
     "behind the shoulder, a doorway opens onto a room that cannot coexist with the room the figure is standing in",
-    "a single word is stitched into the collar in thread, the word legible but the language never learned",
+    "a small embroidered sigil is stitched into the collar in thread, its shape suggesting writing from no language ever learned",
     "the subject wears a small flower pinned at the throat; the species is not a real species but is painted with complete botanical specificity",
     "a thin gold chain hangs from the ear, and at its end is an object which appears to be an object but fails to resolve into any particular one",
     "the hands are painted with unusual care, in contrast to the rest of the figure; the hands are specific and memorable in a way the face is not"
@@ -2415,21 +2824,34 @@ static const Stylus stylus_somniator = {
     somniator_figurae, N_OF(somniator_figurae),
     somniator_motiva, N_OF(somniator_motiva),
     {
-        [PAL_CALIDA]    = "The palette is warm honey and dusky rose, specific but slightly wrong; the hues have the impossible saturation of remembered light.",
-        [PAL_FRIGIDA]   = "The palette is cool pearl, twilight blue, and a faint silver; it reads as the palette of a room one has never quite visited.",
-        [PAL_SATURATA]  = "A single saturated colour — a red ribbon, a green leaf — is more vivid than any colour in waking life; everything else is slightly underdescribed.",
-        [PAL_MUTA]      = "The whole picture is kept in soft, almost silent halftones, with the luminosity of a dream that has just ended.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone, as though the dream had been remembered the morning after through a sepia filter.",
-        [PAL_PRIMARIA]  = "Red, yellow, and blue appear as small specific symbols — a cup, a leaf, a bird — each improbably saturated in a picture otherwise held in quieter tones.",
-        [PAL_TERREA]    = "The palette is raw umber, yellow ochre, and a soft green-grey, with the slightly unreal warmth of light remembered rather than seen."
+        [PAL_CALIDA]    =
+            "The palette is warm honey and dusky rose, specific but slightly wrong; the hues have the impossible saturation of remembered light.",
+        [PAL_FRIGIDA]   =
+            "The palette is cool pearl, twilight blue, and a faint silver; it reads as the palette of a room one has never quite visited.",
+        [PAL_SATURATA]  =
+            "A single saturated colour — a red ribbon, a green leaf — is more vivid than any colour in waking life; everything else is slightly underdescribed.",
+        [PAL_MUTA]      =
+            "The whole picture is kept in soft, almost silent halftones, with the luminosity of a dream that has just ended.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone, as though the dream had been remembered the morning after through a sepia filter.",
+        [PAL_PRIMARIA]  =
+            "Red, yellow, and blue appear as small specific symbols — a cup, a leaf, a bird — each improbably saturated in a picture otherwise held in quieter tones.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, yellow ochre, and a soft green-grey, with the slightly unreal warmth of light remembered rather than seen."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single plain field whose colour is specific but whose identity is unclear — wall? curtain? sky?",
-        [FUN_ORNATUM]    = "Behind the figure, decorative elements are visible — small painted stars, a line of foliage, a fragment of pattern — each specific but not matching any real wallpaper or mural.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a landscape appears that could not exist: a hill of a specific but impossible geometry, a distant door in the sky, a tree that is also a building.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the space has the soft drift of an unfinished dream: no horizon, no object, no edge; only gently-shifting tone.",
-        [FUN_TENEBROSUM] = "The background is a warm dark that seems to pulse faintly, as though remembered rather than observed; the figure emerges from it at a single soft warm rim.",
-        [FUN_LUMINOSUM]  = "The background is a high luminous cream, too bright for any real light, softly flooding the entire picture from all directions."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single plain field whose colour is specific but whose identity is unclear — wall? curtain? sky?",
+        [FUN_ORNATUM]    =
+            "Behind the figure, decorative elements are visible — small painted stars, a line of foliage, a fragment of pattern — each specific but not matching any real wallpaper or mural.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a landscape appears that could not exist: a hill of a specific but impossible geometry, a distant door in the sky, a tree that is also a building.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the space has the soft drift of an unfinished dream: no horizon, no object, no edge; only gently-shifting tone.",
+        [FUN_TENEBROSUM] =
+            "The background is a warm dark that seems to pulse faintly, as though remembered rather than observed; the figure emerges from it at a single soft warm rim.",
+        [FUN_LUMINOSUM]  =
+            "The background is a high luminous cream, too bright for any real light, softly flooding the entire picture from all directions."
     },
     somniator_lumen, N_OF(somniator_lumen),
     somniator_texturae, N_OF(somniator_texturae),
@@ -2473,21 +2895,34 @@ static const Stylus stylus_vacuarius = {
     vacuarius_figurae, N_OF(vacuarius_figurae),
     vacuarius_motiva, N_OF(vacuarius_motiva),
     {
-        [PAL_CALIDA]    = "The surrounding picture is warm — ochre, madder, cream — and the absence inside it is kept as raw warm canvas.",
-        [PAL_FRIGIDA]   = "The surrounding picture is cool — slate, silver, pale blue — and the absence is kept as a paler cool area, barely distinguishable from the ground.",
-        [PAL_SATURATA]  = "The surrounding picture is at full saturation; the absence, by contrast, reads as a soft neutral void at the picture's centre.",
-        [PAL_MUTA]      = "The whole picture is held in soft halftones; the absence is only very subtly different from the surrounding tone, and almost requires the viewer's attention to find.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm grey alone; the absence is the lightest passage in the picture, reading as quiet highlight rather than as shape.",
-        [PAL_PRIMARIA]  = "The surrounding picture uses flat red, yellow, and blue; the absence is pure white — the unpainted ground showing through.",
-        [PAL_TERREA]    = "The surrounding picture is raw umber and burnt sienna over warm ground; the absence is the exposed warm ground itself."
+        [PAL_CALIDA]    =
+            "The surrounding picture is warm — ochre, madder, cream — and the absence inside it is kept as raw warm canvas.",
+        [PAL_FRIGIDA]   =
+            "The surrounding picture is cool — slate, silver, pale blue — and the absence is kept as a paler cool area, barely distinguishable from the ground.",
+        [PAL_SATURATA]  =
+            "The surrounding picture is at full saturation; the absence, by contrast, reads as a soft neutral void at the picture's centre.",
+        [PAL_MUTA]      =
+            "The whole picture is held in soft halftones; the absence is only very subtly different from the surrounding tone, and almost requires the viewer's attention to find.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm grey alone; the absence is the lightest passage in the picture, reading as quiet highlight rather than as shape.",
+        [PAL_PRIMARIA]  =
+            "The surrounding picture uses flat red, yellow, and blue; the absence is pure white — the unpainted ground showing through.",
+        [PAL_TERREA]    =
+            "The surrounding picture is raw umber and burnt sienna over warm ground; the absence is the exposed warm ground itself."
     },
     {
-        [FUN_PLANUM]     = "Behind the absence is a single plain painted wall, continuous to all edges and present on both sides of the silhouette.",
-        [FUN_ORNATUM]    = "Behind the absence, a richly-painted domestic interior is fully visible: framed pictures, patterned wallpaper, a carved chair-back, each accurate except where displaced by the figure that is not there.",
-        [FUN_PAESAGIUM]  = "Behind the absence, a fully-painted landscape continues uninterrupted up to the silhouette and resumes on the other side.",
-        [FUN_ABSTRACTUM] = "Behind the absence, the background is a field of flowing tone with no specific object; the absence reads as a specific silhouette within this undefined space.",
-        [FUN_TENEBROSUM] = "The background is deep and fully painted; the absence reads as a slightly paler person-shaped void within the otherwise continuous darkness.",
-        [FUN_LUMINOSUM]  = "The background is a bright fully-painted field; the absence reads as a darker person-shaped void where the light has not been allowed to pass."
+        [FUN_PLANUM]     =
+            "Behind the absence is a single plain painted wall, continuous to all edges and present on both sides of the silhouette.",
+        [FUN_ORNATUM]    =
+            "Behind the absence, a richly-painted domestic interior is fully visible: framed pictures, patterned wallpaper, a carved chair-back, each accurate except where displaced by the figure that is not there.",
+        [FUN_PAESAGIUM]  =
+            "Behind the absence, a fully-painted landscape continues uninterrupted up to the silhouette and resumes on the other side.",
+        [FUN_ABSTRACTUM] =
+            "Behind the absence, the background is a field of flowing tone with no specific object; the absence reads as a specific silhouette within this undefined space.",
+        [FUN_TENEBROSUM] =
+            "The background is deep and fully painted; the absence reads as a slightly paler person-shaped void within the otherwise continuous darkness.",
+        [FUN_LUMINOSUM]  =
+            "The background is a bright fully-painted field; the absence reads as a darker person-shaped void where the light has not been allowed to pass."
     },
     vacuarius_lumen, N_OF(vacuarius_lumen),
     vacuarius_texturae, N_OF(vacuarius_texturae),
@@ -2502,14 +2937,14 @@ static const int mortuarius_media[] = { MED_OLEUM };
 static const char *const mortuarius_figurae[] = {
     "The subject is alive and well, but the portrait is painted with the conventions of a memorial: subdued colours, a dignified pose, quiet composition, and a soft stillness that belongs to the memory of a person rather than to their present life.",
     "The face is rendered with the quiet respect of a posthumous commission — every feature painted carefully, no smile permitted, the gaze level and composed. The subject is vital and in good health, but the painting treats them as though already enshrined.",
-    "The portrait has the formality of a bereavement photograph: centred, still, flat-lit, with a single pale flower held near the throat and the subject's full name painted in small careful lettering along the lower edge.",
+    "The portrait has the formality of a bereavement photograph: centred, still, flat-lit, with a single pale flower held near the throat and a thin horizontal decorative rule painted quietly along the lower edge.",
     "The subject is painted in a register of mild melancholy not necessarily their own: the eyes are soft and distant, the mouth composed, the skin slightly cooler than life. Nothing is animated.",
     "Every decorative choice — the quiet palette, the enclosed format, the soft shadowing, the muted backdrop — belongs to the vocabulary of memorial portraiture; yet the subject is plainly alive when sat."
 };
 static const char *const mortuarius_motiva[] = {
     "a single white lily or pale rose is pinned near the throat, its petals painted with particular care",
     "a thin black mourning-ribbon runs around the inner edge of the frame, painted as though part of the picture itself",
-    "the subject's name is painted in small, patient lettering along the lower edge, sometimes with a year beneath it but no dash after",
+    "a single thin ruled line in faint black runs along the lower edge of the picture, centred, the quiet horizontal convention of a memorial portrait",
     "a faint soft vignette darkens the outer corners of the picture, drawing the figure into a quiet centre",
     "a small oval locket hangs at the throat, closed, its chain rendered as a thin delicate line",
     "a single small candle is painted at the lower edge of the frame, its flame steady, indicating only a moment's pause"
@@ -2532,20 +2967,32 @@ static const Stylus stylus_mortuarius = {
     mortuarius_motiva, N_OF(mortuarius_motiva),
     {
         [PAL_CALIDA]    = "The palette is warm ivory, pale rose, and a muted ochre, all held in a quiet restrained register.",
-        [PAL_FRIGIDA]   = "The palette is cool bone, slate, pale lavender, and a quiet silver; the flesh is just barely warmer than the wall behind.",
-        [PAL_SATURATA]  = "A single small saturated element — a red flower, a deep cobalt ribbon — sits at the throat in an otherwise restrained picture.",
-        [PAL_MUTA]      = "The whole picture is pulled far toward grey: bone, putty, pearl, ash; the memorial register is absolute.",
-        [PAL_MONOCHROMA]= "The picture is worked in graded warm sepia alone, like an old memorial photograph carefully reproduced in paint.",
-        [PAL_PRIMARIA]  = "The only saturated colours are the small memorial details — a red ribbon, a yellow candle-flame, a blue mourning-locket; the figure itself remains quiet.",
-        [PAL_TERREA]    = "The palette is raw umber, ochre, and bone white, in the slightly aged register of a memorial kept for decades."
+        [PAL_FRIGIDA]   =
+            "The palette is cool bone, slate, pale lavender, and a quiet silver; the flesh is just barely warmer than the wall behind.",
+        [PAL_SATURATA]  =
+            "A single small saturated element — a red flower, a deep cobalt ribbon — sits at the throat in an otherwise restrained picture.",
+        [PAL_MUTA]      =
+            "The whole picture is pulled far toward grey: bone, putty, pearl, ash; the memorial register is absolute.",
+        [PAL_MONOCHROMA] =
+            "The picture is worked in graded warm sepia alone, like an old memorial photograph carefully reproduced in paint.",
+        [PAL_PRIMARIA]  =
+            "The only saturated colours are the small memorial details — a red ribbon, a yellow candle-flame, a blue mourning-locket; the figure itself remains quiet.",
+        [PAL_TERREA]    =
+            "The palette is raw umber, ochre, and bone white, in the slightly aged register of a memorial kept for decades."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a quiet plain wall in warm cream or cool dove grey, faintly vignetted into the corners.",
-        [FUN_ORNATUM]    = "Behind the figure, a subdued floral pattern — small lilies or stylised laurel — is just visible on the wall.",
-        [FUN_PAESAGIUM]  = "Behind the figure, through a narrow opening, a dignified landscape is visible: a low calm field, a distant cypress, a pale horizon.",
-        [FUN_ABSTRACTUM] = "Behind the figure is a soft atmospheric vignette, deeper at the corners and quieter at the centre; no specific object is admitted.",
-        [FUN_TENEBROSUM] = "Behind the figure is a quiet warm black, with the figure emerging only at the single warm light falling on the face.",
-        [FUN_LUMINOSUM]  = "Behind the figure is a soft dove-grey flood of indirect light, even and quiet, with no drama admitted."
+        [FUN_PLANUM]     =
+            "Behind the figure is a quiet plain wall in warm cream or cool dove grey, faintly vignetted into the corners.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a subdued floral pattern — small lilies or stylised laurel — is just visible on the wall.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, through a narrow opening, a dignified landscape is visible: a low calm field, a distant cypress, a pale horizon.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure is a soft atmospheric vignette, deeper at the corners and quieter at the centre; no specific object is admitted.",
+        [FUN_TENEBROSUM] =
+            "Behind the figure is a quiet warm black, with the figure emerging only at the single warm light falling on the face.",
+        [FUN_LUMINOSUM]  =
+            "Behind the figure is a soft dove-grey flood of indirect light, even and quiet, with no drama admitted."
     },
     mortuarius_lumen, N_OF(mortuarius_lumen),
     mortuarius_texturae, N_OF(mortuarius_texturae),
@@ -2589,21 +3036,34 @@ static const Stylus stylus_algorithmicus = {
     algorithmicus_figurae, N_OF(algorithmicus_figurae),
     algorithmicus_motiva, N_OF(algorithmicus_motiva),
     {
-        [PAL_CALIDA]    = "Each cell is either warm ochre or warm cream; the face emerges from the density of warm-valued cells.",
-        [PAL_FRIGIDA]   = "Each cell is either cool slate or cool ivory; the face emerges from the density of cool-valued cells.",
-        [PAL_SATURATA]  = "Cells cycle through pure red, yellow, and blue at maximum saturation; the face emerges from the distribution of the three primaries in the rule's output.",
-        [PAL_MUTA]      = "Cells are held in a very narrow range of soft halftones; the pattern is still absolute but the chromatic variation is quiet.",
-        [PAL_MONOCHROMA]= "Every cell is either pure black or pure white; the face emerges from their spatial distribution alone.",
-        [PAL_PRIMARIA]  = "Cells are red, yellow, blue, or white, assigned strictly by the rule; the face emerges from the aggregate density of chromatic cells.",
-        [PAL_TERREA]    = "Cells are raw umber, burnt sienna, and yellow ochre; the rule produces the face as a density variation among these three earths."
+        [PAL_CALIDA]    =
+            "Each cell is either warm ochre or warm cream; the face emerges from the density of warm-valued cells.",
+        [PAL_FRIGIDA]   =
+            "Each cell is either cool slate or cool ivory; the face emerges from the density of cool-valued cells.",
+        [PAL_SATURATA]  =
+            "Cells cycle through pure red, yellow, and blue at maximum saturation; the face emerges from the distribution of the three primaries in the rule's output.",
+        [PAL_MUTA]      =
+            "Cells are held in a very narrow range of soft halftones; the pattern is still absolute but the chromatic variation is quiet.",
+        [PAL_MONOCHROMA] =
+            "Every cell is either pure black or pure white; the face emerges from their spatial distribution alone.",
+        [PAL_PRIMARIA]  =
+            "Cells are red, yellow, blue, or white, assigned strictly by the rule; the face emerges from the aggregate density of chromatic cells.",
+        [PAL_TERREA]    =
+            "Cells are raw umber, burnt sienna, and yellow ochre; the rule produces the face as a density variation among these three earths."
     },
     {
-        [FUN_PLANUM]     = "The rule covers the entire picture plane with no distinction between figure and ground; the face emerges within the field.",
-        [FUN_ORNATUM]    = "The same rule decorates the picture as a whole, densely; the decoration itself produces the face at the appropriate scale.",
-        [FUN_PAESAGIUM]  = "The rule produces not only a face but, at smaller scale, a suggestion of a landscape behind it — a horizon, a hill — as additional pareidolic artefacts.",
-        [FUN_ABSTRACTUM] = "The picture is pure rule-output with no distinction between figure and ground; the viewer's eye selects the face from the noise.",
-        [FUN_TENEBROSUM] = "The cells are dark on a black ground; the face emerges as a slightly denser cluster of dark cells within the almost-uniform darkness.",
-        [FUN_LUMINOSUM]  = "The cells are light on a white ground; the face emerges as a slightly denser cluster of light cells within the almost-uniform brightness."
+        [FUN_PLANUM]     =
+            "The rule covers the entire picture plane with no distinction between figure and ground; the face emerges within the field.",
+        [FUN_ORNATUM]    =
+            "The same rule decorates the picture as a whole, densely; the decoration itself produces the face at the appropriate scale.",
+        [FUN_PAESAGIUM]  =
+            "The rule produces not only a face but, at smaller scale, a suggestion of a landscape behind it — a horizon, a hill — as additional pareidolic artefacts.",
+        [FUN_ABSTRACTUM] =
+            "The picture is pure rule-output with no distinction between figure and ground; the viewer's eye selects the face from the noise.",
+        [FUN_TENEBROSUM] =
+            "The cells are dark on a black ground; the face emerges as a slightly denser cluster of dark cells within the almost-uniform darkness.",
+        [FUN_LUMINOSUM]  =
+            "The cells are light on a white ground; the face emerges as a slightly denser cluster of light cells within the almost-uniform brightness."
     },
     algorithmicus_lumen, N_OF(algorithmicus_lumen),
     algorithmicus_texturae, N_OF(algorithmicus_texturae),
@@ -2647,21 +3107,34 @@ static const Stylus stylus_holographus = {
     holographus_figurae, N_OF(holographus_figurae),
     holographus_motiva, N_OF(holographus_motiva),
     {
-        [PAL_CALIDA]    = "Each angle is painted in warm flesh tones; overlapping passages carry the additive warmth of the superimposed layers.",
-        [PAL_FRIGIDA]   = "Each angle is painted in cool flesh tones; overlapping passages become cooler still, toward a pale ice-blue at the centre of maximum overlap.",
-        [PAL_SATURATA]  = "Each angle is painted in fully saturated colour at reduced opacity; the overlapping passages produce optical mixes of extraordinary richness.",
-        [PAL_MUTA]      = "All angles are held in soft halftones; the composite reads as a quiet shimmer rather than a dramatic rotation.",
-        [PAL_MONOCHROMA]= "All angles are painted in graded warm sepia; the composite is a single subtle shimmer of brown values.",
-        [PAL_PRIMARIA]  = "Each angle is painted in a single primary colour — one angle red, one yellow, one blue — and the overlapping regions produce optical secondaries.",
-        [PAL_TERREA]    = "All angles are painted in raw umber and ochre; the composite is a warm earthen shimmer with soft depth."
+        [PAL_CALIDA]    =
+            "Each angle is painted in warm flesh tones; overlapping passages carry the additive warmth of the superimposed layers.",
+        [PAL_FRIGIDA]   =
+            "Each angle is painted in cool flesh tones; overlapping passages become cooler still, toward a pale ice-blue at the centre of maximum overlap.",
+        [PAL_SATURATA]  =
+            "Each angle is painted in fully saturated colour at reduced opacity; the overlapping passages produce optical mixes of extraordinary richness.",
+        [PAL_MUTA]      =
+            "All angles are held in soft halftones; the composite reads as a quiet shimmer rather than a dramatic rotation.",
+        [PAL_MONOCHROMA] =
+            "All angles are painted in graded warm sepia; the composite is a single subtle shimmer of brown values.",
+        [PAL_PRIMARIA]  =
+            "Each angle is painted in a single primary colour — one angle red, one yellow, one blue — and the overlapping regions produce optical secondaries.",
+        [PAL_TERREA]    =
+            "All angles are painted in raw umber and ochre; the composite is a warm earthen shimmer with soft depth."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single flat field through which the overlapping angles of the figure read cleanly.",
-        [FUN_ORNATUM]    = "Behind the figure is a subtly patterned wall, visible at different opacities through the overlapping transparent edges of the figure.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a calm landscape extends; it remains unchanged under every angle of the figure, so its consistency contrasts with the figure's rotation.",
-        [FUN_ABSTRACTUM] = "The background is a soft field of rotating transparent shapes, echoing the figure's four-dimensional motion at the ground's own pace.",
-        [FUN_TENEBROSUM] = "The background is a deep warm dark; the figure's overlapping angles emerge from it only where they coincide most densely, at the central frontal view.",
-        [FUN_LUMINOSUM]  = "The background is a clean bright field; the figure's overlapping angles spread across it as a soft flowering silhouette."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single flat field through which the overlapping angles of the figure read cleanly.",
+        [FUN_ORNATUM]    =
+            "Behind the figure is a subtly patterned wall, visible at different opacities through the overlapping transparent edges of the figure.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a calm landscape extends; it remains unchanged under every angle of the figure, so its consistency contrasts with the figure's rotation.",
+        [FUN_ABSTRACTUM] =
+            "The background is a soft field of rotating transparent shapes, echoing the figure's four-dimensional motion at the ground's own pace.",
+        [FUN_TENEBROSUM] =
+            "The background is a deep warm dark; the figure's overlapping angles emerge from it only where they coincide most densely, at the central frontal view.",
+        [FUN_LUMINOSUM]  =
+            "The background is a clean bright field; the figure's overlapping angles spread across it as a soft flowering silhouette."
     },
     holographus_lumen, N_OF(holographus_lumen),
     holographus_texturae, N_OF(holographus_texturae),
@@ -2705,21 +3178,34 @@ static const Stylus stylus_cryptolalus = {
     cryptolalus_figurae, N_OF(cryptolalus_figurae),
     cryptolalus_motiva, N_OF(cryptolalus_motiva),
     {
-        [PAL_CALIDA]    = "The glyphs are written in warm brown ink on a cream vellum ground, with initials and major glyphs picked out in red.",
-        [PAL_FRIGIDA]   = "The glyphs are written in cool grey and slate-blue on pale blue-grey paper; nothing warm is admitted.",
-        [PAL_SATURATA]  = "Initial glyphs of each feature are worked in saturated red or gold; the surrounding minor glyphs are kept in black.",
-        [PAL_MUTA]      = "All glyphs are in quiet sepia and brown on cream; the picture reads as a subtly monochromatic manuscript.",
-        [PAL_MONOCHROMA]= "Black ink only on pale ground; the glyphs do all the work of the picture without any colour admitted.",
-        [PAL_PRIMARIA]  = "Glyphs cycle through red, yellow, and blue in careful rotation; each feature is a dense cluster of the three primary inks.",
-        [PAL_TERREA]    = "The glyphs are raw umber and iron-gall brown on a warm cream vellum; the whole picture has the register of an old manuscript."
+        [PAL_CALIDA]    =
+            "The glyphs are written in warm brown ink on a cream vellum ground, with initials and major glyphs picked out in red.",
+        [PAL_FRIGIDA]   =
+            "The glyphs are written in cool grey and slate-blue on pale blue-grey paper; nothing warm is admitted.",
+        [PAL_SATURATA]  =
+            "Initial glyphs of each feature are worked in saturated red or gold; the surrounding minor glyphs are kept in black.",
+        [PAL_MUTA]      =
+            "All glyphs are in quiet sepia and brown on cream; the picture reads as a subtly monochromatic manuscript.",
+        [PAL_MONOCHROMA] =
+            "Black ink only on pale ground; the glyphs do all the work of the picture without any colour admitted.",
+        [PAL_PRIMARIA]  =
+            "Glyphs cycle through red, yellow, and blue in careful rotation; each feature is a dense cluster of the three primary inks.",
+        [PAL_TERREA]    =
+            "The glyphs are raw umber and iron-gall brown on a warm cream vellum; the whole picture has the register of an old manuscript."
     },
     {
-        [FUN_PLANUM]     = "Behind the glyph-composed figure is a single unmarked expanse of vellum or paper, continuous to all edges.",
-        [FUN_ORNATUM]    = "Behind the figure, a sparse scatter of further glyphs continues the document into the margins; no figurative element breaks the written plane.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a small hand-drawn landscape fills a rectangular inset, framed by glyph-text that identifies it.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the ground is a uniform field of very small, light-toned glyphs at a much smaller scale than those of the face.",
-        [FUN_TENEBROSUM] = "The ground is dark paper with the glyphs picked out in pale ink; the face reads as a luminous text.",
-        [FUN_LUMINOSUM]  = "The ground is a high bright vellum with the glyphs picked out in hard black; the face reads as a dense passage of writing."
+        [FUN_PLANUM]     =
+            "Behind the glyph-composed figure is a single unmarked expanse of vellum or paper, continuous to all edges.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a sparse scatter of further glyphs continues the document into the margins; no figurative element breaks the written plane.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a small hand-drawn landscape fills a rectangular inset, framed by glyph-text that identifies it.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the ground is a uniform field of very small, light-toned glyphs at a much smaller scale than those of the face.",
+        [FUN_TENEBROSUM] =
+            "The ground is dark paper with the glyphs picked out in pale ink; the face reads as a luminous text.",
+        [FUN_LUMINOSUM]  =
+            "The ground is a high bright vellum with the glyphs picked out in hard black; the face reads as a dense passage of writing."
     },
     cryptolalus_lumen, N_OF(cryptolalus_lumen),
     cryptolalus_texturae, N_OF(cryptolalus_texturae),
@@ -2763,21 +3249,31 @@ static const Stylus stylus_interstitius = {
     interstitius_figurae, N_OF(interstitius_figurae),
     interstitius_motiva, N_OF(interstitius_motiva),
     {
-        [PAL_CALIDA]    = "Both overlapping layers are warm ochre and rose; the composite reads as a gently trembling warm flesh.",
+        [PAL_CALIDA]    =
+            "Both overlapping layers are warm ochre and rose; the composite reads as a gently trembling warm flesh.",
         [PAL_FRIGIDA]   = "Both layers are cool slate and pale blue; the shimmer is quiet and chilled.",
-        [PAL_SATURATA]  = "The two layers differ slightly in hue (say, a warm orange primary and a slightly cooler orange shadow); the composite shimmers with chromatic micro-movement.",
-        [PAL_MUTA]      = "Both layers are soft halftones; the doubling is barely perceptible, reading as a subtle liveliness rather than as shimmer.",
-        [PAL_MONOCHROMA]= "The picture is worked entirely in graded warm grey; the shimmer is a purely tonal effect.",
-        [PAL_PRIMARIA]  = "The primary layer is in red-yellow-blue; the secondary layer is in the same primaries shifted by one step, producing optical rainbow flickers at every edge.",
+        [PAL_SATURATA]  =
+            "The two layers differ slightly in hue (say, a warm orange primary and a slightly cooler orange shadow); the composite shimmers with chromatic micro-movement.",
+        [PAL_MUTA]      =
+            "Both layers are soft halftones; the doubling is barely perceptible, reading as a subtle liveliness rather than as shimmer.",
+        [PAL_MONOCHROMA] = "The picture is worked entirely in graded warm grey; the shimmer is a purely tonal effect.",
+        [PAL_PRIMARIA]  =
+            "The primary layer is in red-yellow-blue; the secondary layer is in the same primaries shifted by one step, producing optical rainbow flickers at every edge.",
         [PAL_TERREA]    = "Both layers are raw umber and ochre; the shimmer reads as a warm trembling earth."
     },
     {
-        [FUN_PLANUM]     = "Behind the figure is a single plain field, unmodulated; the shimmer is entirely within the figure and does not extend to the background.",
-        [FUN_ORNATUM]    = "Behind the figure, a patterned wall is itself slightly shimmered at the same 1 mm offset, so the whole picture trembles consistently.",
-        [FUN_PAESAGIUM]  = "Behind the figure, a distant landscape is painted in a single stable layer; only the figure and its immediate surround shimmer.",
-        [FUN_ABSTRACTUM] = "Behind the figure, the entire ground is in subtle micro-displacement, so that no single edge in the picture is quite still.",
-        [FUN_TENEBROSUM] = "The background is deep warm dark, still; the figure emerges from it with its shimmering doubled contours.",
-        [FUN_LUMINOSUM]  = "The background is a clean high ivory, still; the figure reads as a small shimmering silhouette against it."
+        [FUN_PLANUM]     =
+            "Behind the figure is a single plain field, unmodulated; the shimmer is entirely within the figure and does not extend to the background.",
+        [FUN_ORNATUM]    =
+            "Behind the figure, a patterned wall is itself slightly shimmered at the same 1 mm offset, so the whole picture trembles consistently.",
+        [FUN_PAESAGIUM]  =
+            "Behind the figure, a distant landscape is painted in a single stable layer; only the figure and its immediate surround shimmer.",
+        [FUN_ABSTRACTUM] =
+            "Behind the figure, the entire ground is in subtle micro-displacement, so that no single edge in the picture is quite still.",
+        [FUN_TENEBROSUM] =
+            "The background is deep warm dark, still; the figure emerges from it with its shimmering doubled contours.",
+        [FUN_LUMINOSUM]  =
+            "The background is a clean high ivory, still; the figure reads as a small shimmering silhouette against it."
     },
     interstitius_lumen, N_OF(interstitius_lumen),
     interstitius_texturae, N_OF(interstitius_texturae),
@@ -2803,15 +3299,21 @@ static const Stylus *const styli[ART_N] = {
 /* ---- claves ad indices vertere ---- */
 
 static int quaere_indicem(const char *clavis, const char *const *tab, int n) {
-    if (!clavis) return -1;
-    for (int i = 0; i < n; i++) if (strcmp(clavis, tab[i]) == 0) return i;
+    if (!clavis)
+        return -1;
+    for (int i = 0; i < n; i++)
+        if (strcmp(clavis, tab[i]) == 0)
+            return i;
     return -2; /* clavis ignota */
 }
 
-static int resolve_clavem(const char *clavis, const char *const *tab, int n,
-                          const char *nomen_campi, char *err, size_t errn) {
+static int resolve_clavem(
+    const char *clavis, const char *const *tab, int n,
+    const char *nomen_campi, char *err, size_t errn
+) {
     int i = quaere_indicem(clavis, tab, n);
-    if (i == -1) return (int)alea_ambitus((uint32_t)n);
+    if (i == -1)
+        return (int)alea_ambitus((uint32_t)n);
     if (i == -2) {
         pone_errorem(err, errn, "clavis ignota in campo %s: %s", nomen_campi, clavis);
         return -1;
@@ -2821,10 +3323,13 @@ static int resolve_clavem(const char *clavis, const char *const *tab, int n,
 
 /* ---- descriptionem componere ---- */
 
-static int compone(Charta *out, const ArtistaOptiones *opt,
-                   char *err, size_t errn) {
+static int compone(
+    Charta *out, const ArtistaOptiones *opt,
+    char *err, size_t errn
+) {
     int i_art = resolve_clavem(opt->artifex, artifices_claves, ART_N, "artifex", err, errn);
-    if (i_art < 0) return 0;
+    if (i_art < 0)
+        return 0;
     const Stylus *st = styli[i_art];
 
     int i_med;
@@ -2839,25 +3344,35 @@ static int compone(Charta *out, const ArtistaOptiones *opt,
     }
 
     int i_pal = resolve_clavem(opt->palaestra, palettae_claves, PAL_N, "palaestra", err, errn);
-    if (i_pal < 0) return 0;
+    if (i_pal < 0)
+        return 0;
     int i_hab = resolve_clavem(opt->habitus, habitus_claves, HAB_N, "habitus", err, errn);
-    if (i_hab < 0) return 0;
+    if (i_hab < 0)
+        return 0;
     int i_fun = resolve_clavem(opt->fundus, fundi_claves, FUN_N, "fundus", err, errn);
-    if (i_fun < 0) return 0;
+    if (i_fun < 0)
+        return 0;
 
     /* Secundus transitus: electiones per semen factae orthogonales sunt;
      * hic paucas consonantias fortiores inferimus, sed solum ad campos
      * quos vocans non praebuit (ne usoris electio umquam superetur). */
     if (!opt->habitus) {
-        if (i_pal == PAL_MONOCHROMA && i_hab == HAB_IUBILANS) i_hab = HAB_SOLEMNIS;
-        if (i_pal == PAL_MUTA       && i_hab == HAB_IUBILANS) i_hab = HAB_SERENUS;
-        if (i_pal == PAL_SATURATA   && i_hab == HAB_MELANCHOLICUS) i_hab = HAB_TURBULENTUS;
-        if (i_fun == FUN_TENEBROSUM && i_hab == HAB_IUBILANS) i_hab = HAB_SOLEMNIS;
-        if (i_fun == FUN_LUMINOSUM  && i_hab == HAB_MELANCHOLICUS
-            && i_pal != PAL_MUTA && i_pal != PAL_MONOCHROMA) i_hab = HAB_SERENUS;
+        if (i_pal == PAL_MONOCHROMA && i_hab == HAB_IUBILANS)
+            i_hab = HAB_SOLEMNIS;
+        if (i_pal == PAL_MUTA       && i_hab == HAB_IUBILANS)
+            i_hab = HAB_SERENUS;
+        if (i_pal == PAL_SATURATA   && i_hab == HAB_MELANCHOLICUS)
+            i_hab = HAB_TURBULENTUS;
+        if (i_fun == FUN_TENEBROSUM && i_hab == HAB_IUBILANS)
+            i_hab = HAB_SOLEMNIS;
+        if (
+            i_fun == FUN_LUMINOSUM  && i_hab == HAB_MELANCHOLICUS
+            && i_pal != PAL_MUTA && i_pal != PAL_MONOCHROMA
+        ) i_hab = HAB_SERENUS;
     }
     if (!opt->fundus) {
-        if (i_pal == PAL_MONOCHROMA && i_fun == FUN_LUMINOSUM) i_fun = FUN_PLANUM;
+        if (i_pal == PAL_MONOCHROMA && i_fun == FUN_LUMINOSUM)
+            i_fun = FUN_PLANUM;
     }
 
     /* Per-artificem: quidam artifices nonnullos habitus/palestras/fundos
@@ -2867,113 +3382,168 @@ static int compone(Charta *out, const ArtistaOptiones *opt,
     int pal_free = !opt->palaestra;
     int fun_free = !opt->fundus;
     switch (i_art) {
-        case ART_MORTUARIUS:
-            if (hab_free && (i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS
-                             || i_hab == HAB_TENSUS)) i_hab = HAB_SERENUS;
-            if (pal_free && i_pal == PAL_SATURATA)   i_pal = PAL_MUTA;
-            if (fun_free && i_fun == FUN_LUMINOSUM)  i_fun = FUN_PLANUM;
-            break;
-        case ART_MONDRIANUS:
-            if (hab_free && i_hab == HAB_TURBULENTUS) i_hab = HAB_SERENUS;
-            if (hab_free && i_hab == HAB_MELANCHOLICUS) i_hab = HAB_SERENUS;
-            break;
-        case ART_VERMERUS:
-            if (hab_free && (i_hab == HAB_TURBULENTUS || i_hab == HAB_IUBILANS))
-                i_hab = HAB_SERENUS;
-            break;
-        case ART_SEURATUS:
-            if (hab_free && i_hab == HAB_TURBULENTUS) i_hab = HAB_SERENUS;
-            break;
-        case ART_REMBRANDTUS:
-            if (hab_free && i_hab == HAB_IUBILANS) i_hab = HAB_SOLEMNIS;
-            if (pal_free && i_pal == PAL_PRIMARIA) i_pal = PAL_TERREA;
-            if (fun_free && i_fun == FUN_LUMINOSUM) i_fun = FUN_TENEBROSUM;
-            break;
-        case ART_CHRONOFUGUS:
-            if (hab_free && (i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS))
-                i_hab = HAB_SOLEMNIS;
-            if (pal_free && i_pal == PAL_SATURATA) i_pal = PAL_MUTA;
-            break;
-        case ART_VACUARIUS:
-            if (hab_free && i_hab == HAB_IUBILANS) i_hab = HAB_SOLEMNIS;
-            break;
-        case ART_OBSCURUS:
-            if (hab_free && (i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS))
-                i_hab = HAB_SOLEMNIS;
-            if (fun_free && i_fun == FUN_LUMINOSUM) i_fun = FUN_TENEBROSUM;
-            break;
-        case ART_HOKUSAIUS:
-            if (hab_free && i_hab == HAB_TURBULENTUS) i_hab = HAB_SERENUS;
-            break;
-        case ART_POLLOCKIUS:
-            if (hab_free && i_hab == HAB_SERENUS) i_hab = HAB_TURBULENTUS;
-            break;
-        case ART_BACONIUS:
-            if (hab_free && i_hab == HAB_IUBILANS) i_hab = HAB_TENSUS;
-            break;
-        case ART_WARHOLUS:
-            if (hab_free && i_hab == HAB_MELANCHOLICUS) i_hab = HAB_SERENUS;
-            break;
-        case ART_VELASPINUS:
-            if (hab_free && i_hab == HAB_TURBULENTUS) i_hab = HAB_SERENUS;
-            break;
-        case ART_INTERSTITIUS:
-            if (hab_free && i_hab == HAB_SERENUS) i_hab = HAB_TENSUS;
-            break;
-        default: break;
+    case ART_MORTUARIUS:
+        if (
+            hab_free && (
+                i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS
+                || i_hab == HAB_TENSUS
+            )
+        ) i_hab = HAB_SERENUS;
+        if (pal_free && i_pal == PAL_SATURATA)
+            i_pal = PAL_MUTA;
+        if (fun_free && i_fun == FUN_LUMINOSUM)
+            i_fun = FUN_PLANUM;
+        break;
+    case ART_MONDRIANUS:
+        if (hab_free && i_hab == HAB_TURBULENTUS)
+            i_hab = HAB_SERENUS;
+        if (hab_free && i_hab == HAB_MELANCHOLICUS)
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_VERMERUS:
+        if (hab_free && (i_hab == HAB_TURBULENTUS || i_hab == HAB_IUBILANS))
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_SEURATUS:
+        if (hab_free && i_hab == HAB_TURBULENTUS)
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_REMBRANDTUS:
+        if (hab_free && i_hab == HAB_IUBILANS)
+            i_hab = HAB_SOLEMNIS;
+        if (pal_free && i_pal == PAL_PRIMARIA)
+            i_pal = PAL_TERREA;
+        if (fun_free && i_fun == FUN_LUMINOSUM)
+            i_fun = FUN_TENEBROSUM;
+        break;
+    case ART_CHRONOFUGUS:
+        if (hab_free && (i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS))
+            i_hab = HAB_SOLEMNIS;
+        if (pal_free && i_pal == PAL_SATURATA)
+            i_pal = PAL_MUTA;
+        break;
+    case ART_VACUARIUS:
+        if (hab_free && i_hab == HAB_IUBILANS)
+            i_hab = HAB_SOLEMNIS;
+        break;
+    case ART_OBSCURUS:
+        if (hab_free && (i_hab == HAB_IUBILANS || i_hab == HAB_TURBULENTUS))
+            i_hab = HAB_SOLEMNIS;
+        if (fun_free && i_fun == FUN_LUMINOSUM)
+            i_fun = FUN_TENEBROSUM;
+        break;
+    case ART_HOKUSAIUS:
+        if (hab_free && i_hab == HAB_TURBULENTUS)
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_POLLOCKIUS:
+        if (hab_free && i_hab == HAB_SERENUS)
+            i_hab = HAB_TURBULENTUS;
+        break;
+    case ART_BACONIUS:
+        if (hab_free && i_hab == HAB_IUBILANS)
+            i_hab = HAB_TENSUS;
+        break;
+    case ART_WARHOLUS:
+        if (hab_free && i_hab == HAB_MELANCHOLICUS)
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_VELASPINUS:
+        if (hab_free && i_hab == HAB_TURBULENTUS)
+            i_hab = HAB_SERENUS;
+        break;
+    case ART_INTERSTITIUS:
+        if (hab_free && i_hab == HAB_SERENUS)
+            i_hab = HAB_TENSUS;
+        break;
+    default:
+        break;
     }
 
-    const char *figura     = elige(st->figurae,    st->n_figurae);
-    const char *motivum_a  = elige(st->motiva,     st->n_motiva);
-    const char *motivum_b  = NULL;
+    const char *figura    = elige(st->figurae,    st->n_figurae);
+    const char *motivum_a = elige(st->motiva,     st->n_motiva);
+    const char *motivum_b = NULL;
     if (st->n_motiva > 1 && alea_fors(0.66)) {
         for (int guard = 0; guard < 12; guard++) {
             const char *m = st->motiva[alea_ambitus((uint32_t)st->n_motiva)];
-            if (m != motivum_a) { motivum_b = m; break; }
+            if (m != motivum_a) {
+                motivum_b = m;
+                break;
+            }
         }
     }
     const char *motivum_c = NULL;
     if (motivum_b && alea_fors(0.35)) {
         for (int guard = 0; guard < 12; guard++) {
             const char *m = st->motiva[alea_ambitus((uint32_t)st->n_motiva)];
-            if (m != motivum_a && m != motivum_b) { motivum_c = m; break; }
+            if (m != motivum_a && m != motivum_b) {
+                motivum_c = m;
+                break;
+            }
         }
     }
     const char *lumen      = elige(st->lumen,      st->n_lumen);
     const char *textura    = elige(st->texturae,   st->n_texturae);
     const char *compositio = elige(st->compositio, st->n_compositio);
 
-    if (!charta_adde(out, INQUADRAMENTUM)) return 0;
+    if (!charta_adde(out, INQUADRAMENTUM))
+        return 0;
 
-    if (!charta_scribe(out, "%s ", figura)) return 0;
+    if (!charta_scribe(out, "%s ", figura))
+        return 0;
 
-    if (!charta_scribe(out,
-        "The whole work is executed in %s. %s ",
-        elige(media_sets[i_med].opts, media_sets[i_med].n),
-        st->palettae[i_pal])) return 0;
+    if (
+        !charta_scribe(
+            out,
+            "The whole work is executed in %s. %s ",
+            elige(media_sets[i_med].opts, media_sets[i_med].n),
+            st->palettae[i_pal]
+        )
+    ) return 0;
 
-    if (!charta_scribe(out, "%s ", st->fundi[i_fun])) return 0;
+    if (!charta_scribe(out, "%s ", st->fundi[i_fun]))
+        return 0;
 
     if (motivum_c) {
-        if (!charta_scribe(out,
-            "Three specific elements are present on the picture surface: %s; %s; and %s. ",
-            motivum_a, motivum_b, motivum_c)) return 0;
+        if (
+            !charta_scribe(
+                out,
+                "Three specific elements are present on the picture surface: %s; %s; and %s. ",
+                motivum_a, motivum_b, motivum_c
+            )
+        ) return 0;
     } else if (motivum_b) {
-        if (!charta_scribe(out,
-            "Two specific elements are present on the picture surface: %s; and %s. ",
-            motivum_a, motivum_b)) return 0;
+        if (
+            !charta_scribe(
+                out,
+                "Two specific elements are present on the picture surface: %s; and %s. ",
+                motivum_a, motivum_b
+            )
+        ) return 0;
     } else {
-        if (!charta_scribe(out,
-            "One specific element is present on the picture surface: %s. ",
-            motivum_a)) return 0;
+        if (
+            !charta_scribe(
+                out,
+                "One specific element is present on the picture surface: %s. ",
+                motivum_a
+            )
+        ) return 0;
     }
 
-    if (!charta_scribe(out, "%s ", lumen)) return 0;
-    if (!charta_scribe(out, "%s ", compositio)) return 0;
-    if (!charta_scribe(out, "%s ", textura)) return 0;
-    if (!charta_scribe(out, "%s ",
-        elige(habitus_sets[i_hab].opts, habitus_sets[i_hab].n))) return 0;
-    if (!charta_scribe(out, "%s\n", st->signatura)) return 0;
+    if (!charta_scribe(out, "%s ", lumen))
+        return 0;
+    if (!charta_scribe(out, "%s ", compositio))
+        return 0;
+    if (!charta_scribe(out, "%s ", textura))
+        return 0;
+    if (
+        !charta_scribe(
+            out, "%s ",
+            elige(habitus_sets[i_hab].opts, habitus_sets[i_hab].n)
+        )
+    ) return 0;
+    if (!charta_scribe(out, "%s\n", st->signatura))
+        return 0;
     return 1;
 }
 
@@ -2986,22 +3556,36 @@ static const char *const rudis_praecursor =
     "Generate a portrait. The subject's head is centered in the frame "
     "and the subject is facing the viewer. ";
 
-char *artista_generare_rudis(uint64_t semen,
-                               const ArtistaOptiones *optiones,
-                               char *error_locus, size_t error_longitudo) {
+char *artista_generare_rudis(
+    uint64_t semen,
+    const ArtistaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+) {
     static const ArtistaOptiones vacua = {0};
-    if (!optiones) optiones = &vacua;
-    if (error_locus && error_longitudo) error_locus[0] = '\0';
+    if (!optiones)
+        optiones = &vacua;
+    if (error_locus && error_longitudo)
+        error_locus[0] = '\0';
 
     Charta out = {0};
-    if (!charta_adde(&out, rudis_praecursor)) goto defecit;
-    if (!charta_adde(&out,
+    if (!charta_adde(&out, rudis_praecursor))
+        goto defecit;
+    if (
+        !charta_adde(
+            &out,
             "This is an artista: a painted portrait of a person, rendered "
-            "in an invented artistic style of your own choosing. ")) goto defecit;
-    if (!charta_adde(&out, "Make a random portrait of someone.")) goto defecit;
+            "in an invented artistic style of your own choosing. "
+        )
+    ) goto defecit;
+    if (!charta_adde(&out, "Make a random portrait of someone."))
+        goto defecit;
     (void)semen;
 
-    static const struct { const char *key_latine; const char *key_anglice; const char *const *val_p; } campi[] = {
+    static const struct {
+        const char *key_latine;
+        const char *key_anglice;
+        const char *const *val_p;
+    } campi[] = {
         { "artifex",   "style",      NULL },
         { "medium",    "medium",     NULL },
         { "palaestra", "palette",    NULL },
@@ -3013,11 +3597,13 @@ char *artista_generare_rudis(uint64_t semen,
         optiones->habitus, optiones->fundus
     };
     for (int i = 0; i < 5; i++) {
-        if (!valores[i]) continue;
+        if (!valores[i])
+            continue;
         if (!charta_scribe(&out, " Also %s should be %s.", campi[i].key_anglice, valores[i]))
             goto defecit;
     }
-    if (!charta_adde(&out, "\n")) goto defecit;
+    if (!charta_adde(&out, "\n"))
+        goto defecit;
     return out.d;
 
 defecit:
@@ -3026,13 +3612,17 @@ defecit:
     return NULL;
 }
 
-char *artista_generare(uint64_t semen,
-                       const ArtistaOptiones *optiones,
-                       char *error_locus, size_t error_longitudo) {
+char *artista_generare(
+    uint64_t semen,
+    const ArtistaOptiones *optiones,
+    char *error_locus, size_t error_longitudo
+) {
     static const ArtistaOptiones vacua = {0};
-    if (!optiones) optiones = &vacua;
+    if (!optiones)
+        optiones = &vacua;
 
-    if (error_locus && error_longitudo) error_locus[0] = '\0';
+    if (error_locus && error_longitudo)
+        error_locus[0] = '\0';
 
     alea_seminare(semen);
 
